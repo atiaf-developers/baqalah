@@ -1,0 +1,16 @@
+.table-scrollable {
+    width:97%;
+    overflow-x: initial;
+    overflow-y: initial;
+}
+.md-checkbox label>.check {
+    border-top: 2px solid #26A69A;
+    border-right: none;
+    border-bottom: none;
+}
+.md-checkbox input[type=checkbox]:checked~label>.check {
+    opacity: 1;
+    -webkit-transform: scale(1) rotate(205deg);
+    -moz-transform: scale(1) rotate(205deg);
+    transform: scale(1) rotate(205deg);
+}

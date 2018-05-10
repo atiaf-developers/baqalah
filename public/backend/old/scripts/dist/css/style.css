@@ -1,0 +1,1581 @@
+/*
+f0f2f5 background
+a5adb9 lightgray sidebar
+#d8dadc dark gray
+#878b90
+*/
+/* start drop down user */
+.form-control:focus
+{
+    border-color:#D02025
+}
+#forget-password
+{
+    padding-bottom:25px!important
+}
+.send-mail
+{
+    margin-top:3%
+}
+.login-box-body a, 
+.register-box-body a
+{
+    float: right;
+    color: #d02025;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.btn.btn-flat
+{
+    margin-top:3%
+}
+.checkbox, .radio
+{
+    margin-top:0%
+}
+.register-box-body
+{
+    padding-bottom:3%
+}
+.register-box-body a
+{
+    margin-top:4%
+}
+.login-box-body
+{
+    padding-bottom: 18%;
+}
+.register-box-body
+{
+    padding-bottom: 14%;
+}
+.login-logo a,
+.register-logo a
+{
+    color: #d02025;
+}
+.login-page, .register-page
+{
+    background-color:#f0f2f5
+}
+.has-feedback .form-control
+{
+    text-align: right;
+    padding-right:2%
+}
+.btn-primary
+{
+    background-color:#D02025;
+    border-color: #b31906;
+}
+.form-control-feedback
+{
+    left:0%;
+}
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active
+{
+    color: #fff!important;
+    background-color: #a94442!important;
+    border-color: #c32f1d!important;
+}
+.skin-purple .main-header li.user-header,
+.skin-purple .main-header .logo,
+.skin-purple .main-header li.user-header:hover,
+.skin-purple .main-header .logo:hover,
+.skin-purple .main-header .navbar .sidebar-toggle:hover
+{
+   background-color: #D02025;
+}
+.sidebar-menu li a .fa-angle-left, 
+.sidebar-menu li .label,
+.sidebar-menu li .badge
+{
+    margin-top: 0%!important
+}
+.skin-purple .sidebar-form input[type="text"],
+.skin-purple .sidebar-form .btn
+{
+    background-color:#fff
+}
+.skin-purple .sidebar a
+{
+    color:#fff
+}
+.skin-purple .wrapper,
+.skin-purple .main-sidebar,
+.skin-purple .left-side
+{
+    background-color: #3c3c3c;
+}
+.bg-green,
+.callout.callout-success,
+.alert-success,
+.label-success,
+.modal-success .modal-body
+{
+    background-color: #bb050b !important;
+}
+/* end drop down user */
+/* start client settings */
+.client-setting
+{
+    background-color:#fff;
+    border:1px solid #c1c1c1;
+    padding:2%
+}
+.client-setting input
+{
+    height:34px
+}
+.client-setting form button
+{
+    width: 12%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    background-color: #D02025;
+    border: none;
+    color: #fff;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    font-size: 20px;
+    margin-top:2%
+}
+/* end client settings */
+.skin-purple .main-header .navbar
+{
+    background-color: #D02025;
+}
+.skin-purple .sidebar-menu>li:hover>a,
+.skin-purple .sidebar-menu>li.active>a
+{
+    background-color:#666
+}
+.skin-purple .treeview-menu>li>a
+{
+    color:#fff
+}
+.skin-purple .sidebar-menu>li>.treeview-menu
+{
+    background: #82868a;
+}
+*
+{
+    outline: none
+}
+html,css
+{
+	font-family:  DroidKufi;
+	width:100%;
+}
+.dropdown-toggle
+{
+	background-image:none
+}
+.dropdown-toggle:hover
+{
+	background-color:#fff
+}
+.fa-circle
+{
+	font-size:9px
+}
+a:hover,
+a:visited
+{
+	text-decoration:none
+}
+.navbar-toggle .icon-bar
+{
+	background-color:#fff
+}
+.navbar-header button
+{
+	float: right;
+    background-color: #d02025;
+    margin-right: 3%;
+    margin-top: 0%;
+}
+label
+{
+	color:#666;
+	font-weight:bold;
+	text-align: justify
+}
+textarea, input
+{
+	font-family: FontAwesome;
+}
+body
+{
+	background-color:#f0f2f5
+}
+.row
+{
+    margin-right: 0%;
+    margin-left: 0%;
+}
+.container-fluid 
+{
+    padding-right: 0%;
+    padding-left: 0%;
+    margin-right: 0%;
+    margin-left: 0%;
+}
+/*start user setting*/
+.user-setting-total #user-setting button
+{
+	background-color:transparent;
+	border:none
+}
+.user-setting-total #user-setting .dropdown-menu
+{
+	margin-top:43%;
+	background-color:#d8d5d5;
+	text-align: center;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px
+}
+.user-setting-total #user-setting .dropdown-menu li a:hover
+{
+	background-image:none
+}
+.user-setting-total #user-setting .dropdown-menu hr
+{
+	border-color:#666;
+	margin-top: 2%;
+    margin-bottom: 2%;
+}
+.user-setting-total #user-setting a
+{
+	color:#666
+}
+.user-setting-total #user-setting .dropdown-menu:before
+{
+	content: "";
+    position: absolute;
+	left: 126px;
+    top: -16px;
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-bottom: 17px solid #f0f2f5;
+}
+/*start users & boss*/
+.users,
+.boss,
+.reports
+{
+    background-color: #fff;
+    height: 400px;
+    border: 1px solid #c1c1c1;
+    margin-top: 3%;
+    font-size: 16px;
+	color:#a0a5ab;
+	font-weight:bold;
+    margin-right:3%
+}
+.users h3 a,
+.boss h3 a,
+.user-details h3 a
+{
+	color:#666;
+	font-weight:bold
+}
+.user-details .user-details-content
+{
+	color:#c1c1c1
+}
+.user-details .user-details-content  .user-details-content-top
+{
+	color:#a0a5ab;
+	font-weight:bold;
+	font-size:20px
+}
+.user-details .user-details-content div a
+{
+	color:#a0a5ab
+}
+.users .user-content-top
+{
+	margin-bottom:-15%;
+}
+.user-details-content i
+{
+	width: 70px;
+    height: 70px;
+    background-color: #a0a5ab;
+    color: #fff;
+    font-size: 35px;
+    line-height: 70px;
+    border-radius: 50%;
+}
+.users .user-content-top a div,
+.users .user-content-bottom  a div
+{
+	color:#a0a5ab
+}
+.users .user-content-top div:first-of-type,
+.boss .boss-content-top div:first-of-type
+{
+	font-size: 20px;
+    margin-top: 3%;
+}
+.users .user-content-top .fa-users,
+.boss .boss-content-top .fa-users,
+.activity-report .reports .reports-content-top .fa-users
+{
+	font-size: 50px;
+    background-color: #a0a5ab;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    line-height: 90px;
+    color: #fff;
+}
+.boss .boss-content-top a
+{
+	color:#a0a5ab
+}
+.boss .boss-content-top
+{
+	margin-top:-2%
+}
+.users .user-content-top a,
+.users .user-content-bottom a
+{
+	color:#c1c1c1
+}
+.users .user-content-bottom
+{
+	margin-top: -4%;
+}
+.users .user-content-top .fa-trash,
+.boss .boss-content-top .fa-trash,
+.activity-report .reports .reports-content-top .fa-trash
+{
+	width:30px;
+	height:30px;
+	background-color:#a0a5ab;
+	color:#fff;
+	border-radius:50%;
+	line-height:30px
+}
+.boss
+{
+	height:270px;
+	margin-left:16.5%
+}
+.user-details,
+.boss-details
+{
+	box-sizing: border-box;
+	 -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.user-details .user-details-content,
+.boss-details .boss-content-top
+{
+	background-color:#fff;
+	height:285px;
+	border:1px solid #c1c1c1;
+	margin-right:2%;
+	margin-top:2%
+}
+.boss-content-bottom 
+{
+	margin-right:1%;
+	margin-top: -2%;
+	padding-top:1%;
+	margin-bottom: 12%;
+}
+.boss-content-bottom  button
+{
+	margin-left:0%;
+	margin-top:0%
+}
+.boss-content-bottom  .header span
+{
+	margin-top:1%
+}
+.boss-content-bottom .search-bar
+{
+	margin-left:0%;
+    margin-right: 1%;
+	margin-top:2%
+}
+.boss-content-bottom .header
+{
+   	height: 50px;
+    border: 1px solid #c1c1c1;
+    background-color: #fff;
+    margin-right: 2%;
+    margin-top: 3%;
+    width: 102.3%;
+}
+#permission
+{
+	margin-left: -5%;
+    float: left;
+    margin-top: 2%;
+}
+.boss-name
+{
+	margin-top: -1.9%;
+    margin-right: 0.2%;
+    width: 102.01%;
+}
+.account-u-rev .buttons button
+{
+    margin-right:2%;
+    margin-top:2%
+}
+.boss-name .boss-name-data
+{
+    margin-top: 0%;
+    background-color: #f0f2f5;
+	border: 1px solid #c1c1c1;
+    margin-right: 1.8%;
+	height:100px;
+	padding-top:3%;
+	padding-bottom:3%
+}
+.boss-name .boss-name-data i
+{
+	font-size:49px;
+	color:#a0a5ab
+}
+.boss-name .boss-name-data .data
+{
+	background-color:#fff;
+	float:left;
+	text-align: center;
+	font-weight:bold;
+}
+.boss-name .boss-name-data .data a
+{
+	color:#d02025;
+}
+.boss-name .boss-name-data .mail span
+{
+	display:inline-block;
+	color:#666;
+	font-size:18px
+}
+.boss-name .boss-name-data .mail span:last-of-type
+{
+	font-size:14px
+}
+/*end users*/
+/*start addboss page*/
+.form1,
+.form2
+{
+	margin-right:2%;
+	margin-top:3%;
+	background-color:#fff;
+	border:1px solid #c1c1c1;
+	padding-right:0%;
+	padding-left:0%;
+	margin-bottom: 12%;
+}
+.form1 .header1,
+.form2 .header2,
+.client-request .header2
+{
+	height:43px;
+	color:#fff;
+	background-color:#a0a5ab;
+	text-align: center;
+	padding-top:1%;
+	padding-bottom:1%;
+	font-size:18px;
+	margin-bottom:2%
+}
+.form1 .image-add div,
+.client-request-total .client-request #panel #info-box .image-add div
+{
+	background-color:#a0a5ab;
+	height:80px;
+	display:inline-block;
+	width:40%;
+	margin-right: 0%;
+}
+.form1 .image-add,
+.form2 .image-add,
+.client-request-total .client-request #panel #info-box .image-add
+{
+	width:20%
+}
+.add-boss-content h3
+{
+	color:#666
+}
+.add-boss-content .link
+{
+    margin-top:2%
+}
+.add-boss-content .link a
+{
+    background-color:#c1c1c1;
+    color:#fff;
+    padding-top:1%;
+    padding-bottom:1%
+}
+.add-boss-content .link a i
+{
+    float: left
+}
+.add-boss-content .link  .link-data
+{
+    padding:1%;
+    border:1px solid #c1c1c1;
+    display: none
+}
+.add-boss-content button,
+.form2 button
+{
+	margin-right:auto;
+	margin-left:auto;
+	background-color:#D02025;
+	font-weight:bold; 
+	color:#fff; 
+	background-image:none;
+	font-weight: normal;
+	font-size: 14px;
+    margin-top: 5%;
+    margin-left: 2%;
+    margin-right: 18%;
+}
+.add-boss-content
+{
+	padding-right:4%;
+    padding-bottom:3%
+}
+.add-boss-content button:hover,
+.form2 button:hover
+{
+	background-color: #96171b;
+	color:#fff
+}
+.form2 form td
+{
+	text-align: left
+}
+.form2 form td input
+{
+	margin-right:4%
+}
+.add-boss-content button:active,
+.form2 button:active
+{
+	background-image: none;
+}
+/*end addboss page*/
+/*start last-active-content page & trash page*/
+.last-active-content,
+.trash-content
+{
+	margin-right:2%;
+	margin-top:3%
+}
+.last-active-content .dropdown,
+.trash-content .dropdown
+{
+	margin-right: 0%;
+    margin-top: 1%;
+}
+.last-active-content .last-active-content-bottom,
+.trash-content .trash-content-bottom
+{
+	background-color: #fff;
+	border:1px solid #c1c1c1;
+	padding:0% 0% 3% 0%;
+	margin-top:3%
+}
+.last-active-content .last-active-content-bottom-data,
+.trash-content .trash-content-bottom-data
+{
+	background-color:#f0f2f5;
+	border:1px solid #c1c1c1;
+	margin-top:0%;
+	padding-top:2%;
+	height:90px
+}
+.last-active-content .last-active-content-bottom .last-active-content-bottom-data i,
+.trash-content .trash-content-bottom .trash-content-bottom-data i
+{
+	color: #a0a5ab;
+    font-size: 49px;
+}
+.last-active-content .last-active-content-bottom .last-active-content-bottom-data span,
+.trash-content .trash-content-bottom .trash-content-bottom-data span
+{
+	color:#a0a5ab;
+	font-weight:bold;
+	font-size:16px;
+	margin-top: 1.5%;
+}
+.last-active-content .last-active-content-bottom .last-active-content-bottom-data p
+{
+	color:#666;
+	font-size:18px
+}
+.last-active-content .last-active-content-bottom .last-active-content-bottom-data .time span,
+.trash-content .trash-content-bottom .trash-content-bottom-data .time span
+{
+	color: #969595;
+    text-align: center;
+    display: inline-block;
+}
+/*end last-active-content page & trash page*/
+/*start trash page*/
+.trash-content .trash-content-bottom .trash-content-bottom-data p
+{
+	background-color:#f9a630;
+	color:#fff;
+	padding:1%;
+	text-align: center;
+	float:right;
+	width:10%;
+	margin-right:20%;
+	font-weight:bold
+}
+.trash-content .trash-content-bottom .trash-content-bottom-data .time span
+{
+	float:left
+}
+/*end trash page*/
+/*start client page*/
+.search-bar
+{
+	margin-top:2%;
+	margin-right: 0%;
+}
+.members-content-bottom-data  .members-content-bottom-data-table input,
+.client-content-bottom-data .client-content-bottom-data-table input
+{
+    width: 25px;
+    height: 25px;
+    margin-top: 5%;
+}
+.boss-content-bottom .boss-name .boss-name-data input
+{
+    width: 25px;
+    height: 25px;
+    margin-top: 1%;
+}
+.accounturev-content-bottom-data .accounturev-content-bottom-data-table input,
+.reports-content-bottom-data .reports-content-bottom-data-table input
+{
+    width: 25px;
+    height: 25px;
+    margin-top: 4%;
+}
+.category-search .buttons button
+{
+    margin-right:3%;
+    margin-top:2%
+}
+.category-search-content-bottom-data .category-search-content-bottom-data-table input
+{
+    width: 25px;
+    height: 25px;
+    margin-top: 6%;
+}
+.search-content-bottom .members-content-bottom-data-table input,
+.helps-content-bottom-data input
+{
+    width: 25px;
+    height: 25px;
+    margin-top: 4%;
+}
+.last-active-content-bottom  .last-active-content-bottom-data input
+{
+    width: 25px;
+    height: 25px;
+    margin-top: 2%;
+    margin-right:2%
+}
+.trash-content .buttons button,
+.search-page .buttons button
+
+{
+    margin-right:2%;
+    margin-top:2%
+}
+.reports-total .buttons button,
+.last-active-content .buttons button,
+.activity-report .buttons button
+{
+    margin-right:3%;
+    margin-top:3%
+}
+.client-content-bottom .client-content-bottom-data,
+.account-u-rev .accounturev-content-bottom-data,
+.members-content-bottom .members-content-bottom-data,
+.category-search .category-search-content-bottom-data,
+.helps-content-bottom-data
+{
+	background-color: #fff;
+    padding: 0% 0% 3% 0%;
+    border: 1px solid #c1c1c1;
+    margin-right: 3%;
+    width: 103%;
+    margin-top: 2%;
+	margin-bottom: 12%;
+}
+.members-content-bottom .buttons button,
+.client-content-bottom .buttons button
+{
+    margin-right: 3%;
+    margin-top: 2%;
+}
+.boss-content-bottom .buttons button
+{
+    margin-right: 3%;
+    margin-top: 2%;
+    margin-bottom:2%
+}
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table,
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table,
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table,
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table,
+.helps-content-bottom-data .accounturev-content-bottom-data-table,
+.search-content .search-content-bottom .members-content-bottom-data-table 
+{
+	background-color:#f0f2f5;
+	border: 1px solid #c1c1c1;
+	padding:1%;
+	margin-top:0%;
+    margin-bottom:2%;
+}
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table i,
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table i,
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table i,
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table i,
+.helps-content-bottom-data .accounturev-content-bottom-data-table i
+{
+    font-size: 60px;
+    color: #a0a5ab;
+    text-align: center;
+    padding: 1.7% 0.5%;
+    margin-top: 1%;
+    height: 96px;
+}
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table .name span,
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .name span,
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table .name span,
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table .name span,
+.helps-content-bottom-data .accounturev-content-bottom-data-table .name span
+{
+	color:#939394;
+	font-size:18px;
+}
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table .name p
+{
+	color:#666;
+	font-size:14px
+}
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table  .data .address-data,
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table  .data .address-data,
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table  .data .address-data,
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table  .data .address-data,
+.helps-content-bottom-data .accounturev-content-bottom-data-table .data .address-data,
+.search-content .search-content-bottom .members-content-bottom-data-table  .data .address-data,
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table  .data .categ-data,
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table  .data .categ-data,
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table  .data .categ-data,
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table  .data .categ-data,
+.helps-content-bottom-data .accounturev-content-bottom-data-table .data .categ-data,
+.search-content .search-content-bottom .members-content-bottom-data-table  .data .categ-data
+{
+	background-color: #fff;
+	color:#666;
+	padding-top:3%;
+    padding-bottom:9%;
+	font-size: 18px;
+    margin-top:3%
+}
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table .date-time span,
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .date-time span,
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table .date-time span,
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table span,
+.helps-content-bottom-data .accounturev-content-bottom-data-table span,
+.search-content .search-content-bottom .members-content-bottom-data-table span
+{
+	display: inline-block;
+	color:#666;
+	margin-top:7%;
+	text-align: center
+}
+.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table .date-time,
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .date-time,
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table .date-time
+{
+    text-align: center;
+}
+/*start members page*/
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table .date-time span i
+{
+	background-color:transparent;
+	color:#666;
+	font-size:18px
+}
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table .date-time 
+{
+	margin-bottom: -4%;
+}
+.members-content-bottom .members-content-bottom-data
+{
+	margin-right: 2%;
+	margin-bottom: 18%;
+}
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table .name
+{
+	margin-top:3%
+}
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table .data
+{
+	margin-top:2%
+}
+.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table p
+{color:#666}
+/*end members page*/
+/*end client page*/
+/*start account-u-rev page*/
+.user-details
+{
+	margin-bottom:9%
+}
+.account-u-rev .search
+{
+	margin-right: 1%;
+	margin-top:2%
+}
+.account-u-rev
+{
+    width: 70%;
+	margin-bottom: 10%;
+}
+.account-u-rev .accounturev-content-bottom-data
+{
+	width: 97.5%;
+}
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .name p
+{
+	color:#000;
+	font-size:14px
+}
+.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table  .data
+{
+	margin-top:1%
+}
+/*end account-u-rev page*/
+/*start member page*/
+.members-content-bottom .search-bar
+{
+	margin-top: -3%;
+    margin-right: 2%;
+}
+/*end member page*/
+/*start remove member page*/
+.form2 .image-add div
+{
+	background-color: #a0a5ab;
+    height: 130px;
+    display: inline-block;
+    width: 65%;
+    margin-right: 0%;
+	margin-top: 12%;
+}
+.form2 button
+{
+	margin-right:42%;
+	margin-left:30%;
+}
+/*end remove member page*/
+/*start category page*/
+.category
+{
+    margin-top: 3%;
+    margin-right: 0%;
+    margin-left: 0%;
+}
+.category-data
+{
+	background-color:#fff;
+	border:1px solid #c1c1c1;
+	margin-right:4%;
+	margin-top:2%
+}
+.category .category-data h3 a,
+.category .category-data .data-number a,
+.category .category-data .data-number-bottom a
+{
+	color:#666
+}
+.category .category-data .data-number p
+{
+	font-size:16px;
+	margin-top:8%
+}
+.category .category-data .data-number div
+{
+	width:100px;
+	height:100px;
+	border-radius: 50%;
+	background-color:#a0a5ab;
+	margin-bottom:8%;
+	float:left
+}
+/*end category page*/
+/*start add page*/
+.add,
+.edit
+{
+	background-color:#fff;
+	border:1px solid #c1c1c1;
+	margin-top:3%;
+	margin-right:1%;
+	margin-bottom: 12%;
+}
+.add .header1 p,
+.edit .header1 p
+{
+	margin-top:2%;
+	font-size:24px;
+	color:#666;
+	font-weight:bold
+}
+.add .icon div,
+.edit .icon div
+{
+	width:150px;
+	height:150px;
+	background-color:#a0a5ab;
+	display:block;
+	margin-right:auto;
+	margin-left:auto
+}
+.add .icon button,
+.edit .icon button
+{
+	display:block;
+	margin-right:auto;
+	margin-left:auto;
+	width:150px;
+}
+.add .form,
+.edit .form
+{
+	margin-top:4%;
+	margin-bottom: 10%;
+}
+.add .form table tr td input
+{
+	width:245%
+}
+.boss-name .boss-name-data div
+{
+    text-align: right
+}
+.add .form table tr td button,
+.edit .form  button
+{
+    margin-right: 541%;
+    margin-top: 0%;
+    width: 114%;
+    border: none;
+    background-color: #a0a5ab;
+    color: #fff;
+}
+.add .form table tr td textarea,
+.edit .form table tr td textarea
+{
+	width: 248%;
+    margin-right: 99%;
+    border: 1px solid #c1c1c1;
+}
+.add .form .last,
+.edit .form .last
+{
+	width: 12%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    background-color: #D02025;
+    border: none;
+    color: #fff;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    font-size: 20px;
+}
+/*end add page*/
+/*start client-request page*/
+.client-request-total
+{
+	margin-right: 0%;
+    margin-top: 3%;
+	margin-bottom: 12%;
+}
+.client-request
+{
+	float:right;
+	background-color:#fff;
+	border:1px solid #c1c1c1;
+	padding-right:0%;
+	padding-left:0%
+}
+.client-request-tab
+{
+	float: left;
+    background-color: #fff;
+    width: 17%;
+    margin-left: 13%;
+	padding-right: 0%;
+    padding-left: 0%;
+}
+.client-request-tab #client-request-tab1
+{
+	float:right;
+	text-align: center;
+	padding-right: 0%;
+    padding-left: 0%;
+}
+.client-request-tab #client-request-tab1 a
+{
+	background-color:#c1c1c1;
+	color:#000;
+	height:50px;
+	line-height:50px;
+	font-weight:bold;
+	font-size:16px;
+	text-decoration: none
+}
+.client-request-tab #client-request-tab1 button
+{
+	margin-top:16%;
+    margin-bottom: 4%;
+    margin-right: 5%;
+    border: none;
+    color: #fff;
+    padding: 1% 0.5%;
+    font-weight: bold;
+    font-size: 14px;
+}
+.client-request-total .client-request #panel #info-box .image-add div
+{
+	width: 80%;
+	height: 110px;
+	margin-top: 7%;
+}
+.client-request-total .client-request #panel #info-box form tr td label
+{
+	float: left;
+}
+.client-request-total .client-request #panel #info-box form tr td input,
+.client-request-total .client-request #panel #info-box form tr td textarea
+{
+	margin-right:4%
+}
+.client-request-total .client-request #panel #info-box form tr td textarea
+{
+	border:1.5px solid #d8d2d2
+}
+.client-request-total .client-request #panel #branch-box form
+{
+	border:1px solid #c1c1c1;
+	margin-right:3%;
+}
+.client-request-total .client-request #panel #branch-box form table
+{
+	margin-top:-8%;
+	margin-bottom:3%
+}
+.client-request-total .client-request #panel #branch-box form table tr td label
+{
+	float:left
+}
+.client-request-total .client-request #panel #branch-box form table tr td input
+{
+	margin-right:4%
+}
+.client-request-total .client-request #panel #branch-box form
+{
+	margin-bottom:3%
+}
+.client-request-total .client-request #panel #photo-box div
+{
+	height:320px;
+	border:1px solid #666;
+	margin-right:-4%;
+	margin-bottom:2%
+}
+.client-request-total .client-request #panel #photo-box
+{
+	display:none
+}
+.client-request-total .client-request #panel #branch-box
+{
+	display:none
+}
+/*end client-request page*/
+/*start category search page*/
+.category-search
+{
+	margin-top:3%;
+	margin-right:3%
+}
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table .name span
+{
+	float: right;
+	display:inline-block;
+	margin-bottom:-2%
+}
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table .name a
+{
+	color:#666
+}
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table  .data span
+{
+	text-align: right;
+    display: inline-block;
+    width: 100%;
+    margin-top: 0%;
+}
+.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table  .data 
+{
+	margin-top:2%
+}
+.main-header .navbar-custom-menu,
+.main-header .navbar-right
+{
+    margin-left:5%
+}
+.category-search-tab,
+.edit-tab
+{
+	float: left;
+    margin-left: 5%;
+    margin-top: 3%;
+	background-color:#fff;
+	padding-bottom: 1%;
+	padding-right:0%;
+	padding-left:0%;
+	margin-bottom:4%
+}
+.category-search-tab #category-search-tab1,
+.edit-tab #edit-tab1
+{
+	padding-right:0%;
+	padding-left:0%;
+	float:right;
+	width:100%;
+	text-align: right
+}
+.category-search-tab #category-search-tab1 a,
+.edit-tab #edit-tab1 a
+{
+	height:50px;
+	color:#000;
+	font-size:16px;
+	line-height:50px;
+	font-weight:bold;
+	background-color:#c1c1c1;
+	border-bottom:1px solid #9e9b9b;
+	text-decoration: none
+}
+.category-search-tab #category-search-tab1 a span,
+.edit-tab #edit-tab1 a span 
+{
+	display:inline-block;
+	float: left;
+	text-align: justify;
+	color: #639a63;
+    border: 1px solid #639a63;
+	height: 36px;
+    line-height: 36px;
+    margin-top: 3%;
+}
+.category-search-tab #category-search-tab1 button,
+.edit-tab #edit-tab1 button
+{
+	margin-top: 16%;
+    margin-right: 5%;
+    border: none;
+    color: #fff;
+    padding: 1% 0.5%;
+    font-weight: bold;
+    font-size: 14px;
+}
+/*end category search page*/
+/*start edit page*/
+.edit
+{
+	margin-right: 0%;
+	margin-bottom:7%
+}
+.category-search-tab
+{
+	margin-left: 15%;
+    margin-top: 3%;
+}
+.edit-tab #edit-tab1
+{
+	text-align: center
+}
+.edit .form .dropdown
+{
+	float:right;
+	width:80%
+}
+.edit .form table tr td input
+{
+	width:220%;
+}
+.edit .form table tr td button
+{
+	margin-right: 508%;
+}
+.edit #branch-box,
+.edit #categ-box,
+.edit #tags-box
+{
+	display: none
+}
+/*end edit page*/
+/*start report page*/
+.reports-total
+{
+	margin-top:3%;
+	margin-right:0%
+}
+.reports-total .reports .reports-content-top
+{
+	margin-top:4%
+}
+.reports-total .reports .reports-content-top a
+{
+	color:#a0a5ab;
+	font-size: 24px;
+}
+.reports-total .reports .reports-content-top .fa-users
+{
+	font-size: 50px;
+    background-color: #a0a5ab;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    line-height: 90px;
+    color: #fff;
+}
+.reports-total .reports .reports-content-top .fa-trash
+{
+	width: 30px;
+    height: 30px;
+    background-color: #a0a5ab;
+    color: #fff;
+    border-radius: 50%;
+    line-height: 30px;
+	margin-top:2%
+}
+.reports-total .search
+{
+	margin-right: 0%;
+	margin-top: 2%
+}
+.reports-total .reports .reports-content-bottom
+{
+	margin-top: -4%;
+}
+.reports-total .reports .reports-content-bottom a
+{
+	color:#a0a5ab;
+	font-weight:normal
+}
+.reports-total .reports-content-bottom-data .reports-content-bottom-data-table .date-time,
+.activity-report .reports-content-bottom-data .reports-content-bottom-data-table .date-time
+{
+	float:left;
+	text-align: center;
+	color:#666
+}
+.reports-total .reports-content-bottom-data .reports-content-bottom-data-table p,
+.activity-report  .reports-content-bottom-data .reports-content-bottom-data-table p
+{
+	font-size:16px
+}
+.reports-total .reports-content-bottom-data .reports-content-bottom-data-table span,
+.activity-report  .reports-content-bottom-data .reports-content-bottom-data-table span
+{
+	color:gray;
+	font-size:16px
+}
+.reports-total .reports-content-bottom-data .reports-content-bottom-data-table .data,
+.activity-report  .reports-content-bottom-data .reports-content-bottom-data-table .data
+{
+	background-color:#fff;
+	text-align: right;
+	margin-right: 8%;
+	font-size:16px;
+	color:#000
+}
+.reports-total .reports-content-bottom-data .reports-content-bottom-data-table,
+.activity-report  .reports-content-bottom-data .reports-content-bottom-data-table
+{
+	background-color: #f0f2f5;
+	border-bottom: 1px solid #c1c1c1;
+	padding-top:2%;
+	padding-bottom: 2%
+}
+.reports-total .reports-content-bottom-data,
+.activity-report  .reports-content-bottom-data
+{
+	background-color: #fff;
+    padding: 0% 0% 3% 0%;
+    border: 1px solid #c1c1c1;
+    margin-right: 3%;
+    width: 100%;
+    margin-top: 2%;
+	margin-bottom: 12%;
+}
+.reports-total .reports-content-bottom-data .reports-content-bottom-data-table button,
+.activity-report .reports-content-bottom-data .reports-content-bottom-data-table button
+{
+	border:none;
+}
+/*end report page*/
+/*start activity report page*/
+.activity-report
+{
+	margin-top: 3%;
+    margin-right: 0%;
+}
+.activity-report .reports
+{
+	height:260px
+}
+.activity-report .reports .reports-content-top
+{
+	margin-top:2%
+}
+.activity-report .reports .reports-content-top a
+{
+	color:#a0a5ab;
+	font-size:20px
+}
+.activity-report .reports h3 a
+{
+	color:#666
+}
+.activity-report .helps-content-bottom-data .accounturev-content-bottom-data-table a .name
+{
+	color:#666
+}
+.activity-report .search
+{
+	margin-top: 2%;
+    margin-right: 1%;
+}
+/*end activity report page*/
+/*start helps page*/
+.helps-content-bottom-data
+{
+	margin-right: 2%;
+    width: 100.5%;
+}
+.helps-content-bottom-data .name 
+{
+	float:right;
+	margin-top: -1%;
+}
+.helps-content-bottom-data .name span
+{
+	float:right
+}
+.helps-content-bottom-data .accounturev-content-bottom-data-table .data span
+{
+	float:right
+}
+.helps-content-bottom-data .accounturev-content-bottom-data-table .data
+{
+	background-color: #fff;
+    color: #666;
+    padding: 1%;
+    font-size: 18px;
+    padding-top: 0%;
+	margin-top: 3%;
+}
+/*end helps page*/
+/*start search page*/
+.search-page
+{
+	margin-right:0%;
+	margin-top:3%
+}
+.search-page .dropdown button
+{
+	margin-right: 29%;
+    margin-top: -3%;
+}
+.search-page .search-content
+{
+	background-color: #fff;
+    border: 1px solid #c1c1c1;
+    padding:0% 0% 3% 0%;
+    margin-top: 1%;
+    margin-right: 1%;
+    width: 77%;
+}
+.search-page .search-content .search-content-bottom a .name,
+.search-page  .search-content .search-content-bottom .members-content-bottom-data-table a .name
+{
+	color:#666
+}
+.search-content .search-content-bottom .members-content-bottom-data-table .date-time span i
+{
+	background-color:transparent;
+	font-size:14px;
+	color:#666;
+	width:12px;
+	height:2px
+}
+.search-content .search-content-bottom .members-content-bottom-data-table i
+{
+    font-size: 60px;
+    color: #afb0b3;
+    text-align: center;
+    padding: 1.7% 0.5%;
+    margin-top: 1%;
+    height: 96px;
+	width: 100px;
+}
+.search-content .search-content-bottom .members-content-bottom-data-table  .data span
+{
+	float: right;
+    display: inline-block;
+    margin-top: 0%;
+}
+.search-content .search-content-bottom .members-content-bottom-data-table  .name span
+{
+	float:right
+}
+.search-content .search-content-bottom .members-content-bottom-data-table  .data
+{
+	margin-right:-7%;
+	margin-top: 2%;
+}
+/*end search page*/
+/*start top-page page*/
+.top-page
+{
+	background-color:#fff;
+	margin-top:3%;
+	margin-right:0%;
+	border:1px solid #666
+}
+.top-page p
+{
+	font-size: 18px;
+    margin-top: 2%;
+    color: #666;
+    font-weight: bold;
+}
+.top-page .content
+{
+	border:1px solid #666;
+	padding:1%;
+	margin-right:4%;
+	margin-bottom:2%
+}
+.top-page button
+{
+	border:none;
+	background-color:#c1c1c1;
+	color:#fff;
+	padding:0.5% 2%;
+	margin-bottom:2%
+}
+.top-page button:last-of-type
+{
+	background-color: #d02025;
+    color: #fff;
+    padding: 0.5% 4%;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 21px;
+}
+/*end top-page page*/
+footer
+{
+	position:fixed;
+	bottom:0%;
+	right:0%;
+	left:0%;
+	height:50px;
+	background-color:#666;
+}
+/*start media query*/
+@media (min-width:1260px) and (max-width:1560px)
+{
+	.boss{margin-left: 10.5%;}
+	.account-u-rev{margin-right: 6%;}
+	.account-u-rev .search{margin-right: 21.5%;}
+}
+@media (min-width:1260px) and (max-width:1500px)
+{
+	.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .date-time  p {margin-left:-39%}	
+}
+@media (min-width:992px) and (max-width:1259px)
+{
+	.boss{margin-left: 5.5%;}
+	.account-u-rev{margin-right: 11%;}
+	.account-u-rev .search{margin-right: 21.5%;}
+	.account-u-rev .accounturev-content-bottom-data{width: 100%;}
+	
+	.client-content-bottom .client-content-bottom-data .client-content-bottom-data-table  .data,
+	.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table  .data,
+	.members-content-bottom .members-content-bottom-data .members-content-bottom-data-table  .data,
+	.category-search .category-search-content-bottom-data .category-search-content-bottom-data-table  .data,
+	.helps-content-bottom-data .accounturev-content-bottom-data-table .data,
+	.search-content .search-content-bottom .members-content-bottom-data-table  .data
+	{
+		font-size:16px;
+		font-weight:bold;
+		width:29%
+	}
+	.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .date-time
+	{
+		width: 27%;
+    	float: left;
+	}
+	.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .date-time  p {margin-left: -66%;}
+}
+@media (min-width:1100px) and (max-width:1259px)
+{
+	.account-u-rev .accounturev-content-bottom-data .accounturev-content-bottom-data-table .date-time  p {margin-left: -53%;}
+}
+@media (min-width:881px) and (max-width:991px)
+{
+	.boss
+	{
+    height: 270px;
+    margin-left: 4.5%;
+	}
+	.account-u-rev .search{margin-right: 38.2%;}
+	.client-content-bottom .client-content-bottom-data,
+	.account-u-rev .accounturev-content-bottom-data,
+	.members-content-bottom .members-content-bottom-data,
+	.category-search .category-search-content-bottom-data,
+	.helps-content-bottom-data
+	{
+		margin-right: 41.7%;
+    	margin-top: 9%;
+	}
+}
+/*end media query*/

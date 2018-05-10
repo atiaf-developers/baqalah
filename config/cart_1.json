@@ -1,0 +1,91 @@
+[
+    {
+        "id": 1,
+        "price": 200,
+        "menu_section_id": 8,
+        "sizes": [
+            {
+                "id": 1,
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ],
+        "topings": [
+            {
+                "id": 1,
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "menu_section_id": 8,
+        "sizes": [
+            {
+                "id": 1,
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ],
+        "topings": [
+            {
+                "id": 1,
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "menu_section_id": 8,
+        "sizes": [],
+        "topings": [
+            {
+                "id": 1,
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ]
+    },
+     {
+        "id": 4,
+        "menu_section_id": 8,
+        "sizes": [
+            {
+                "id": 1,
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ],
+        "topings": [
+            {
+                "id": 1,
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ]
+    }
+
+]

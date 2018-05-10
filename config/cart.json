@@ -1,0 +1,53 @@
+{
+    "order_detailes": [{
+            "id": 1,
+            "size_id": 12,
+            "price": 40,
+            "quantity": 1,
+            "toppings_price": 30,
+            "total_price": 70,
+            "comment": "",
+            "toppings": [{
+                    "id": 46,
+                    "price": 30,
+                    "quantity": 1,
+                    "total_price": 30
+                }
+
+            ]
+        },
+        {
+            "id": 1,
+            "size_id": 13,
+            "price": 50,
+            "toppings_price": 20,
+            "quantity": 1,
+            "total_price": 70,
+            "comment": "",
+            "toppings": [{
+                    "id": 47,
+                    "price": 20,
+                    "quantity": 1,
+                    "total_price": 20
+                }
+
+            ]
+        }
+    ],
+
+    "order_info": {
+        "resturant_id": 6,
+        "user_address_id": 1,
+        "resturant_branch_id": 2,
+        "payment_method_id": 1,
+        "primary_price": 140,
+        "toppings_price": 50,
+        "service_charge": 10,
+        "vat": 5,
+        "delivery_cost": 45,
+        "total_cost": 271.5,
+        "net_cost": 271.5,
+        "phone": "0122451116",
+        "coupon": ""
+    }
+}

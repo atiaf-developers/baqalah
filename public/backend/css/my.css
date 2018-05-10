@@ -1,0 +1,229 @@
+.classifiedUploadedPicContainer {
+    display: inline-block;
+    width: 100px;
+    height: 130px;
+    vertical-align: middle;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+.classifiedUploadedPic {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.classifiedUploadedPicTools {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+}
+.uploadedPics .classifiedUploadedPicContainer:first-child .moveClassifiedUploadedPicRight {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.classifiedUploadedPicTools .btn {
+    padding: 0;
+    font-size: 12px;
+    height: 30px;
+    display: inline-block;
+    margin: 0px;
+    width: 33.33%;
+}
+.uploadedPics .classifiedUploadedPicContainer:last-child .moveClassifiedUploadedPicLeft {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.tempSpinner {
+    position: absolute;
+    font-size: 80px !important;
+    top: 26px;
+    left: 10px;
+    color: #666;
+}
+
+.classifiedUploadedPicTools .btn {
+    padding: 0;
+    font-size: 12px;
+    height: 30px;
+    display: inline-block;
+    margin: 0px;
+    width: 33.33%;
+}
+.tempUploadPic {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    height: 130px;
+    background-color: #888;
+    border-radius: 5px;
+    position: relative;
+}
+.cancelTempUploadPic {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: white;
+    cursor: pointer;
+}
+.progressText {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    color: white;
+}
+.progressBar {
+    position: absolute;
+    height: 10px;
+    top: calc(50% - 5px);
+    background-color: #c00;
+    left: 10px;
+    border-radius: 10px;
+    max-width: calc(100% - 20px);
+    transition: all 0.4s;
+}
+
+
+.wsool-tooltip {
+    background-color: #774141;
+}
+.tooltip.bottom .wsool-tooltip-arrow {
+    border-bottom-color: #774141;
+}
+option[disabled] {
+    color: #cc0000;
+    background-color: white;
+    cursor: not-allowed;
+}
+.listcatselector {
+    border: 1px solid #ddd;
+    height: 250px;
+    overflow: overlay;
+    background: #f2f2f2;
+}
+.lielectorItem {
+    padding: 0px 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.catselect {
+    background: #105b94;
+    border: 0;
+    text-align: center;
+    padding: 70px 0px;
+    overflow: inherit;
+}
+.catselect .fa {
+    font-size: 100px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.catselect .baching .bot-serg {
+    padding: 5px 18px;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.21);
+    box-shadow: 0px 1px 2px #0b3b5f;
+}
+
+.catselect .baching {
+    margin: 0;
+}
+.lielectorItem:hover, .lielectorItem.active {
+    background: #105b94;
+    color: #fff;
+}
+.utna {
+    margin-bottom: 15px;
+}
+
+.chetitle {
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+}
+.baching .bot-serg {
+    height: auto;
+    border-radius: 4px;
+
+}
+.catselect .baching .bot-serg {
+    padding: 5px 18px;
+    font-size: 13px;
+    box-shadow: 0px 1px 2px #0b3b5f;
+}
+
+
+
+.baching .bot-serg {
+    height: auto;
+    padding: 5px 18px;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px #8c2b10;
+}
+
+.padbot .bot-serg, .botcent .bot-serg {
+    float: none;
+}
+
+
+
+.bot-serg {
+    float: right;
+    height: 50px;
+    padding: 10px 20px;
+    color: #fff;
+    border: 0;
+    background: #4c9b2e;
+    outline: none;
+    outline-style: none;
+}
+.portlet.box.red {
+    border: 1px solid #0278c2!important;
+}
+.portlet.red {
+    background-color: #0278c2!important;
+}
+.portlet.box.red>.portlet-title, .portlet.red, .portlet>.portlet-body.red {
+    background-color: #0278c2;
+}
+
+/*map*/
+.controls {
+    background-color: #fff;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    height: 29px;
+    margin-left: 17px;
+    margin-top: 10px;
+    outline: none;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+}
+
+.controls:focus {
+    border-color: #4d90fe;
+}
+.title {
+    font-weight: bold;
+}
+#infowindow-content {
+    display: none;
+}
+#map #infowindow-content {
+    display: inline;
+}
+
+
+
