@@ -46,16 +46,13 @@ class ProductsController extends ApiController {
     public function show(Request $request,$id) {
         try {
             $user = $this->auth_user();
-
             $product = $this->getProducts($request->input('store_id'),$id);
-            
             if (!$product) {
                 $message = _lang('app.not_found');
                 return _api_json(new \stdClass(), ['message' => $message], 404);
             }
             return _api_json($product);
         } catch (\Exception $e) {
-            dd($e);
             $message = _lang('app.error_is_occured');
             return _api_json(new \stdClass(), ['message' => $message], 400);
         }
@@ -186,17 +183,20 @@ class ProductsController extends ApiController {
 
     private function getProducts($store_id,$product_id = null)
     {
+        $columns=["products.id","products.has_offer",'products.name','products.description','products.images','products.quantity',
+                'products.price',"categories_translations.title as category","categories.id as category_id"];
+
        $user = $this->auth_user();
 
         $products = Product::join('categories','categories.id','=','products.category_id');
         $products->join('stores', 'stores.id', '=', 'products.store_id');
         $products->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id');
-        
         if ($user->type == 1) {
             $products->leftJoin('favourites', function ($join) use($user) {
                 $join->on('favourites.product_id', '=', 'products.id');
                 $join->where('favourites.user_id', $user->id);    
             });
+            $columns[]="favourites.id as is_favourite";
         }
         if ($product_id) {
             $products->where('products.id', $product_id);
@@ -205,13 +205,8 @@ class ProductsController extends ApiController {
         $products->where('stores.active', true);
         $products->where('products.active', true);
         $products->where('categories_translations.locale', $this->lang_code);
-        if ($user->type == 1) {
-            $products->select("products.id",'products.name','products.description','products.images','products.quantity',
-                'products.price',"categories_translations.title as category","favourites.id as is_favourite","products.has_offer");
-        }else{
-            $products->select("products.id","products.has_offer",'products.name','products.description','products.images','products.quantity',
-                'products.price',"categories_translations.title as category","categories.id as category_id");
-        }
+        $products->select($columns);
+
         if ($product_id) {
             $product = $products->first();
             if (!$product) {
@@ -222,7 +217,6 @@ class ProductsController extends ApiController {
            $products = $products->paginate($this->limit);
            return Product::transformCollection($products);
         }
-       
     }
 
 }

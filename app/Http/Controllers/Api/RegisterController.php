@@ -77,7 +77,6 @@ class RegisterController extends ApiController {
             if ($request->step == 1 || $request->step == 2) {
                 $rules = $this->client_rules;
             }else{
-                
                 return _api_json(new \stdClass(), ['message' => _lang('app.error_is_occured')], 400);
             } 
         }
@@ -93,15 +92,11 @@ class RegisterController extends ApiController {
                 $rules = $this->store_rules;
             }
             else{
-             
                return _api_json(new \stdClass(), ['message' => _lang('app.error_is_occured')], 400);
             }
-
         }
         else{
-         
           return _api_json(new \stdClass(), ['message' => _lang('app.error_is_occured')], 400);
-
         }
        
         $validator = Validator::make($request->all(), $rules);
@@ -111,15 +106,13 @@ class RegisterController extends ApiController {
         }
 
         if ($request->step == 1 && $request->type == 2) {
-             return _api_json(new \stdClass());
+            return _api_json(new \stdClass());
         }
-       else if (($request->step == 1 && $request->type == 1) || ($request->step == 2 && $request->type == 2)) {
-
+        else if (($request->step == 1 && $request->type == 1) || ($request->step == 2 && $request->type == 2)) {
             $verification_code = Random(4);
             return _api_json(new \stdClass(),['code' => $verification_code ]);
-       }
-
-       else if(($request->step == 2 && $request->type == 1) || ($request->step == 3 && $request->type == 2)){
+        }
+        else if(($request->step == 2 && $request->type == 1) || ($request->step == 3 && $request->type == 2)){
           
             DB::beginTransaction();
             try {
@@ -133,41 +126,36 @@ class RegisterController extends ApiController {
                 return _api_json(User::transform($user), ['token' => AUTHORIZATION::generateToken($token), 'expire' => $expire_in_seconds], 201);
             } catch (\Exception $e) {
                 DB::rollback();
-               dd($e);
                 $message = _lang('app.error_is_occured');
                 return _api_json(new \stdClass(), ['message' => $message],400);
             }
-
-       }
-       else{
+        }
+        else{
           return _api_json(new \stdClass(), ['message' => _lang('app.error_is_occured')], 400);
-       } 
+        } 
     }
 
     private function createUser($request) {
 
         $User = new User;
-       
         $User->username = $request->input('username');
-        $User->mobile = $request->input('mobile');
         $User->email = $request->input('email');
         $User->password = bcrypt($request->input('password'));
         if ($request->type == 1) {
           $User->fname = $request->input('first_name');
           $User->lname = $request->input('last_name');
           $User->gender = $request->input('gender');
+          $User->mobile = $request->input('mobile');
         }
         $User->type = $request->type;
-        $User->active = 1;
+        $User->image = "default.png";
+        $User->active = $request->type == 1 ? 1 : 0;
         $User->device_type = $request->device_type;
         $User->device_token = $request->device_token;
-
         $User->save();
-
         if ($request->type == 2) {
             $this->createStore($request,$User);
         }
-       
         return $User;
     }
 
@@ -177,12 +165,13 @@ class RegisterController extends ApiController {
         $store = new Store;
         $store->name = $request->input('store_name');
         $store->description = $request->input('store_description');
-        $store->image = Store::upload($request->input('store_image'),'stores',false,false,true);
+        $store->image = Store::upload($request->input('store_image'),'stores',true,false,true);
         $store->lat = $request->input('lat');
         $store->lng = $request->input('lng');
         $store->address = getAddress($request->input('lat'), $request->input('lng'), $lang = "AR");
-        $store->active = 1;
+        $store->active = 0;
         $store->available = 1;
+        $store->phone = $request->input('mobile');
         $store->user_id = $User->id;
 
         $store->save();

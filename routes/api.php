@@ -52,6 +52,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('get_categories', 'BasicController@getCategories');
 
         Route::resource('products', 'ProductsController');
+        Route::resource('stores', 'StoresController');
 
 
         Route::get('store_categories', 'StoresController@getStoreCategories');

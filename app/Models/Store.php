@@ -25,11 +25,19 @@ class Store extends MyModel {
         $transformer->name = $item->name;
         $transformer->description = $item->description;
         $transformer->image = url('public/uploads/stores').'/'.$item->image;
+        $transformer->phone = $item->phone;
         $transformer->lat = $item->lat;
         $transformer->lng = $item->lng;
         $transformer->address = $item->address;
         $transformer->available = $item->available;
-
+        if ($user = static::auth_user()) {
+            if ($user->type == 1) {
+                $transformer->available_text = $item->available == 0 ? _lang('app.closed') : _lang('app.opened');
+                $transformer->is_rated = $item->is_rated ? 1 : 0;
+                $transformer->number_of_products = $item->number_of_products;
+                $transformer->rate = $item->rate;
+            }  
+        }
         return $transformer;
     }
 

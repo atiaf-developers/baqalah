@@ -39,17 +39,13 @@ class User extends Authenticatable {
         if ($item->type == 1) {
             $transformer->first_name = $item->fname;
             $transformer->last_name = $item->lname;
-            $transformer->gender = _lang('app.'.static::$gender[$item->gender]);
+            $transformer->gender = $item->gender;
+            $transformer->gender_text = _lang('app.'.static::$gender[$item->gender]);
+            $transformer->mobile = $item->mobile;
         }
         $transformer->username = $item->username;
         $transformer->email = $item->email ? $item->email : "";
-        $transformer->mobile = $item->mobile;
-        if ($item->image) {
-            $transformer->image = url('public/uploads/users').'/'.$item->image;
-        }
-        else{
-            $transformer->image = url('public/uploads/users/default.png');
-        }
+        $transformer->image = url('public/uploads/users').'/'.$item->image;
         if ($item->type == 2) {
             $transformer->store = Store::transform($item->store);
         }
