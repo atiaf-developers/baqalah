@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Product;
+use App\Models\Favourite;
 
 class ProductsController extends ApiController {
 
@@ -19,6 +20,10 @@ class ProductsController extends ApiController {
         'images' => 'required',
     );
 
+    private $favourite_rules = array(
+        'product_id' => 'required'
+    );
+
     public function __construct() {
         parent::__construct();
     }
@@ -30,7 +35,7 @@ class ProductsController extends ApiController {
      */
     public function index(Request $request) {
         try {
-            $products = $this->getProducts($request->input('store_id'));
+            $products = $this->getProducts($request);
             return _api_json($products);
         } catch (\Exception $e) {
             $message = _lang('app.error_is_occured');
@@ -46,7 +51,7 @@ class ProductsController extends ApiController {
     public function show(Request $request,$id) {
         try {
             $user = $this->auth_user();
-            $product = $this->getProducts($request->input('store_id'),$id);
+            $product = $this->getProducts($request,$id);
             if (!$product) {
                 $message = _lang('app.not_found');
                 return _api_json(new \stdClass(), ['message' => $message], 404);
@@ -67,7 +72,7 @@ class ProductsController extends ApiController {
      */
     public function store(Request $request) {
         try {
-           
+
             $this->rules['product_name'] =  "required|unique:products,name,NULL,id,store_id,{$request->input('store_id')}";
             
             $validator = Validator::make($request->all(), $this->rules);
@@ -181,27 +186,87 @@ class ProductsController extends ApiController {
         }
     }
 
-    private function getProducts($store_id,$product_id = null)
+    public function handleFavourites(Request $request)
     {
-        $columns=["products.id","products.has_offer",'products.name','products.description','products.images','products.quantity',
-                'products.price',"categories_translations.title as category","categories.id as category_id"];
+        try {
+            $validator = Validator::make($request->all(), $this->favourite_rules);
+            if ($validator->fails()) {
+                $errors = $validator->errors()->toArray();
+                return _api_json('', ['errors' => $errors], 400);
+            } 
 
-       $user = $this->auth_user();
+            $user = $this->auth_user();
+            $product = Product::find($request->input('product_id'));
+            if (!$product) {
+                $message = _lang('app.not_found');
+                return _api_json('', ['message' => $message], 404);
+            }
 
-        $products = Product::join('categories','categories.id','=','products.category_id');
-        $products->join('stores', 'stores.id', '=', 'products.store_id');
+            $check = Favourite::where('product_id',$request->input('product_id'))
+            ->where('user_id',$user->id)
+            ->first();
+
+            if ($check) {
+                $check->delete();
+            }
+            else{
+                $favourite = new Favourite;
+                $favourite->product_id = $request->input('product_id');
+                $favourite->user_id = $user->id;
+                $favourite->save();
+            }
+            return _api_json('',['message' => _lang('app.updated_successfully')]);
+        } catch (\Exception $e) {
+            $message = _lang('app.error_is_occured');
+            return _api_json('', ['message' => $message],400);
+        }
+    }
+
+    private function getProducts($request,$product_id = null)
+    {
+
+        $columns=["products.id",'products.name','products.description','products.images','products.quantity',
+        'products.price'];
+
+        $user = $this->auth_user();
+
+        $products = Product::join('stores', 'stores.id', '=', 'products.store_id');
+        $products->join('categories','categories.id','=','products.category_id');
         $products->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id');
+
         if ($user->type == 1) {
+
             $products->leftJoin('favourites', function ($join) use($user) {
                 $join->on('favourites.product_id', '=', 'products.id');
                 $join->where('favourites.user_id', $user->id);    
             });
             $columns[]="favourites.id as is_favourite";
+            $columns[]="stores.id as store_id";
+            $columns[]="stores.name as store_name";
+            $columns[]="stores.image as store_image";
+            $columns[]="stores.rate as store_rate";
+            $columns[]="stores.available as store_available";
+
+            if ($request->input('categories')) {
+                $categories = json_decode($request->input('categories'));
+                $products->whereIn('products.category_id',$categories);
+            }
+            if ($request->input('sort')) {
+                $sort_type = $request->input('sort') == 1 ? 'ASC' : 'DESC'; 
+                $products->orderBy('products.price', $sort_type);
+            }
         }
+        else if($user->type == 2){
+            $columns[]="products.has_offer";
+            $columns[]="categories_translations.title as category";
+            $columns[]="categories.id as category_id";
+        }
+
         if ($product_id) {
             $products->where('products.id', $product_id);
         }
-        $products->where('stores.id', $store_id);
+
+        $products->where('stores.id', $request->input('store_id'));
         $products->where('stores.active', true);
         $products->where('products.active', true);
         $products->where('categories_translations.locale', $this->lang_code);
@@ -216,7 +281,7 @@ class ProductsController extends ApiController {
         }else{
            $products = $products->paginate($this->limit);
            return Product::transformCollection($products);
-        }
-    }
+       }
+   }
 
 }

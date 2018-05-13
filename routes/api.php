@@ -46,25 +46,22 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('setting', 'BasicController@getSettings');
     Route::get('notifications', 'NotificationsController@index');
     Route::get('noti_count', 'NotificationsController@getUnReadNoti');
+
+
+     Route::get('get_categories', 'BasicController@getCategories');
     Route::group(['middleware' => 'jwt.auth'], function () {
 
         Route::post('user/update', 'UserController@update');
-        Route::get('get_categories', 'BasicController@getCategories');
+       
 
         Route::resource('products', 'ProductsController');
         Route::resource('stores', 'StoresController');
-
-
         Route::get('store_categories', 'StoresController@getStoreCategories');
-        Route::get('get_store','StoresController@getStore');
-        
         Route::get('get_user', 'UserController@getUser');
-        Route::post('rate', 'BasicController@rate');
-        Route::get('donation_requests', 'DonationRequestsController@index');
-        Route::post('change_request_status', 'DonationRequestsController@status');
-        Route::get('containers', 'ContainersController@index');
-        Route::get('log_dump', 'ContainersController@Logdump');
-        Route::post('unload_container', 'ContainersController@unload_container');
-        Route::post('update_location','UserController@updateLocation');
+
+        Route::post('rate', 'StoresController@rate');
+        Route::get('favourites', 'UserController@favourites');
+        Route::post('handle_favourites','ProductsController@handleFavourites');
+        
     });
 });

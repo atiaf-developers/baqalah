@@ -7,41 +7,48 @@ use App\Http\Controllers\ApiController;
 use Validator;
 use App\Models\Store;
 use App\Models\Category;
+use App\Models\Rating;
 use DB;
 
 class StoresController extends ApiController {
 
     private $rules = array(
-        'container_id' => 'required'
+        'lat' => 'required',
+        'lng' => 'required'
+    );
+
+    private $rate_rules = array(
+        'store_id' => 'required',
+        'rate' => 'required'
     );
 
     public function __construct() {
         parent::__construct();
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $validator = Validator::make($request->all(), $this->rules);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            return _api_json('', ['errors' => $errors], 400);
+        }
         $user = $this->auth_user();
-        $distance = 5;
+        $distance = 10;
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
 
-            $columns = ['stores.id','stores.name','stores.description','stores.image','stores.phone','stores.lat','stores.lng','stores.address','stores.available'];
+        $stores = Store::leftJoin('ratings', function ($join) use($user) {
+            $join->on('ratings.store_id', '=', 'stores.id');
+            $join->where('ratings.user_id',  $user->id);
+        })
+        ->where('stores.active',true)
+        ->select(['stores.id','stores.name','stores.description','stores.image','stores.phone','stores.lat','stores.lng','stores.address','stores.available','ratings.id as is_rated',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1) as number_of_products"),'stores.rate',DB::raw($this->iniDiffLocations('stores', $lat, $lng))])
+        ->having('distance','<=',$distance)
+        ->orderBy('distance')
+        ->get();
 
-            $stores = Store::where('stores.id',$id);
-            $stores->where('stores.active',true);
-            
-            $stores->leftJoin('ratings', function ($join) use($user,$id) {
-                    $join->on('ratings.store_id', '=', 'stores.id');
-                    $join->where('ratings.user_id',  $user->id);
-                    $join->where('ratings.store_id', $id);    
-               
-                $columns[]="ratings.id as is_rated";
-                $columns[] = DB::raw("(SELECT Count(*) FROM products WHERE store_id = {$id} and active = 1) as number_of_products");
-                $columns[] = 'stores.rate';
-            }
-            $stores->select($columns);
-            $stores = $stores->paginate($this->limit);
-
-            return _api_json(Store::transformCollection($stores));
+        return _api_json(Store::transformCollection($stores));
     }
 
     public function show(Request $request,$id) {
@@ -49,22 +56,15 @@ class StoresController extends ApiController {
 
             $user = $this->auth_user();
 
-            $columns = ['stores.id','stores.name','stores.description','stores.image','stores.phone','stores.lat','stores.lng','stores.address','stores.available'];
-
-            $store = Store::where('stores.id',$id);
-            $store->where('stores.active',true);
-            if ($user->type == 1) {
-                $store->leftJoin('ratings', function ($join) use($user,$id) {
-                    $join->on('ratings.store_id', '=', 'stores.id');
-                    $join->where('ratings.user_id',  $user->id);
-                    $join->where('ratings.store_id', $id);    
-                });
-                $columns[]="ratings.id as is_rated";
-                $columns[] = DB::raw("(SELECT Count(*) FROM products WHERE store_id = {$id} and active = 1) as number_of_products");
-                $columns[] = 'stores.rate';
-            }
-            $store->select($columns);
-            $store = $store->first();
+            $store = Store::leftJoin('ratings', function ($join) use($user,$id) {
+                $join->on('ratings.store_id', '=', 'stores.id');
+                $join->where('ratings.user_id',  $user->id);
+                $join->where('ratings.store_id', $id);  
+            })
+            ->where('stores.id',$id)
+            ->where('stores.active',true)
+            ->select(['stores.id','stores.name','stores.description','stores.image','stores.phone','stores.lat','stores.lng','stores.address','stores.available','ratings.id as is_rated',DB::raw("(SELECT Count(*) FROM products WHERE store_id = {$id} and active = 1) as number_of_products"),'stores.rate'])
+            ->first();
 
             if (!$store) {
                 return _api_json(new \stdClass(), ['message' => _lang('app.not_found')], 404);
@@ -95,11 +95,50 @@ class StoresController extends ApiController {
         }
     }
 
-    private function getStores($store_id = null)
-    {
 
+    public function rate(Request $request) {
+
+        $validator = Validator::make($request->all(), $this->rate_rules);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            return _api_json('', ['errors' => $errors], 400);
+        }
+        
+        $user = $this->auth_user();
+        $store = Store::find($request->input('store_id'));
+        if (!$store) {
+            $message = _lang('app.not_found');
+            return _api_json('', ['message' => $message], 404);
+        }
+
+        $check = Rating::where('user_id',$user->id)
+                        ->where('store_id',$request->input('store_id'))
+                        ->first();
+        if ($check) {
+            return _api_json('', ['message' => _lang('app.you_have_already_rate_this_store')], 400);
+        }
+        DB::beginTransaction();
+        try {
+            
+            $rate = new Rating;
+            $rate->user_id = $user->id;
+            $rate->store_id = $request->input('store_id');
+            $rate->rate = $request->input('rate');
+            $rate->save();
+
+            $store_new_rate = Rating::where('store_id', $request->input('store_id'))
+            ->select(DB::raw(' SUM(rate)/COUNT(*) as rate'))
+            ->first();
+            $store->rate = $store_new_rate->rate;
+            $store->save();
+            DB::commit();
+            $message = _lang('app.rated_successfully');
+            return _api_json('', ['message' => $message]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message = _lang('app.error_is_occured');
+            return _api_json('', ['message' => $message], 400);
+        }
     }
-
-
 
 }

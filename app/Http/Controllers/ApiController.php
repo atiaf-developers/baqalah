@@ -22,7 +22,7 @@ class ApiController extends Controller {
     protected $lang_code;
     protected $User;
     protected $data;
-    protected $limit = 2;
+    protected $limit = 10;
     protected $expire_no = 1;
     protected $expire_type = 'day';
 

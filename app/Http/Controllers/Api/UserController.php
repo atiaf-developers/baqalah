@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Helpers\AUTHORIZATION;
 use App\Models\User;
-use App\Models\DesignerCategory;
+use App\Models\Product;
 use App\Models\Designer;
 use Validator;
 use DB;
@@ -109,25 +109,25 @@ class UserController extends ApiController {
         }
     }
 
-    public function updateLocation(Request $request)
-    {
-        $validator = Validator::make($request->all(), $this->location_rules);
-        if ($validator->fails()) {
-            $errors = $validator->errors()->toArray();
-            return _api_json('', ['errors' => $errors], 400);
-        }
+    public function favourites(Request $request) {
         try {
             $user = $this->auth_user();
-            $user->lat = $request->lat;
-            $user->lng = $request->lng;
-            $user->save();
-            return _api_json('');
-        } catch (\Exception $e) {
-            $message = _lang('app.error_is_occured');
-            return _api_json('', ['message' => $message], 400);
-        }
-        
 
+            $favourites = Product::Join('favourites', function ($join) use($user) {
+                $join->on('favourites.product_id', '=', 'products.id');
+                $join->where('favourites.user_id', $user->id);    
+            }) 
+            ->join('stores', 'stores.id', '=', 'products.store_id')
+            ->where('stores.active',true)
+            ->select("products.id",'products.name','products.description','products.images','products.quantity',
+                        'products.price',"favourites.id as is_favourite","stores.id as store_id","stores.name as store_name","stores.image as store_image","stores.rate as store_rate","stores.available as store_available")
+            ->paginate($this->limit);
+
+            return _api_json(Product::transformCollection($favourites));
+        } catch (\Exception $e) {
+            $message = ['message' => _lang('app.error_occured')];
+            return _api_json([], $message, 400);
+        }
     }
 
 }
