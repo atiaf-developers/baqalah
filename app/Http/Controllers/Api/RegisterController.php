@@ -23,8 +23,7 @@ class RegisterController extends ApiController {
         'password' => 'required',
         'gender' => 'required',
         'device_token' => 'required',
-        'device_type' => 'required',
-        
+        'device_type' => 'required',  
     );
 
     private $store_rules_step_one  = array(
@@ -36,8 +35,7 @@ class RegisterController extends ApiController {
         'mobile' => 'required|unique:users',
         'password' => 'required',
         'device_token' => 'required',
-        'device_type' => 'required',
-        
+        'device_type' => 'required',   
     );
 
     private $store_rules_step_two  = array(

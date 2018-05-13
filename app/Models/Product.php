@@ -8,6 +8,11 @@ class Product extends MyModel
 {
     protected $table = "products";
 
+    public static $sizes = array(
+        's' => array('width' => 300, 'height' => 300),
+        'm' => array('width' => 400, 'height' => 400),
+    );
+
 
     public static function transform($item)
     {
@@ -19,7 +24,6 @@ class Product extends MyModel
         $transformer->description = $item->description;
         $transformer->price = $item->price;
         $transformer->quantity = $item->quantity;
-
         $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
         $transformer->images = $prefixed_array;
 
@@ -39,7 +43,7 @@ class Product extends MyModel
            $transformer->category = $item->category;
            $transformer->category_id = $item->category_id;
            $transformer->has_offer = $item->has_offer;
-           
+
        }
 
        return $transformer;

@@ -9,7 +9,7 @@ class Store extends MyModel {
     protected $table = "stores";
 
     public static $sizes = array(
-        's' => array('width' => 200, 'height' => 200),
+        's' => array('width' => 300, 'height' => 300),
         'm' => array('width' => 400, 'height' => 400),
     );
 
