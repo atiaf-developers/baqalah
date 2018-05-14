@@ -136,6 +136,10 @@ class RegisterController extends ApiController {
     private function createUser($request) {
 
         $User = new User;
+
+        $settings = $this->settings();
+        $activation_type = $settings['stores_activation']->value;
+
         $User->username = $request->input('username');
         $User->email = $request->input('email');
         $User->password = bcrypt($request->input('password'));
@@ -147,17 +151,24 @@ class RegisterController extends ApiController {
         }
         $User->type = $request->type;
         $User->image = "default.png";
-        $User->active = $request->type == 1 ? 1 : 0;
+        
+        if ($request->type == 1) {
+            $User->active = 1;
+        }
+        else{
+            $User->active = $activation_type == 1 ? 0 : 1;
+        }
+
         $User->device_type = $request->device_type;
         $User->device_token = $request->device_token;
         $User->save();
         if ($request->type == 2) {
-            $this->createStore($request,$User);
+            $this->createStore($request,$User,$activation_type);
         }
         return $User;
     }
 
-    private function createStore($request,$User)
+    private function createStore($request,$User,$activation_type)
     {
         
         $store = new Store;
@@ -167,9 +178,9 @@ class RegisterController extends ApiController {
         $store->lat = $request->input('lat');
         $store->lng = $request->input('lng');
         $store->address = getAddress($request->input('lat'), $request->input('lng'), $lang = "AR");
-        $store->active = 0;
+        $store->active = $activation_type == 1 ? 0 : 1;
         $store->available = 1;
-        $store->phone = $request->input('mobile');
+        $store->mobile = $request->input('mobile');
         $store->user_id = $User->id;
 
         $store->save();

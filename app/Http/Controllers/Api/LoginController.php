@@ -51,7 +51,6 @@ class LoginController extends ApiController {
             if (password_verify($credentials['password'], $find->password)) {
                 return $find;
             }
-            return $find;
         }
         return false;
     }

@@ -21,14 +21,21 @@ class BasicController extends ApiController {
     private $contact_rules = array(
         'message' => 'required',
         'email' => 'required|email',
-        'type' => 'required',
-        'name' => 'required'
+        'subject' => 'required',
+        'name' => 'required',
+        'store_id' => 'required'
     );
 
     private $categories_rules = array(
         'lat' => 'required',
         'lng' => 'required'
     );
+
+    private $store_categories_rules = array(
+        'store_id' => 'required',
+    );
+
+
 
     public function getToken(Request $request) {
         $token = $request->header('authorization');
@@ -55,10 +62,7 @@ class BasicController extends ApiController {
 
     public function getSettings() {
         try {
-            $settings = Setting::select('name', 'value')->get()->keyBy('name');
-            $settings['social_media'] = json_decode($settings['social_media']->value);
-            $settings['info'] = SettingTranslation::where('locale', $this->lang_code)->first();
-
+            $settings = SettingTranslation::where('locale', $this->lang_code)->first();
             return _api_json($settings);
         } catch (\Exception $e) {
             return _api_json(new \stdClass(), ['message' => $e->getMessage()], 400);
@@ -73,16 +77,34 @@ class BasicController extends ApiController {
         } else {
             try {
                 $ContactMessage = new ContactMessage;
-                $ContactMessage->email = $request->input('email');
-                $ContactMessage->type = $request->input('type');
-                $ContactMessage->message = $request->input('message');
                 $ContactMessage->name = $request->input('name');
+                $ContactMessage->email = $request->input('email');
+                $ContactMessage->subject = $request->input('subject');
+                $ContactMessage->message = $request->input('message');
+                $ContactMessage->store_id = $request->input('store_id');
                 $ContactMessage->save();
                 return _api_json('', ['message' => _lang('app.message_is_sent_successfully')]);
             } catch (\Exception $ex) {
                 return _api_json('', ['message' => _lang('app.error_is_occured')], 400);
             }
         }
+    }
+
+    public function getComplaints(Request $request) {
+        $validator = Validator::make($request->all(), ['store_id' => 'required']);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            return _api_json([], ['errors' => $errors], 400);
+        } 
+        try {
+            $complaints = ContactMessage::where('store_id',$request->input('store_id'))
+            ->select('name','email','subject','message')
+            ->paginate($this->limit);
+            return _api_json(ContactMessage::transformCollection($complaints));
+        } catch (\Exception $ex) {
+            return _api_json([], ['message' => _lang('app.error_is_occured')], 400);
+        }
+        
     }
 
 
@@ -99,7 +121,20 @@ class BasicController extends ApiController {
             $categories = $this->categories($request,$user);
             return $categories;
         } catch (\Exception $e) {
-            dd($e);
+            return _api_json([], ['message' => _lang('app.error_is_occured')], 400);
+        }
+    }
+
+    public function getStoreCategories(Request $request) {
+        try {
+            $validator = Validator::make($request->all(), $this->store_categories_rules);
+            if ($validator->fails()) {
+                $errors = $validator->errors()->toArray();
+                return _api_json('', ['errors' => $errors], 400);
+            }
+            $categories = $this->storeCategories($request->input('store_id'));
+            return _api_json(Category::transformCollection($categories));
+        } catch (\Exception $e) {
             return _api_json([], ['message' => _lang('app.error_is_occured')], 400);
         }
     }
@@ -107,7 +142,8 @@ class BasicController extends ApiController {
 
     private function categories($request,$user = null)
     {
-        $distance = 5;
+        $settings = $this->settings();
+        $distance = $settings['search_range_for_stores']->value;
         $columns = ["categories.id", "categories_translations.title"];
         
         if ($user) {
@@ -120,7 +156,7 @@ class BasicController extends ApiController {
                 $join->where('ratings.user_id',  $user->id);
             })
             ->where('stores.active',true)
-            ->select(['stores.id','stores.name','stores.description','stores.image','stores.phone','stores.lat','stores.lng','stores.address','stores.available','ratings.id as is_rated',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1) as number_of_products"),'stores.rate',DB::raw($this->iniDiffLocations('stores', $lat, $lng))])
+            ->select(['stores.id','stores.name','stores.description','stores.image','stores.mobile','stores.lat','stores.lng','stores.address','stores.available','ratings.id as is_rated',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1) as number_of_products"),'stores.rate',DB::raw($this->iniDiffLocations('stores', $lat, $lng))])
             ->having('distance','<=',$distance)
             ->orderBy('distance')
             ->first();

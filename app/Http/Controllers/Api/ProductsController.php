@@ -20,10 +20,7 @@ class ProductsController extends ApiController {
         'images' => 'required',
     );
 
-    private $favourite_rules = array(
-        'product_id' => 'required'
-    );
-
+    
     public function __construct() {
         parent::__construct();
     }
@@ -186,42 +183,7 @@ class ProductsController extends ApiController {
         }
     }
 
-    public function handleFavourites(Request $request)
-    {
-        try {
-            $validator = Validator::make($request->all(), $this->favourite_rules);
-            if ($validator->fails()) {
-                $errors = $validator->errors()->toArray();
-                return _api_json('', ['errors' => $errors], 400);
-            } 
-
-            $user = $this->auth_user();
-            $product = Product::find($request->input('product_id'));
-            if (!$product) {
-                $message = _lang('app.not_found');
-                return _api_json('', ['message' => $message], 404);
-            }
-
-            $check = Favourite::where('product_id',$request->input('product_id'))
-            ->where('user_id',$user->id)
-            ->first();
-
-            if ($check) {
-                $check->delete();
-            }
-            else{
-                $favourite = new Favourite;
-                $favourite->product_id = $request->input('product_id');
-                $favourite->user_id = $user->id;
-                $favourite->save();
-            }
-            return _api_json('',['message' => _lang('app.updated_successfully')]);
-        } catch (\Exception $e) {
-            $message = _lang('app.error_is_occured');
-            return _api_json('', ['message' => $message],400);
-        }
-    }
-
+   
     private function getProducts($request,$product_id = null)
     {
 

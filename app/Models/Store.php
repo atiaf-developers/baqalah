@@ -25,7 +25,7 @@ class Store extends MyModel {
         $transformer->name = $item->name;
         $transformer->description = $item->description;
         $transformer->image = url('public/uploads/stores').'/'.$item->image;
-        $transformer->phone = $item->phone;
+        $transformer->phone = $item->mobile;
         $transformer->lat = $item->lat;
         $transformer->lng = $item->lng;
         $transformer->address = $item->address;

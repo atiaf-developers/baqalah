@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Product extends MyModel
 {
+    use SoftDeletes;
+    
     protected $table = "products";
+    protected $dates = ['deleted_at'];
 
     public static $sizes = array(
         's' => array('width' => 300, 'height' => 300),
@@ -50,20 +55,20 @@ class Product extends MyModel
 
    }
 
-   protected static function boot() {
-    parent::boot();
+    protected static function boot() {
+        parent::boot();
 
-    static::deleting(function($product) {
+        static::deleting(function($product) {
 
-    });
+        });
 
-    static::deleted(function($product) {
+        static::deleted(function($product) {
 
-        $product_images = json_decode($product->images);
-        foreach ($product_images as $image) {
-            Product::deleteUploaded('products', $image);
-        }
+            /*$product_images = json_decode($product->images);
+            foreach ($product_images as $image) {
+                Product::deleteUploaded('products', $image);
+            }*/
 
-    });
-}
+        });
+    }
 }

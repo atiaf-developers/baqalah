@@ -3,8 +3,7 @@ var Settings = function() {
     var init = function() {
         //$.extend(lang, new_lang);
         handleSubmit();
-        My.readImageMulti('about_image');
-        Map.initMap(true, true, true, false);
+       
     };
 
     var handleSubmit = function() {
@@ -12,39 +11,15 @@ var Settings = function() {
         $('#editSettingsForm').validate({
             ignore: "",
             rules: {
-                'setting[phone]': {
+                'setting[search_range_for_stores]': {
                     required: true
                 },
-                'setting[email]': {
-                    required: true,
-                    email: true
-                },
-                'setting[social_media][facebook]': {
+                'setting[commission]': {
                     required: true
                 },
-                'setting[social_media][twitter]': {
+                'setting[stores_activation]': {
                     required: true
                 },
-                'setting[social_media][instagram]': {
-                    required: true
-                },
-                'setting[social_media][google]': {
-                    required: true
-                },
-                'setting[social_media][youtube]': {
-                    required: true
-                },
-                'setting[store][android]': {
-                    required: true
-                },
-                'setting[store][ios]': {
-                    required: true
-                },
-                about_image: {
-                    accept: "image/*",
-                    filesize: 1000 * 1024
-                },
-
             },
             messages: lang.messages,
             highlight: function(element) { // hightlight error inputs
@@ -60,24 +35,12 @@ var Settings = function() {
         });
         var langs = JSON.parse(config.languages);
         for (var x = 0; x < langs.length; x++) {
-            // var title = "input[name='title[" + langs[x] + "]']";
-            var description = "textarea[name='description[" + langs[x] + "]']";
-            var address = "textarea[name='address[" + langs[x] + "]']";
-            var about = "textarea[name='about[" + langs[x] + "]']";
-            var policy = "textarea[name='policy[" + langs[x] + "]']";
-            // $(title).rules('add', {
-            //     required: true
-            // });
-            $(description).rules('add', {
+            var about_us = "textarea[name='about_us[" + langs[x] + "]']";
+            var usage_conditions = "textarea[name='usage_conditions[" + langs[x] + "]']";
+            $(about_us).rules('add', {
                 required: true
             });
-            $(address).rules('add', {
-                required: true
-            });
-            $(about).rules('add', {
-                required: true
-            });
-            $(policy).rules('add', {
+            $(usage_conditions).rules('add', {
                 required: true
             });
         }
@@ -139,7 +102,7 @@ var Settings = function() {
                         if (typeof data.errors === 'object') {
                             for (i in data.errors) {
                                 var message = data.errors[i];
-                                if (i.startsWith('title') || i.startsWith('description') || i.startsWith('address') || i.startsWith('about')) {
+                                if (i.startsWith('usage_conditions') || i.startsWith('about_us')) {
                                     var key_arr = i.split('.');
                                     var key_text = key_arr[0] + '[' + key_arr[1] + ']';
                                     i = key_text;

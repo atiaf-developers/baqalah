@@ -10,4 +10,15 @@ class ContactMessage extends MyModel {
 
     public static $types=['suggestion','enquiry','complaint'];
 
+    public static function transform($item)
+    {
+    	$transformer = new \stdClass();
+    	$transformer->name = $item->name;
+    	$transformer->email = $item->email;
+    	$transformer->subject = $item->subject;
+    	$transformer->message = $item->message;
+
+    	return $transformer;
+    }
+
 }

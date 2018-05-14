@@ -12,7 +12,7 @@ use App\Models\Order;
 use App\Models\Notification;
 use App\Models\Setting;
 use App\Traits\Basic;
-use App\Models\Device;
+use App\Models\Category;
 use Request;
 
 class ApiController extends Controller {
@@ -103,6 +103,31 @@ class ApiController extends Controller {
             'is_base64image' => _lang('app.this_field_must_be_base64_as_image'),
             'onefromjsonarray' => _lang('app.you_should_select_one_at_least'),
         ];
+    }
+
+    protected function storeCategories($store_id)
+    {
+
+        $categories = Category::Join('categories_translations', 'categories.id', '=', 'categories_translations.category_id')
+            ->join('store_categories', 'categories.id', '=', 'store_categories.category_id')
+            ->join('stores', 'stores.id', '=', 'store_categories.store_id')
+            ->where('categories_translations.locale', $this->lang_code)
+            ->where('categories.active', true)
+            //->where('stores.user_id', $user->id)
+            ->where('stores.id', $store_id)
+            ->orderBy('categories.this_order')
+            ->select("categories.id", "categories_translations.title")
+            ->get();
+
+        return $categories;
+
+    }
+
+
+    protected function settings()
+    {
+        $settings = Setting::select('name', 'value')->get()->keyBy('name');
+        return $settings;
     }
 
    
