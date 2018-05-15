@@ -217,6 +217,10 @@ class ProductsController extends ApiController {
                 $sort_type = $request->input('sort') == 1 ? 'ASC' : 'DESC'; 
                 $products->orderBy('products.price', $sort_type);
             }
+            if ($request->input('search')) {
+               $products->whereRaw(handleKeywordWhere(['products.name'], $request->input('search')));  
+            }
+            
         }
         else if($user->type == 2){
             $columns[]="products.has_offer";
@@ -228,7 +232,10 @@ class ProductsController extends ApiController {
             $products->where('products.id', $product_id);
         }
 
-        $products->where('stores.id', $request->input('store_id'));
+        
+        if ($request->input('store_id')) {
+            $products->where('stores.id', $request->input('store_id'));
+        }
         $products->where('stores.active', true);
         $products->where('products.active', true);
         $products->where('categories_translations.locale', $this->lang_code);

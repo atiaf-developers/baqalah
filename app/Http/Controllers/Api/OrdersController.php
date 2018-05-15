@@ -30,6 +30,11 @@ class OrdersController extends ApiController {
     	'mobile' => 'required',
     );
 
+    private $status_rules = array(
+    	'order_id' => 'required',
+    	'status'   => 'required'
+    );
+
 	public function __construct() {
 		parent::__construct();
 	}
@@ -155,20 +160,64 @@ class OrdersController extends ApiController {
         }
 	}
 
+	public function status(Request $request)
+	{
+		try {
+			$validator = Validator::make($request->all(), $this->status_rules);
+	        if ($validator->fails()) {
+	                $errors = $validator->errors()->toArray();
+	                return _api_json(new \stdClass(), ['errors' => $errors], 400);
+	        }
+
+			$user = $this->auth_user();
+			$order = Order::join('stores','orders.store_id','=','stores.id')
+			->join('users','orders.user_id','=','users.id')
+			->where('orders.id',$request->input('order_id'))
+			->where('stores.user_id',$user->id)
+			->select('orders.*','users.device_type','users.device_token')
+			->first();
+			
+			if (!$order) {
+				return _api_json('', ['message' => _lang('app.not_found')], 404);
+			}
+			$order->status = $request->input('status');
+			$order->save();
+
+			/*$Fcm = new Fcm;
+			$notification['title'] = 'بقالة';
+			$notification['body'] = Order::status[$request->input('status')];
+            $token = $order->device_token;
+            $type = $order->device_type == 1 ? 'and' : 'ios';
+			$Fcm->send($token, $notification, $type);*/
+			
+			return _api_json('',['message' => _lang('app.updated_successfully')]);
+		} catch (\Exception $e) {
+			$message = _lang('app.error_is_occured');
+            return _api_json('', ['message' => $message], 400);
+		}
+	}
+
 
 	private function getOrders($request)
 	{
 		$user = $this->auth_user();
 		$status = array();
-		if ($user->tpye == 1) {
+
+		if ($user->type == 1) {
 			$status = [0,1,2,3,4];
+			$transformer = 'Client';
 		}else{
+			$transformer = 'Store';
             if ($request->input('type') == 1) {
             	$status = [0];
-            }else{
-            	$status = [1,2,3,4];
+            }else if($request->input('type') == 2){
+            	$status = [2,3];
+            }
+            else{
+            	$status = [4];
             }
 		}
+
 		$columns = ['orders.id','orders.delivery_type','orders.date','orders.status','receipt_details.name','receipt_details.mobile','receipt_details.lat','receipt_details.lng','receipt_details.building','receipt_details.floor','receipt_details.address'];
 
 		$orders = Order::join('receipt_details','orders.receipt_details_id','=','receipt_details.id');
@@ -193,7 +242,8 @@ class OrdersController extends ApiController {
 		                $orders->whereIn('status',$status);
 		                $orders->select($columns);
 		$orders =       $orders->paginate($this->limit);
-		return Order::transformCollection($orders);
+
+		return Order::transformCollection($orders,$transformer);
 
 	}
 

@@ -303,4 +303,17 @@ class UserController extends ApiController {
         }
     }
 
+    public function logout()
+    {
+        try {
+            $user = $this->auth_user();
+            $user->device_token = "";
+            $user->save();
+            return _api_json('');
+        } catch (\Exception $e) {
+            $message = ['message' => _lang('app.error_occured')];
+            return _api_json('', $message, 400);
+        }
+    }
+
 }
