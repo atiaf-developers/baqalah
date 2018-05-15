@@ -61,6 +61,15 @@ class CartController extends ApiController {
             $errors = $validator->errors()->toArray();
             return _api_json('', ['errors' => $errors], 400);
         }
+
+        $product = Product::where('id',$request->input('product_id'))
+                           ->where('store_id',$request->input('store_id'))
+                           ->where('active',true)
+                           ->first();
+
+        if (!$product) {
+             return _api_json('', ['message' => _lang('app.not_found')], 404);
+        }
         $user = $this->auth_user();
         $cart_item = Cart::where('product_id',$request->input('product_id'))
                     ->where('user_id',$user->id)
