@@ -29,7 +29,7 @@ trait ModelTrait {
     }
 
 
-    protected static function transformCollection($items, $type = null) {
+    protected static function transformCollection($items, $type = null, $extra_params = array()) {
 
         $transformers = array();
 
@@ -40,13 +40,17 @@ trait ModelTrait {
         }
         if (count($items)) {
             foreach ($items as $item) {
-
-                $transformers[] = self::$transform($item);
+                if (count($extra_params) > 0) {
+                    $transformers[] = self::$transform($item, $extra_params);
+                } else {
+                    $transformers[] = self::$transform($item);
+                }
             }
         }
 
         return $transformers;
     }
+
 
     protected static function handleKeywordWhere($columns, $keyword) {
         $search_exploded = explode(" ", $keyword);

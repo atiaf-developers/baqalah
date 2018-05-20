@@ -20,8 +20,8 @@
 @else
 <link href="{{url('public/backend/plugins')}}/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
 @endif
-<link href="{{url('public/backend/plugins')}}/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
-<link href="{{url('public/backend/plugins')}}/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+<!--<link href="{{url('public/backend/plugins')}}/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+<link href="{{url('public/backend/plugins')}}/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />-->
 <link href="{{url('public/backend/plugins')}}/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
 <link href="{{url('public/backend/plugins')}}/jquery-confirm/css/jquery-confirm.css" rel="stylesheet" type="text/css" />
 <link href="{{url('public/backend/plugins')}}/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
@@ -32,12 +32,12 @@
 @endif
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<link href="{{url('public/backend/plugins')}}/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
-<link href="{{url('public/backend/plugins')}}/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" type="text/css" />
-<link href="{{url('public/backend/plugins')}}/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+<!--<link href="{{url('public/backend/plugins')}}/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
+<link href="{{url('public/backend/plugins')}}/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" type="text/css" />-->
+<!--<link href="{{url('public/backend/plugins')}}/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
 <link href="{{url('public/backend/plugins')}}/morris/morris.css" rel="stylesheet" type="text/css" />
 <link href="{{url('public/backend/plugins')}}/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-<link href="{{url('public/backend/plugins')}}/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+<link href="{{url('public/backend/plugins')}}/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />-->
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL STYLES -->
 @if($lang_code == 'ar') 
@@ -93,11 +93,9 @@
     }
     var lang = {
         filesize_can_not_be_more_than: "{{ _lang('app.filesize_can_not_be_more_than')}}",
-        lounge_number: "{{ _lang('app.lounge_number')}}",
         gender: "{{ _lang('app.gender')}}",
         male: "{{ _lang('app.male')}}",
         female: "{{ _lang('app.female')}}",
-        available_of_accommodation: "{{ _lang('app.available_of_accommodation')}}",
         import: "{{ _lang('app.import')}}",
         add: "{{ _lang('app.add')}}",
         edit: "{{ _lang('app.edit')}}",
@@ -107,43 +105,13 @@
         choose: "{{ _lang('app.choose')}}",
         delete: "{{ _lang('app.delete')}}",
         message: "{{ _lang('app.message')}}",
-        view_message: "{{ _lang('app.view_message')}}",
         send: "{{ _lang('app.send')}}",
         no_results: "{{ _lang('app.no_results')}}",
-        cancel_change_category: "{{ _lang('app.cancel_change_category')}}",
-        change_category: "{{ _lang('app.change_category')}}",
-        countries: "{{ _lang('app.countries')}}",
         no_category_selected: "{{ _lang('app.no_category_selected')}}",
         active: "{{ _lang('app.active')}}",
         not_active: "{{ _lang('app.not_active')}}",
         close: "{{ _lang('app.close')}}",
         no_item_selected: "{{ _lang('app.no_item_selected')}}",
-        add_user: "{{ _lang('app.add_user')}}",
-        edit_user: "{{ _lang('app.edit_user')}}",
-        add_group: "{{ _lang('app.add_group')}}",
-        edit_group: "{{ _lang('app.edit_group')}}",
-        add_country: "{{ _lang('app.add_country')}}",
-        edit_country: "{{ _lang('app.edit_country')}}",
-        add_company: "{{ _lang('app.add_company')}}",
-        edit_company: "{{ _lang('app.edit_company')}}",
-        add_program_category: "{{ _lang('app.add_program_category')}}",
-        edit_program_category: "{{ _lang('app.edit_program_category')}}",
-        add_airlines: "{{ _lang('app.add_airlines')}}",
-        edit_airlines: "{{ _lang('app.edit_airlines')}}",
-        add_flight_bookings: "{{ _lang('app.add_flight_bookings')}}",
-        edit_flight_bookings: "{{ _lang('app.edit_flight_bookings')}}",
-        add_hotel_room: "{{ _lang('app.add_hotel_room')}}",
-        edit_hotel_room: "{{ _lang('app.edit_hotel_room')}}",
-        add_hotel_advantages: "{{ _lang('app.add_hotel_advantages')}}",
-        edit_hotel_advantages: "{{ _lang('app.edit_hotel_advantages')}}",
-        add_hotel_extra_services: "{{ _lang('app.add_hotel_extra_services')}}",
-        edit_hotel_extra_services: "{{ _lang('app.edit_hotel_extra_services')}}",
-        add_hotel_room_meals: "{{ _lang('app.add_hotel_room_meals')}}",
-        edit_hotel_room_meals: "{{ _lang('app.edit_hotel_room_meals')}}",
-        add_hotel: "{{ _lang('app.add_hotel')}}",
-        edit_hotel: "{{ _lang('app.edit_hotel')}}",
-        add_currency: "{{ _lang('app.add_currency')}}",
-        edit_currency: "{{ _lang('app.edit_currency')}}",
         save: "{{ _lang('app.save')}}",
         updated_successfully: "{{ _lang('app.updated_successfully')}}",
         loading: "{{ _lang('app.loading')}}",
@@ -162,6 +130,8 @@
         try_again: "{{ _lang('app.try_again')}}",
         choose_one: "{{ _lang('app.please_choose_one')}}",
         no_file_to_upload: "{{ _lang('app.no_file_to_upload')}}",
+        //new
+        
     };
     // alert(config.lang);
 </script>

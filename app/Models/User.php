@@ -27,6 +27,8 @@ class User extends Authenticatable {
         1 => 'male',
         2 => 'female'
     ];
+    
+    
 
     public function store()
     {
