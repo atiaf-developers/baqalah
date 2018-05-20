@@ -76,7 +76,7 @@ trait Basic {
         }
     }
 
-     public function updateValues($model, $data) {
+    /* public function updateValues($model, $data) {
         //dd($values);
         $table = $model::getModel()->getTable();
         //dd($table);
@@ -99,7 +99,7 @@ trait Basic {
         //$params[] = Carbon::now();
         //return DB::update("UPDATE `$table` SET `remaining_available_of_accommodation` = CASE `id` {$cases} END WHERE `id` in ({$ids})");
         return DB::update("UPDATE `$table` $sql_str WHERE `id` in ({$ids})");
-    }
+    }*/
 
 
    protected function create_noti($entity_id,$notifier_id,$entity_type,$notifible_type=1) {

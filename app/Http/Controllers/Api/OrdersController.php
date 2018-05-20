@@ -256,19 +256,21 @@ class OrdersController extends ApiController {
     }
 
     public function status(Request $request) {
-        try {
+       
             $validator = Validator::make($request->all(), $this->status_rules);
             if ($validator->fails()) {
                 $errors = $validator->errors()->toArray();
                 return _api_json(new \stdClass(), ['errors' => $errors], 400);
             }
 
+            DB::beginTransaction();
+            try {
             $user = $this->auth_user();
             $order = Order::join('stores', 'orders.store_id', '=', 'stores.id')
                     ->join('users', 'orders.user_id', '=', 'users.id')
                     ->where('orders.id', $request->input('order_id'))
                     ->where('stores.user_id', $user->id)
-                    ->select('orders.*', 'users.device_type', 'users.device_token')
+                    ->select('orders.*')
                     ->first();
 
             if (!$order) {
@@ -277,15 +279,33 @@ class OrdersController extends ApiController {
             $order->status = $request->input('status');
             $order->save();
 
-            /* $Fcm = new Fcm;
-              $notification['title'] = 'بقالة';
-              $notification['body'] = Order::status[$request->input('status')];
-              $token = $order->device_token;
-              $type = $order->device_type == 1 ? 'and' : 'ios';
-              $Fcm->send($token, $notification, $type); */
+            if ($order->status == 1) {
+                $order_products = Order::Join('order_details','orders.id','=','order_details.order_id')
+                               ->join('products','order_details.product_id','=','products.id')
+                               ->where('orders.id',$request->input('order_id'))
+                               ->select('order_details.product_id','order_details.quantity','products.quantity as product_quantity')
+                               ->get();
+                               
+                foreach ($order_products as $item) {
+                   $available_quantity = $item->product_quantity + $item->quantity;
+                   $products_updated_quantity['quantity'] = ['id' => $item->product_id, 'value' => $available_quantity];
+                }
+               // dd($products_updated_quantity);
+               
+                $this->updateValues('App\Models\Product', $products_updated_quantity);
+            }
 
+            DB::commit();
+
+            $notification['title'] = 'البقالة';
+            $status = $order->delivery_type==1?Order::$status_one:Order::$status_two;
+            $notification['body'] = isset($status[$order->status])?_lang('app.' . $status[$order->status]['client']):'';
+
+            $this->send_noti_fcm($notification, $order->user_id);
             return _api_json('', ['message' => _lang('app.updated_successfully')]);
         } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
             $message = _lang('app.error_is_occured');
             return _api_json('', ['message' => $message], 400);
         }

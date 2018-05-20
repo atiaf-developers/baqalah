@@ -28,7 +28,7 @@ class Store extends MyModel {
         $transformer->address = $item->address;
         $transformer->available = $item->available;
 
-        if ($extra_params['user']->type == 1) {
+        if (isset($extra_params['user']) && $extra_params['user']->type == 1) {
             $transformer->available_text = $item->available == 0 ? _lang('app.closed') : _lang('app.opened');
             $transformer->number_of_products = $item->number_of_products;
             $transformer->rate = $item->rate;

@@ -81,7 +81,7 @@ class Order extends MyModel {
         $user = new \stdClass();
         $transformer->date = date('h:i A Y/m/d', strtotime($item->date));
         $transformer->status = $item->status;
-         $status = $item->delivery_type==1?static::$status_one:static::$status_two;
+        $status = $item->delivery_type==1?static::$status_one:static::$status_two;
         $transformer->status_text = isset($status[$item->status])?_lang('app.' . $status[$item->status]['store']):'';
 
         $user->name = $item->fname . ' ' . $item->lname;
