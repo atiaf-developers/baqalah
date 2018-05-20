@@ -16,6 +16,12 @@ trait Basic {
         'en' => 'english'
     );
 
+    protected static function getLangCode() {
+        $lang_code = app()->getLocale();
+
+        return $lang_code;
+    }
+
     protected function inputs_check($model, $inputs = array(), $id = false, $return_errors = true) {
         $errors = array();
         foreach ($inputs as $key => $value) {

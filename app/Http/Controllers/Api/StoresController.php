@@ -60,7 +60,7 @@ class StoresController extends ApiController {
             if (!$store) {
                 return _api_json(new \stdClass(), ['message' => _lang('app.not_found')], 404);
             }
-            return _api_json(Store::transform($store));
+            return _api_json(Store::transform($store,['user'=>$user]));
         } catch (\Exception $e) {
             return _api_json([], ['message' => _lang('app.error_is_occured')], 400);
         }

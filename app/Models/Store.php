@@ -17,6 +17,7 @@ class Store extends MyModel {
     }
 
     public static function transform($item, $extra_params = array()) {
+        $lang_code = static::getLangCode();
         $transformer = new \stdClass();
         $transformer->id = $item->id;
         $transformer->name = $item->name;
@@ -27,8 +28,12 @@ class Store extends MyModel {
         $transformer->lng = $item->lng;
         $transformer->address = $item->address;
         $transformer->available = $item->available;
-
+        
         if (isset($extra_params['user']) && $extra_params['user']->type == 1) {
+            $transformer->categories = $item->categories()->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id')
+            ->where('categories_translations.locale', $lang_code)
+            ->where('categories.active', true)
+            ->pluck('categories_translations.title');
             $transformer->available_text = $item->available == 0 ? _lang('app.closed') : _lang('app.opened');
             $transformer->number_of_products = $item->number_of_products;
             $transformer->rate = $item->rate;
@@ -41,7 +46,7 @@ class Store extends MyModel {
         parent::boot();
 
         static::deleting(function($store) {
-            
+
         });
 
         static::deleted(function($store) {
