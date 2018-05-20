@@ -131,8 +131,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('container/data', 'ContainersController@data');
     // Route For Container Moduel {End}
     // Route For Users Moduel {Start}
-    Route::resource('users', 'UsersController');
-    Route::post('users/data', 'UsersController@data');
+    Route::resource('clients', 'ClientsController');
+    Route::post('clients/data', 'ClientsController@data');
+    
+    Route::resource('stores', 'StoresController');
+    Route::post('stores/data', 'StoresController@data');
     // Route For Users Moduel {End}
 
 

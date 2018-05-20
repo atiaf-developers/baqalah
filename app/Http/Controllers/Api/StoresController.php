@@ -33,18 +33,13 @@ class StoresController extends ApiController {
         $distance = $settings['search_range_for_stores']->value;
         $lat = $request->input('lat');
         $lng = $request->input('lng');
-
-        $stores = Store::leftJoin('ratings', function ($join) use($user) {
-            $join->on('ratings.store_id', '=', 'stores.id');
-            $join->where('ratings.user_id',  $user->id);
-        })
-        ->where('stores.active',true)
-        ->select(['stores.id','stores.name','stores.description','stores.image','stores.mobile','stores.lat','stores.lng','stores.address','stores.available','ratings.id as is_rated',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1) as number_of_products"),'stores.rate',DB::raw($this->iniDiffLocations('stores', $lat, $lng))])
+        $stores = Store::where('stores.active',true)
+        ->select(['stores.id','stores.name','stores.description','stores.image','stores.mobile','stores.lat','stores.lng','stores.address','stores.available',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1) as number_of_products"),'stores.rate',DB::raw($this->iniDiffLocations('stores', $lat, $lng))])
         ->having('distance','<=',$distance)
         ->orderBy('distance')
         ->get();
 
-        return _api_json(Store::transformCollection($stores));
+        return _api_json(Store::transformCollection($stores,null,['user'=>$user]));
     }
 
     public function show(Request $request,$id) {

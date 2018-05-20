@@ -186,7 +186,6 @@ class ProductsController extends ApiController {
    
     private function getProducts($request,$product_id = null)
     {
-
         $columns=["products.id",'products.name','products.description','products.images','products.quantity',
         'products.price'];
 
@@ -197,7 +196,6 @@ class ProductsController extends ApiController {
         $products->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id');
 
         if ($user->type == 1) {
-
             $products->leftJoin('favourites', function ($join) use($user) {
                 $join->on('favourites.product_id', '=', 'products.id');
                 $join->where('favourites.user_id', $user->id);    

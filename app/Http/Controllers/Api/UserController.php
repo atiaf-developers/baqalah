@@ -214,13 +214,6 @@ class UserController extends ApiController {
             $message = _lang('app.not_found');
             return _api_json('', ['message' => $message], 404);
         }
-
-        $check = Rating::where('user_id',$user->id)
-                        ->where('store_id',$request->input('store_id'))
-                        ->first();
-        if ($check) {
-            return _api_json('', ['message' => _lang('app.you_have_already_rate_this_store')], 400);
-        }
         DB::beginTransaction();
         try {
             
@@ -303,17 +296,9 @@ class UserController extends ApiController {
         }
     }
 
-    public function logout()
-    {
-        try {
-            $user = $this->auth_user();
-            $user->device_token = "";
-            $user->save();
-            return _api_json('');
-        } catch (\Exception $e) {
-            $message = ['message' => _lang('app.error_occured')];
-            return _api_json('', $message, 400);
-        }
+    public function logout(Request $request) {
+        Device::where('user_id', $this->auth_user()->id)->where('device_id', $request->input('device_id'))->update(['device_token'=>'']);
+        return _api_json(new \stdClass(), array(), 201);
     }
 
 }
