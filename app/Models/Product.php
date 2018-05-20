@@ -17,6 +17,11 @@ class Product extends MyModel
         's' => array('width' => 300, 'height' => 300),
         'm' => array('width' => 400, 'height' => 400),
     );
+    
+    
+     public function store() {
+        return $this->belongsTo(Store::class, 'store_id', 'id');
+    }
 
 
     public static function transform($item)
