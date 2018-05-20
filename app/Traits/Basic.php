@@ -79,6 +79,32 @@ trait Basic {
         }
         return $rules;
     }
+
+
+    public function updateValues($model, $data) {
+        //dd($values);
+        $table = $model::getModel()->getTable();
+        //dd($table);
+        $cases = [];
+        $ids = [];
+        $sql_arr = [];
+        $columns = array_keys($data);
+        foreach ($data as $one) {
+            $id = (int) $one['id'];
+            $cases[] = "WHEN {$id} then {$one['value']}";
+            $ids[] = $id;
+        }
+        $ids = implode(',', $ids);
+        $cases = implode(' ', $cases);
+        foreach ($columns as $column) {
+            $sql_arr[] = "SET `{$column}` = CASE `id` {$cases} END";
+        }
+        $sql_str = implode(',', $sql_arr);
+        //dd($sql_str);
+        //$params[] = Carbon::now();
+        //return DB::update("UPDATE `$table` SET `remaining_available_of_accommodation` = CASE `id` {$cases} END WHERE `id` in ({$ids})");
+        return DB::update("UPDATE `$table` $sql_str WHERE `id` in ({$ids})");
+    }
     
 
 }

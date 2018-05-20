@@ -42,7 +42,6 @@ class LoginController extends ApiController {
     }
 
     private function auth_check($credentials) {
-
         $find = User::where('username', $credentials['username'])
                  ->where('type', $credentials['type'])
                 ->where('active', 1)
