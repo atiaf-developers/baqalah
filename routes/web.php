@@ -104,6 +104,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('profile', 'ProfileController@index');
     Route::patch('profile', 'ProfileController@update');
 
+
+
     Route::resource('groups', 'GroupsController');
     Route::post('groups/data', 'GroupsController@data');
 
@@ -127,11 +129,21 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('products', 'ProductController');
     Route::get('products/status/{id}', 'ProductController@status');
     Route::post('products/data', 'ProductController@data');
-   
+
+    
+    Route::post('settings', 'SettingsController@store');
     Route::get('notifications', 'NotificationsController@index');
     Route::post('notifications', 'NotificationsController@store');
 
-    Route::post('settings', 'SettingsController@store');
+
+ 
+    Route::get('settings', 'SettingsController@index');
+
+
+
+
+
+  
 
     Route::resource('contact_messages', 'ContactMessagesController');
     Route::post('contact_messages/data', 'ContactMessagesController@data');
