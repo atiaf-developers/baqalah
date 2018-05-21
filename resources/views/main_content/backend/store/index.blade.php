@@ -1,33 +1,33 @@
 @extends('layouts.backend')
 
-@section('pageTitle', _lang('app.clients'))
+@section('pageTitle', _lang('app.stores'))
 
 @section('js')
 
-<script src="{{url('public/backend/js')}}/clients.js" type="text/javascript"></script>
+<script src="{{url('public/backend/js')}}/stores.js" type="text/javascript"></script>
 
 @endsection
 @section('breadcrumb')
 <li><a href="{{url('admin')}}">{{_lang('app.dashboard')}}</a> <i class="fa fa-circle"></i></li>
-<li><span> {{_lang('app.clients')}}</span></li>
+<li><span> {{_lang('app.stores')}}</span></li>
 
 @endsection
 @section('content')
 
-<div class="modal fade" id="addEditClient" role="dialog">
+<div class="modal fade" id="addEditStore" role="dialog">
     <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="addEditClientLabel"></h4>
+                <h4 class="modal-title" id="addEditStoreLabel"></h4>
             </div>
 
             <div class="modal-body">
 
 
-                <form role="form"  id="addEditClientForm"  enctype="multipart/form-data">
+                <form role="form"  id="addEditStoreForm"  enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="id" id="id" value="0">
                     <input type="hidden" name="type" id="type" value="2">
@@ -123,7 +123,7 @@
       </div>
 <div class = "panel panel-default">
     <div class = "panel-heading">
-        <h3 class = "panel-title">{{_lang('app.clients')}}</h3>
+        <h3 class = "panel-title">{{_lang('app.stores')}}</h3>
     </div>
     <div class = "panel-body">
         <!--Table Wrapper Start-->
@@ -138,7 +138,7 @@
             <table class = "table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
                 <thead>
                     <tr>
-                        <th>{{_lang('app.username')}}</th>
+                        <th>{{_lang('app.store_name')}}</th>
                         <th>{{_lang('app.image')}}</th>
                         <th>{{_lang('app.mobile')}}</th>
                         <th>{{_lang('app.status')}}</th>

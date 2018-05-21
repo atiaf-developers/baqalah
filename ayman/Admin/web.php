@@ -109,6 +109,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('groups', 'GroupsController');
     Route::resource('admins', 'AdminsController');
 
+    Route::resource('clients', 'ClientsController');
     Route::resource('donation_types', 'DonationTypesController');
     Route::resource('donation_requests', 'DonationRequestsController');
     Route::resource('delegates_report', 'DelegatesReportController');
@@ -123,37 +124,25 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('categories', 'CategoriesController');
     Route::resource('news', 'NewsController');
     Route::resource('videos', 'VideosController');
-
+    Route::resource('stores', 'StoreController');
+    Route::get('stores/edit/{id}', 'StoreController@edit');
+    Route::get('clients/edit/{id}', 'ClientsController@edit');
+    Route::get('products/edit/{id}', 'ProductController@edit');
     Route::get('settings', 'SettingsController@index');
+    Route::get('products/{id}', 'ProductController@index');
 
     // Route For Container Moduel {Start}
     Route::resource('container', 'ContainersController');
     Route::post('container/data', 'ContainersController@data');
     // Route For Container Moduel {End}
     // Route For Users Moduel {Start}
-    Route::resource('clients', 'ClientsController');
-    Route::post('clients/data', 'ClientsController@data');
-
-    Route::resource('stores', 'StoresController');
-    Route::post('stores/data', 'StoresController@data');
+    Route::resource('users', 'UsersController');
+    Route::post('users/data', 'UsersController@data');
     // Route For Users Moduel {End}
 
 
 
-    Route::resource('clients', 'ClientsController');
-    Route::resource('stores', 'StoreController');
-    Route::get('stores/edit/{id}', 'StoreController@edit');
-    Route::get('clients/edit/{id}', 'ClientsController@edit');
-    Route::get('products/edit/{id}', 'ProductController@edit');
-    Route::get('products/{id}', 'ProductController@index');
-    Route::post('clients/data', 'ClientsController@data');
-    Route::post('stores/data', 'StoreController@data');
-    Route::get('clients/active/{id}', 'ClientsController@active');
-    Route::get('stores/active/{id}', 'StoreController@active');
-    Route::get('products/active/{id}', 'ProductController@active');
-    Route::post('products/data', 'ProductController@data');
-    
-    
+
     Route::post('settings', 'SettingsController@store');
     Route::get('notifications', 'NotificationsController@index');
     Route::get('reservations', 'ReservationsController@index');
@@ -164,6 +153,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::post('groups/data', 'GroupsController@data');
     Route::post('locations/data', 'LocationsController@data');
+    Route::post('clients/data', 'ClientsController@data');
+    Route::post('stores/data', 'StoreController@data');
+    Route::get('clients/active/{id}', 'ClientsController@active');
+    Route::get('stores/active/{id}', 'StoreController@active');
+    Route::get('products/active/{id}', 'ProductController@active');
+    Route::post('products/data', 'ProductController@data');
 
 
 
@@ -192,9 +187,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
 
-    Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
-    Route::post('login', 'LoginController@login')->name('admin.login.submit');
-   Route::get('logout', 'LoginController@logout')->name('admin.logout');
+    $this->get('login', 'LoginController@showLoginForm')->name('admin.login');
+    $this->post('login', 'LoginController@login')->name('admin.login.submit');
+    $this->get('logout', 'LoginController@logout')->name('admin.logout');
 });
 //});
 
