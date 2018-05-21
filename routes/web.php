@@ -124,35 +124,35 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::resource('stores', 'StoresController');
     Route::post('stores/data', 'StoresController@data');
-    Route::get('stores/status/{id}', 'StoreController@status');
+    Route::get('stores/status/{id}', 'StoresController@status');
 
     Route::resource('products', 'ProductController');
     Route::get('products/status/{id}', 'ProductController@status');
     Route::post('products/data', 'ProductController@data');
+    Route::resource('orders_reports', 'OrdersReportsController');
 
-    
     Route::post('settings', 'SettingsController@store');
     Route::get('notifications', 'NotificationsController@index');
     Route::post('notifications', 'NotificationsController@store');
 
 
- 
+
     Route::get('settings', 'SettingsController@index');
 
 
 
 
 
-  
+
 
     Route::resource('contact_messages', 'ContactMessagesController');
     Route::post('contact_messages/data', 'ContactMessagesController@data');
 
-    
-   
+
+
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'LoginController@login')->name('admin.login.submit');
-   Route::get('logout', 'LoginController@logout')->name('admin.logout');
+    Route::get('logout', 'LoginController@logout')->name('admin.logout');
 });
 //});
 
