@@ -68,8 +68,6 @@ class OrdersController extends ApiController {
             $errors = Cart::checkAvailiabilty($user->id);
             if (!empty($errors)) {
                 return _api_json('', ['message' => implode('\n', $errors)], 400);
-            } else {
-                return _api_json('');
             }
             $cart = Cart::getCartApi($user->id);
 
@@ -111,7 +109,7 @@ class OrdersController extends ApiController {
                     $order->store_id = $product->store_id;
                     $order->user_id = $user->id;
                     $order->total_price = 0;
-                    $order->date = date('Y-m-d H:i:s');
+                    $order->date = date('Y-m-d');
                     $order->status = 0;
                     $order->save();
                     $items = array();
@@ -125,12 +123,13 @@ class OrdersController extends ApiController {
                         );
                         $order->total_price += $item->total_price;
                         $available_quantity = $item->product_quantity - $item->quantity;
-                        $products_updated_quantity['quantity'] = ['id' => $item->product_id, 'value' => $available_quantity];
+                        $products_updated_quantity['quantity'][] = ['id' => $item->product_id, 'value' => $available_quantity];
                     }
                     $order->commission = $commission;
                     $order->commission_cost = ($order->total_price * $commission) / 100;
                     $order->save();
                     OrderDetails::insert($items);
+                    //dd($products_updated_quantity);
                     $this->updateValues('App\Models\Product', $products_updated_quantity);
                 }
             }
@@ -142,6 +141,7 @@ class OrdersController extends ApiController {
             $this->send_noti_fcm($notification, $stores_user_id);
             return _api_json('', ['message' => _lang('app.order_has_been_sent_successfully')]);
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
             $message = _lang('app.error_is_occured');
             return _api_json('', ['message' => $message], 400);

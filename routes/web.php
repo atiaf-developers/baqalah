@@ -152,7 +152,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('stores/active/{id}', 'StoreController@active');
     Route::get('products/active/{id}', 'ProductController@active');
     Route::post('products/data', 'ProductController@data');
-    
+    Route::resource('orders_reports', 'OrdersReportsController');
     
     Route::post('settings', 'SettingsController@store');
     Route::get('notifications', 'NotificationsController@index');

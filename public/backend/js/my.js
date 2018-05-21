@@ -46,6 +46,25 @@ var My = function () {
         init: function () {
             handleNewValidatorMethods();
         },
+        print: function (div)
+        {
+            var mywindow = window.open('', 'PRINT', 'height=600,width=800');
+
+            mywindow.document.write('<html><head><title>' + document.title + '</title>');
+            mywindow.document.write('</head><body >');
+            //mywindow.document.write('<h1>' + document.title + '</h1>');
+
+            mywindow.document.write(document.getElementById(div).innerHTML);
+            mywindow.document.write('</body></html>');
+
+//            mywindow.document.close(); // necessary for IE >= 10
+//            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            //mywindow.close();
+
+            return false;
+        },
         toast: function (message) {
             toastr.options = {
                 "debug": false,
