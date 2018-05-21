@@ -13,30 +13,37 @@ class ProductController extends BackendController
     public function __construct() {
 
         parent::__construct();
-        $this->middleware('CheckPermission:products,open');
+        $this->middleware('CheckPermission:products,open', ['only' => ['index']]);
         $this->middleware('CheckPermission:products,add', ['only' => ['store']]);
-        $this->middleware('CheckPermission:products,view', ['only' => ['show']]);
-        $this->middleware('CheckPermission:products,edit', ['only' => ['update']]);
+        $this->middleware('CheckPermission:products,edit', ['only' => ['show', 'update']]);
         $this->middleware('CheckPermission:products,delete', ['only' => ['delete']]);
     }
 
-    public function index($id){
-        $this->data['store_id']=$id;
+    public function index(Request $request){
+
+        $store_id = $request->input('store_id') ? $request->input('store_id') : null;
+        if ($store_id) {
+            $store = Store::find($store_id);
+            if (!$store) {
+                return $this->err404();
+            }
+            $this->data['store_name'] = $store->name;
+        }
+        $this->data['store_id'] = $store_id;
         return $this->_view('products/index', 'backend');
     }
-    public function active($id){
-        $Product = Product::find($id);
-        // dd($Product);
-        if ($Product) {
-            if($Product->active==1){
-                $Product->active=0;
-            }else{
-                $Product->active=1;
-            }
-            $Product->save();
+
+    public function status($id){
+        try {
+            $product = Product::find($id);
+            if (!$product) {
+                return _json('error', _lang('app.not_found'));
+            }  
+            $product->active = !$product->active;
+            $product->save();
             return _json('success', _lang('app.success'));
-        } else {
-            return _json('error', _lang('app.error_is_occured'), 404);
+        } catch (\Exception $e) {
+            return _json('error', _lang('app.error_is_occured'));
         }
     }
     public function edit($id) {
@@ -99,9 +106,9 @@ class ProductController extends BackendController
             if (!$item->image) {
                 $item->image = 'default.png';
             }
-             $back = '<img src="' . url('public/uploads/users/' . $item->image) . '" style="height:64px;width:64px;"/>';
-             return $back;
-         })
+            $back = '<img src="' . url('public/uploads/users/' . $item->image) . '" style="height:64px;width:64px;"/>';
+            return $back;
+        })
         ->escapeColumns([])
         ->make(true);
     }

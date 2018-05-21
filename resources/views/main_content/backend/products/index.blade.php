@@ -3,7 +3,7 @@
 @section('pageTitle', _lang('app.Products'))
 @section('breadcrumb')
 <li><a href="{{url('admin')}}">{{_lang('app.dashboard')}}</a> <i class="fa fa-circle"></i></li>
-<li><a href="{{url('admin/stores')}}">{{_lang('app.stores')}}</a> <i class="fa fa-circle"></i></li>
+<li><a href="{{url('admin/products')}}">{{_lang('app.products')}}</a> <i class="fa fa-circle"></i></li>
 <li><span> {{_lang('app.products')}}</span></li>
 
 @endsection

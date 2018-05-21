@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetails extends MyModel
 {
     protected $table = 'order_details';
+    protected $casts = array(
+        'price' => 'double',
+        'quantity' => 'integer',
+    );
 
     public static function transform($item)
     {

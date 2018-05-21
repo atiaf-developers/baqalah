@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends MyModel {
 
     protected $table = "orders";
+    protected $casts = array(
+        'id' => 'integer',
+        'status' => 'integer',
+        'delivery_type' => 'integer',
+        'total_price' => 'double',
+        'store_id' => 'integer'
+    );
+
     private static $delivery_types = [
         1 => 'delivery_by_store',
         2 => 'receiving_the_order'
@@ -58,7 +66,7 @@ class Order extends MyModel {
                                 ->join('products', 'order_details.product_id', '=', 'products.id')
                                 ->select('products.name', 'products.images', 'order_details.price', 'order_details.quantity')
                                 ->get());
-        $transformer->total_price = $item->total_price;
+        $transformer->total_price = (double)$item->total_price;
 
 
         $store = new \stdClass();
@@ -104,7 +112,7 @@ class Order extends MyModel {
 
     private static function deliveryMethod($item) {
         $delivery_method = new \stdClass();
-        $delivery_method->delivery_type = $item->delivery_type;
+        $delivery_method->delivery_type = (int)$item->delivery_type;
         $delivery_method->delivery_type_text = _lang('app.' . static::$delivery_types[$item->delivery_type]);
         $delivery_method->name = $item->name;
         $delivery_method->mobile = $item->mobile;
