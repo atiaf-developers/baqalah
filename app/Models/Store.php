@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends MyModel {
 
     protected $table = "stores";
+    protected $casts = ['id' => 'integer'];
     public static $sizes = array(
         's' => array('width' => 300, 'height' => 300),
         'm' => array('width' => 400, 'height' => 400),
@@ -30,10 +31,10 @@ class Store extends MyModel {
         $transformer->available = $item->available;
         
         if (isset($extra_params['user']) && $extra_params['user']->type == 1) {
-            $transformer->categories = $item->categories()->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id')
+            $transformer->categories = implode(" - ",$item->categories()->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id')
             ->where('categories_translations.locale', $lang_code)
             ->where('categories.active', true)
-            ->pluck('categories_translations.title');
+            ->pluck('categories_translations.title')->toArray());
             $transformer->available_text = $item->available == 0 ? _lang('app.closed') : _lang('app.opened');
             $transformer->number_of_products = $item->number_of_products;
             $transformer->rate = $item->rate;

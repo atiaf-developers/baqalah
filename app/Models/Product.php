@@ -13,6 +13,8 @@ class Product extends MyModel
     protected $table = "products";
     protected $dates = ['deleted_at'];
 
+    protected $casts = ['price' => 'float','quantity' => 'integer'];
+
     public static $sizes = array(
         's' => array('width' => 300, 'height' => 300),
         'm' => array('width' => 400, 'height' => 400),
@@ -41,11 +43,11 @@ class Product extends MyModel
 
             $transformer->is_favourite = $item->is_favourite ? 1 : 0;
             $store = new \stdClass();
-            $store->id = $item->store_id;
+            $store->id = (int)$item->store_id;
             $store->name = $item->store_name;
             $store->imag = url('public/uploads/stores').'/'.$item->store_image;
-            $store->rate = $item->store_rate;
-            $store->available = $item->store_available;
+            $store->rate = (double)$item->store_rate;
+            $store->available = (int)$item->store_available;
             $transformer->store = $store;
 
         }else if($user->type == 2){
@@ -69,10 +71,10 @@ class Product extends MyModel
 
         static::deleted(function($product) {
 
-            /*$product_images = json_decode($product->images);
+            $product_images = json_decode($product->images);
             foreach ($product_images as $image) {
                 Product::deleteUploaded('products', $image);
-            }*/
+            }
 
         });
     }
