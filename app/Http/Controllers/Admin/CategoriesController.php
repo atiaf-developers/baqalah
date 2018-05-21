@@ -289,6 +289,13 @@ class CategoriesController extends BackendController {
                                     $back .= '</a>';
                                     $back .= '</li>';
                                 }
+                                if(\Permissions::check('products', 'open')){
+                                    $back .= '<li>';
+                                    $back .= '<a href="'.url('admin/products').'?category_id='.$item->id.'" data-id = "' . $item->id . '">';
+                                    $back .= '<i class = "icon-docs"></i>' . _lang('app.products');
+                                    $back .= '</a>';
+                                    $back .= '</li>';
+                                }
 
                                 $back .= '</ul>';
                                 $back .= ' </div>';

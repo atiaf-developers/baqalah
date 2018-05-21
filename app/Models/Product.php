@@ -13,7 +13,8 @@ class Product extends MyModel
     protected $table = "products";
     protected $dates = ['deleted_at'];
 
-    protected $casts = ['price' => 'float','quantity' => 'integer'];
+    protected $casts = ['price' => 'float','quantity' => 'integer','store_id' => 'integer','store_rate' => 'double',
+    'store_available' => 'int'];
 
     public static $sizes = array(
         's' => array('width' => 300, 'height' => 300),
@@ -21,7 +22,7 @@ class Product extends MyModel
     );
     
     
-     public function store() {
+    public function store() {
         return $this->belongsTo(Store::class, 'store_id', 'id');
     }
 
@@ -43,39 +44,40 @@ class Product extends MyModel
 
             $transformer->is_favourite = $item->is_favourite ? 1 : 0;
             $store = new \stdClass();
-            $store->id = (int)$item->store_id;
+            $store->id = $item->store_id;
             $store->name = $item->store_name;
-            $store->imag = url('public/uploads/stores').'/'.$item->store_image;
-            $store->rate = (double)$item->store_rate;
-            $store->available = (int)$item->store_available;
+            $store->image = url('public/uploads/stores').'/'.$item->store_image;
+            $store->rate = $item->store_rate;
+            $store->available = $item->store_available;
+            $store->available_text = $item->store_available == 0 ? _lang('app.closed') : _lang('app.opened');
             $transformer->store = $store;
 
         }else if($user->type == 2){
 
-           $transformer->category = $item->category;
-           $transformer->category_id = $item->category_id;
-           $transformer->has_offer = $item->has_offer;
+         $transformer->category = $item->category;
+         $transformer->category_id = $item->category_id;
+         $transformer->has_offer = $item->has_offer;
 
-       }
+     }
 
-       return $transformer;
+     return $transformer;
 
-   }
+ }
 
-    protected static function boot() {
-        parent::boot();
+ protected static function boot() {
+    parent::boot();
 
-        static::deleting(function($product) {
+    static::deleting(function($product) {
 
-        });
+    });
 
-        static::deleted(function($product) {
+    static::deleted(function($product) {
 
-            $product_images = json_decode($product->images);
-            foreach ($product_images as $image) {
-                Product::deleteUploaded('products', $image);
-            }
+        $product_images = json_decode($product->images);
+        foreach ($product_images as $image) {
+            Product::deleteUploaded('products', $image);
+        }
 
-        });
-    }
+    });
+}
 }

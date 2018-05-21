@@ -1,95 +1,28 @@
-var type = 2;
-var Famous_grid;
-var Members_grid;
-var Worker_grid;
+
+var Clients_grid;
+
 var Clients = function() {
     var init = function() {
         //alert('heree');
         $.extend(lang, new_lang);
-
         //console.log(lang);
         handleRecords();
-        handleDatatables();
         handleSubmit();
-        handlePasswordActions();
         My.readImageMulti('user_image');
 
     };
-    var handlePasswordActions = function(string_length) {
-        $('#show-password').click(function() {
-            if ($('#password').val() != '') {
-                $("#password").attr("type", "text");
-            } else {
-                $("#password").attr("type", "password");
-            }
-        });
-        $('#random-password').click(function() {
-            $('[id^="password"]').closest('.form-group').removeClass('has-error').addClass('has-success');
-            $('[id^="password"]').closest('.form-group').find('.help-block').html('').css('opacity', 0);
-            $('[id^="password"]').val(randomPassword(8));
-        });
-    }
-    var randomPassword = function(string_length) {
-        var chars = "0123456789!@#$%^&*abcdefghijklmnopqrstuvwxtzABCDEFGHIJKLMNOPQRSTUVWXTZ!@#$%^&*";
-        var myrnd = [],
-            pos;
-        while (string_length--) {
-            pos = Math.floor(Math.random() * chars.length);
-            myrnd += chars.substr(pos, 1);
-        }
-        return myrnd;
-    }
+   
 
-    var handleDatatables = function() {
-        $(document).on('click', '.data-box', function() {
-            $('.data-box').removeClass('active');
-            $(this).addClass('active');
-            type = 2;
-            $('.table-container').hide();
-            if (typeof Famous_grid === 'undefined') {
-                Famous_grid = $('#famous-table .dataTable').dataTable({
-                    //"processing": true,
-                    "serverSide": true,
-                    "ajax": {
-                        "url": config.admin_url + "/clients/data",
-                        "type": "POST",
-                        data: { type: type, _token: $('input[name="_token"]').val() },
-                    },
-                    "columns": [
-                        //                    {"data": "user_input", orderable: false, "class": "text-center"},
-                        { "data": "username", "name": "username" },
-                        { "data": "image", "name": "image" },
-                        { "data": "mobile", "name": "mobile" },
-                        { "data": "active", "name": "active" },
-                        { "data": "options", orderable: false, searchable: false }
-                    ],
-                    "order": [
-                        [1, "desc"]
-                    ],
-                    "oLanguage": { "sUrl": config.url + '/datatable-lang-' + config.lang_code + '.json' }
-
-                });
-
-            } else {
-                Famous_grid.on('preXhr.dt', function(e, settings, data) {
-                    data.type = type
-                    data._token = $('input[name="_token"]').val()
-                })
-                Famous_grid.api().ajax.url(config.admin_url + "/clients/data").load();
-            }
-            $('#famous-table').show();
-            return false;
-        });
-    }
+    
     var handleRecords = function() {
 
-        Famous_grid = $('#famous-table .dataTable').dataTable({
+        Clients_grid = $('.dataTable').dataTable({
             //"processing": true,
             "serverSide": true,
             "ajax": {
                 "url": config.admin_url + "/clients/data",
                 "type": "POST",
-                data: { type: type, _token: $('input[name="_token"]').val() },
+                data: { _token: $('input[name="_token"]').val() },
             },
             "columns": [
                 //                    {"data": "user_input", orderable: false, "class": "text-center"},
@@ -358,243 +291,31 @@ var Clients = function() {
             });
 
         },
-        massage: function(t) {
-            var id = $(t).attr("data-id");
-            document.getElementById('user_id').value = id;
-            My.editForm({
-                element: t,
-                url: config.admin_url + '/users/' + id + '?type=clients',
-                success: function(data) {
-                    console.log(data);
+      
+     
+       status: function(t) {
+            var client_id = $(t).data("id"); 
+            $(t).prop('disabled', true);
+            $(t).html('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>');
 
-                    Clients.empty();
-                    My.setModalTitle('#addEditClient', lang.edit_user);
-
-                    for (i in data.message) {
-                        if (i == 'password') {
-                            continue;
-                        } else if (i == 'user_image') {
-                            $('.user_image_box').html('<img style="height:80px;width:150px;" class="user_image"  src="' + config.public_path + '/uploads/users/' + data.message[i] + '" alt="your image" />');
-                        } else {
-                            $('#' + i).val(data.message[i]);
-                        }
-                    }
-
-                    $('#sendMassage').modal('show');
-                }
-            });
-
-        },
-        Orders: function(t) {
-            var id = $(t).attr("data-id");
-            var action = config.admin_url + '/order/wait/' + id;
             $.ajax({
-                url: action,
-                data: '',
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data.type == 'success') {
-                        toastr.options = {
-                            "debug": false,
-                            "positionClass": "toast-bottom-left",
-                            "onclick": null,
-                            "fadeIn": 300,
-                            "fadeOut": 1000,
-                            "timeOut": 5000,
-                            "extendedTimeOut": 1000,
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        };
-                        toastr.success(data.message, 'رسالة');
-                        Famous_grid.api().ajax.reload();
+                url: config.admin_url+'/clients/status/'+client_id,
+                success: function(data){  
+                     $(t).prop('disabled', false);
+                     if ($(t).hasClass( "btn-info" )) {
+                        $(t).addClass('btn-danger').removeClass('btn-info');
+                        $(t).html(lang.not_active);
 
-                        // if (id != 0) {
-                        //     $('#addEditUsers').modal('hide');
-                        // } else {
-                        //     Users.empty();
-                        // }
-
-                    } else {
-                        console.log(data)
-                        if (typeof data.errors === 'object') {
-                            for (i in data.errors) {
-                                $('[name="' + i + '"]')
-                                    .closest('.form-group').addClass('has-error');
-                                $('#' + i).closest('.form-group').find(".help-block").html(data.errors[i][0]).css('opacity', 1)
-                            }
-                        } else {
-                            //alert('here');
-                            $.confirm({
-                                title: lang.error,
-                                content: data.message,
-                                type: 'red',
-                                typeAnimated: true,
-                                buttons: {
-                                    tryAgain: {
-                                        text: lang.try_again,
-                                        btnClass: 'btn-red',
-                                        action: function() {}
-                                    }
-                                }
-                            });
-                        }
+                    }else{
+                        $(t).addClass('btn-info').removeClass('btn-danger');
+                        $(t).html(lang.active);
                     }
                 },
-                error: function(xhr, textStatus, errorThrown) {
-
-                    My.ajax_error_message(xhr);
-                },
-                dataType: "json",
-                type: "GET"
+                error: function (xhr, textStatus, errorThrown) {
+                   My.ajax_error_message(xhr);
+               },
             });
 
-            return false;
-        },
-        status: function(t) {
-            var id = $(t).attr("data-id");
-            var action = config.admin_url + '/clients/active/' + id + '';
-            $.ajax({
-                url: action,
-                data: '',
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data.type == 'success') {
-                        toastr.options = {
-                            "debug": false,
-                            "positionClass": "toast-bottom-left",
-                            "onclick": null,
-                            "fadeIn": 300,
-                            "fadeOut": 1000,
-                            "timeOut": 5000,
-                            "extendedTimeOut": 1000,
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        };
-                        toastr.success(data.message, 'رسالة');
-                        Famous_grid.api().ajax.reload();
-
-                        // if (id != 0) {
-                        //     $('#addEditUsers').modal('hide');
-                        // } else {
-                        //     Users.empty();
-                        // }
-
-                    } else {
-                        console.log(data)
-                        if (typeof data.errors === 'object') {
-                            for (i in data.errors) {
-                                $('[name="' + i + '"]')
-                                    .closest('.form-group').addClass('has-error');
-                                $('#' + i).closest('.form-group').find(".help-block").html(data.errors[i][0]).css('opacity', 1)
-                            }
-                        } else {
-                            //alert('here');
-                            $.confirm({
-                                title: lang.error,
-                                content: data.message,
-                                type: 'red',
-                                typeAnimated: true,
-                                buttons: {
-                                    tryAgain: {
-                                        text: lang.try_again,
-                                        btnClass: 'btn-red',
-                                        action: function() {}
-                                    }
-                                }
-                            });
-                        }
-                    }
-                },
-                error: function(xhr, textStatus, errorThrown) {
-
-                    My.ajax_error_message(xhr);
-                },
-                dataType: "json",
-                type: "GET"
-            });
-
-            return false;
-        },
-        order: function(t) {
-            var id = $(t).attr("data-id");
-
-            var action = config.admin_url + '/users/order/' + id + '';
-            $.ajax({
-                url: action,
-                data: '',
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data.type == 'success') {
-                        toastr.options = {
-                            "debug": false,
-                            "positionClass": "toast-bottom-left",
-                            "onclick": null,
-                            "fadeIn": 300,
-                            "fadeOut": 1000,
-                            "timeOut": 5000,
-                            "extendedTimeOut": 1000,
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        };
-                        toastr.success(data.message, 'رسالة');
-                        Famous_grid.api().ajax.reload();
-
-                        // if (id != 0) {
-                        //     $('#addEditUsers').modal('hide');
-                        // } else {
-                        //     Users.empty();
-                        // }
-
-                    } else {
-                        console.log(data)
-                        if (typeof data.errors === 'object') {
-                            for (i in data.errors) {
-                                $('[name="' + i + '"]')
-                                    .closest('.form-group').addClass('has-error');
-                                $('#' + i).closest('.form-group').find(".help-block").html(data.errors[i][0]).css('opacity', 1)
-                            }
-                        } else {
-                            //alert('here');
-                            $.confirm({
-                                title: lang.error,
-                                content: data.message,
-                                type: 'red',
-                                typeAnimated: true,
-                                buttons: {
-                                    tryAgain: {
-                                        text: lang.try_again,
-                                        btnClass: 'btn-red',
-                                        action: function() {}
-                                    }
-                                }
-                            });
-                        }
-                    }
-                },
-                error: function(xhr, textStatus, errorThrown) {
-
-                    My.ajax_error_message(xhr);
-                },
-                dataType: "json",
-                type: "GET"
-            });
-
-            return false;
         },
         delete: function(t) {
             var id = $(t).attr("data-id");

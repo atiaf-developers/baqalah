@@ -17,6 +17,7 @@ class User extends Authenticatable {
     protected $casts = array(
         'id' => 'integer',
         'mobile' => 'string',
+        'gender' => 'integer'
     );
     public static $sizes = array(
         's' => array('width' => 120, 'height' => 120),
