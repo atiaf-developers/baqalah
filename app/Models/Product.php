@@ -46,9 +46,10 @@ class Product extends MyModel
             $store = new \stdClass();
             $store->id = $item->store_id;
             $store->name = $item->store_name;
-            $store->imag = url('public/uploads/stores').'/'.$item->store_image;
+            $store->image = url('public/uploads/stores').'/'.$item->store_image;
             $store->rate = $item->store_rate;
             $store->available = $item->store_available;
+            $store->available_text = $item->store_available == 0 ? _lang('app.closed') : _lang('app.opened');
             $transformer->store = $store;
 
         }else if($user->type == 2){

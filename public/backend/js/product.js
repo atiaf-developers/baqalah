@@ -1,73 +1,51 @@
-var type = 2;
-var Famous_grid;
-var Members_grid;
-var Worker_grid;
-var Proudcts = function() {
-    var init = function() {
-        //alert('heree');
-        $.extend(lang, new_lang);
+var Products_grid;
+var store_id;
+var category_id;
 
-        //console.log(lang);
+
+var Proudcts = function() {
+
+    var init = function() {
+
+        $.extend(lang, new_lang);
+        $.extend(config, new_config);
+        store_id = config.store_id;
+        category_id = config.category_id;
         handleRecords();
-        // handleDatatables();
         handleSubmit();
-        handlePasswordActions();
         if ($('#map').length > 0) {
             Map.initMap(false, false, false);
         }
-        My.readImageMulti('user_image');
-
     };
-    var handlePasswordActions = function(string_length) {
-        $('#show-password').click(function() {
-            if ($('#password').val() != '') {
-                $("#password").attr("type", "text");
-            } else {
-                $("#password").attr("type", "password");
-            }
-        });
-        $('#random-password').click(function() {
-            $('[id^="password"]').closest('.form-group').removeClass('has-error').addClass('has-success');
-            $('[id^="password"]').closest('.form-group').find('.help-block').html('').css('opacity', 0);
-            $('[id^="password"]').val(randomPassword(8));
-        });
-    }
-    var randomPassword = function(string_length) {
-        var chars = "0123456789!@#$%^&*abcdefghijklmnopqrstuvwxtzABCDEFGHIJKLMNOPQRSTUVWXTZ!@#$%^&*";
-        var myrnd = [],
-            pos;
-        while (string_length--) {
-            pos = Math.floor(Math.random() * chars.length);
-            myrnd += chars.substr(pos, 1);
-        }
-        return myrnd;
-    }
+    
 
 
     var handleRecords = function() {
 
-        Famous_grid = $('#famous-table .dataTable').dataTable({
+        Products_grid =  $('.dataTable').dataTable({
             //"processing": true,
             "serverSide": true,
             "ajax": {
                 "url": config.admin_url + "/products/data",
                 "type": "POST",
-                data: { _token: $('input[name="_token"]').val(), store_id: store_id },
+                data: {store_id: store_id, category_id: category_id ,_token: $('input[name="_token"]').val() },
             },
             "columns": [
                 //                    {"data": "user_input", orderable: false, "class": "text-center"},
-                { "data": "name", "name": "name" },
-                { "data": "image", "name": "image" },
-                { "data": "price", "name": "price" },
-                { "data": "active", "name": "active" },
+                { "data": "name", "name": "products.name" },
+                { "data": "image", "name": "image" ,orderable: false, searchable: false },
+                { "data": "price", "name": "products.price" },
+                { "data": "category", "name": "categories_translations.title"},
+                { "data": "store", "name": "stores.name"},
+                { "data": "active", "name": "products.active" ,orderable: false, searchable: false },
                 { "data": "options", orderable: false, searchable: false }
-            ],
-            "order": [
+                ],
+                "order": [
                 [1, "desc"]
-            ],
-            "oLanguage": { "sUrl": config.url + '/datatable-lang-' + config.lang_code + '.json' }
+                ],
+                "oLanguage": { "sUrl": config.url + '/datatable-lang-' + config.lang_code + '.json' }
 
-        });
+            });
     }
     var handleSubmit = function() {
 
@@ -157,7 +135,7 @@ var Proudcts = function() {
                             "hideMethod": "fadeOut"
                         };
                         toastr.success(data.message, 'رسالة');
-                        Famous_grid.api().ajax.reload();
+                        Products_grid.api().ajax.reload();
 
                         if (id != 0) {
                             $('#addEditStore').modal('hide');
@@ -170,7 +148,7 @@ var Proudcts = function() {
                         if (typeof data.errors === 'object') {
                             for (i in data.errors) {
                                 $('[name="' + i + '"]')
-                                    .closest('.form-group').addClass('has-error');
+                                .closest('.form-group').addClass('has-error');
                                 $('[name="' + i + '"]').closest('.form-group').find(".help-block").html(data.errors[i][0]).css('opacity', 1)
                             }
                         } else {
@@ -246,7 +224,7 @@ var Proudcts = function() {
                         if (typeof data.errors === 'object') {
                             for (i in data.errors) {
                                 $('[name="' + i + '"]')
-                                    .closest('.form-group').addClass('has-error');
+                                .closest('.form-group').addClass('has-error');
                                 $('#' + i).closest('.form-group').find(".help-block").html(data.errors[i][0]).css('opacity', 1)
                             }
                         } else {
@@ -322,76 +300,28 @@ var Proudcts = function() {
 
         },
         status: function(t) {
+            var product_id = $(t).data("id"); 
+            $(t).prop('disabled', true);
+            $(t).html('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>');
 
-            var id = $(t).attr("data-id");
-            // alert(id);
-            var action = config.admin_url + '/products/active/' + id + '';
             $.ajax({
-                url: action,
-                data: '',
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data.type == 'success') {
-                        toastr.options = {
-                            "debug": false,
-                            "positionClass": "toast-bottom-left",
-                            "onclick": null,
-                            "fadeIn": 300,
-                            "fadeOut": 1000,
-                            "timeOut": 5000,
-                            "extendedTimeOut": 1000,
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        };
-                        toastr.success(data.message, 'رسالة');
-                        Famous_grid.api().ajax.reload();
+               url: config.admin_url+'/products/status/'+product_id,
+               success: function(data){  
+                   $(t).prop('disabled', false);
+                   if ($(t).hasClass( "btn-info" )) {
+                        $(t).addClass('btn-danger').removeClass('btn-info');
+                        $(t).html(lang.not_active);
+                        
+                   }else{
+                        $(t).addClass('btn-info').removeClass('btn-danger');
+                        $(t).html(lang.active);
+                   }
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                 App.ajax_error_message(xhr);
+             },
+         });
 
-                        // if (id != 0) {
-                        //     $('#addEditUsers').modal('hide');
-                        // } else {
-                        //     Users.empty();
-                        // }
-
-                    } else {
-                        console.log(data)
-                        if (typeof data.errors === 'object') {
-                            for (i in data.errors) {
-                                $('[name="' + i + '"]')
-                                    .closest('.form-group').addClass('has-error');
-                                $('#' + i).closest('.form-group').find(".help-block").html(data.errors[i][0]).css('opacity', 1)
-                            }
-                        } else {
-                            //alert('here');
-                            $.confirm({
-                                title: lang.error,
-                                content: data.message,
-                                type: 'red',
-                                typeAnimated: true,
-                                buttons: {
-                                    tryAgain: {
-                                        text: lang.try_again,
-                                        btnClass: 'btn-red',
-                                        action: function() {}
-                                    }
-                                }
-                            });
-                        }
-                    }
-                },
-                error: function(xhr, textStatus, errorThrown) {
-
-                    My.ajax_error_message(xhr);
-                },
-                dataType: "json",
-                type: "GET"
-            });
-
-            return false;
         },
         delete: function(t) {
             var id = $(t).attr("data-id");

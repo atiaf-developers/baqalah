@@ -104,94 +104,40 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('profile', 'ProfileController@index');
     Route::patch('profile', 'ProfileController@update');
 
-
-
     Route::resource('groups', 'GroupsController');
+    Route::post('groups/data', 'GroupsController@data');
+
     Route::resource('admins', 'AdminsController');
+    Route::post('admins/data', 'AdminsController@data');
 
-    Route::resource('donation_types', 'DonationTypesController');
-    Route::resource('donation_requests', 'DonationRequestsController');
-    Route::resource('delegates_report', 'DelegatesReportController');
-    Route::post('donation_requests/assigned', 'DonationRequestsController@assigned');
-    Route::resource('albums', 'AlbumsController');
-    Route::resource('album_images', 'AlbumImagesController');
-    Route::resource('activities', 'ActivitiesController');
-    Route::post('pilgrims/import', 'PilgrimsController@import');
-    Route::post('pilgrims/data', 'PilgrimsController@data');
     Route::resource('locations', 'LocationsController');
-    Route::resource('our_locations', 'OurLocationsController');
+    Route::post('locations/data', 'LocationsController@data');
+
     Route::resource('categories', 'CategoriesController');
-    Route::resource('news', 'NewsController');
-    Route::resource('videos', 'VideosController');
+    Route::post('categories/data', 'CategoriesController@data');
 
-    Route::get('settings', 'SettingsController@index');
-
-    // Route For Container Moduel {Start}
-    Route::resource('container', 'ContainersController');
-    Route::post('container/data', 'ContainersController@data');
-    // Route For Container Moduel {End}
-    // Route For Users Moduel {Start}
     Route::resource('clients', 'ClientsController');
     Route::post('clients/data', 'ClientsController@data');
+    Route::get('clients/status/{id}', 'ClientsController@status');
 
     Route::resource('stores', 'StoresController');
     Route::post('stores/data', 'StoresController@data');
-    // Route For Users Moduel {End}
+    Route::get('stores/status/{id}', 'StoreController@status');
 
-
-
-    Route::resource('clients', 'ClientsController');
-    Route::resource('stores', 'StoreController');
-    Route::get('stores/edit/{id}', 'StoreController@edit');
-    Route::get('clients/edit/{id}', 'ClientsController@edit');
-    Route::get('products/edit/{id}', 'ProductController@edit');
-    Route::get('products/{id}', 'ProductController@index');
-    Route::post('clients/data', 'ClientsController@data');
-    Route::post('stores/data', 'StoreController@data');
-    Route::get('clients/active/{id}', 'ClientsController@active');
-    Route::get('stores/active/{id}', 'StoreController@active');
-    Route::get('products/active/{id}', 'ProductController@active');
+    Route::resource('products', 'ProductController');
+    Route::get('products/status/{id}', 'ProductController@status');
     Route::post('products/data', 'ProductController@data');
-    
-    
-    Route::post('settings', 'SettingsController@store');
+   
     Route::get('notifications', 'NotificationsController@index');
-    Route::get('reservations', 'ReservationsController@index');
     Route::post('notifications', 'NotificationsController@store');
 
-
-
-
-    Route::post('groups/data', 'GroupsController@data');
-    Route::post('locations/data', 'LocationsController@data');
-
-
-
-
-
-
-    Route::post('admins/data', 'AdminsController@data');
+    Route::post('settings', 'SettingsController@store');
 
     Route::resource('contact_messages', 'ContactMessagesController');
     Route::post('contact_messages/data', 'ContactMessagesController@data');
 
-    Route::post('categories/data', 'CategoriesController@data');
-    Route::post('videos/data', 'VideosController@data');
-    Route::post('donation_types/data', 'DonationTypesController@data');
-    Route::post('albums/data', 'AlbumsController@data');
-    Route::post('donation_requests/data', 'AlbumsController@data');
-    Route::post('activities/data', 'ActivitiesController@data');
-    Route::post('news/data', 'NewsController@data');
-    Route::post('album_images/data', 'AlbumImagesController@data');
-
-
-
-
-
-
-
-
-
+    
+   
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'LoginController@login')->name('admin.login.submit');
    Route::get('logout', 'LoginController@logout')->name('admin.logout');
