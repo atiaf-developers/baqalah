@@ -52,7 +52,7 @@
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="{{url('admin/login')}}">
-                <img src="{{url('public/backend/images/logo.png')}}" alt="" /> </a>
+                <img src="{{url('public/backend/images/logo-login.png')}}" alt="" /> </a>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->

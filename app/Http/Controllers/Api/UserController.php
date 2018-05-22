@@ -11,6 +11,7 @@ use App\Models\Store;
 use App\Models\StoreCtegory;
 use App\Models\Rating;
 use App\Models\Favourite;
+use App\Models\Device;
 use Validator;
 use DB;
 
