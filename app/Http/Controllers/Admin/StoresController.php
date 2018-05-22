@@ -10,7 +10,7 @@ use App\Models\StoreCtegory;
 use Validator;
 use DB;
 
-class StoreController extends BackendController
+class StoresController extends BackendController
 {
     public function __construct() {
 

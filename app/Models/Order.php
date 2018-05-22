@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Order extends MyModel {
 
@@ -55,13 +56,79 @@ class Order extends MyModel {
         return $this->hasMany(OrderDetails::class, 'order_id');
     }
 
+    public static function getOrdersAdmin($request, $id = false) {
+
+
+        $orders = static::join('receipt_details', 'receipt_details.id', '=', 'orders.receipt_details_id');
+        $orders->join('stores', 'stores.id', '=', 'orders.store_id');
+        $orders->join('users', 'users.id', '=', 'orders.user_id');
+        $orders->select(["orders.id", "orders.total_price", "orders.delivery_type", "stores.name as store_name", "users.username as client_name", "orders.created_at",
+            "orders.date", "receipt_details.name", "receipt_details.mobile", "receipt_details.lat", "receipt_details.lng", "receipt_details.building", "receipt_details.floor",
+            'orders.commission', 'orders.commission_cost', 'orders.status']);
+        $orders->groupBy('orders.id');
+        if (!$id) {
+            $orders = static::handleWhere($orders, $request);
+            $orders->orderBy('orders.created_at', 'DESC');
+            return $orders->paginate(static::$limit)->appends($request->all());
+        } else {
+            $orders->where("orders.id", $id);
+            return $orders->first();
+        }
+    }
+
+    public static function getInfoAdmin($request) {
+        $orders = static::join('receipt_details', 'receipt_details.id', '=', 'orders.receipt_details_id');
+        $orders->join('stores', 'stores.id', '=', 'orders.store_id');
+        $orders->join('users', 'users.id', '=', 'orders.user_id');
+        $orders = static::handleWhere($orders, $request);
+        $orders->select(DB::raw('sum(orders.total_price) as total_price'), DB::raw('sum(orders.commission_cost) as total_commission_cost'));
+        return $orders->first();
+    }
+
+    public static function getOrderDetailsAdmin($order_id) {
+        $order_details = OrderDetails::join('products', 'products.id', '=', 'order_details.product_id');
+        $order_details->select('products.name', 'products.images', 'order_details.price', 'order_details.quantity','order_details.total_price');
+        $order_details->where('order_details.order_id', $order_id);
+        $order_details->groupBy('products.id');
+        $order_details = $order_details->get();
+        return OrderDetails::transformCollection($order_details, 'Admin');
+    }
+
+    private static function handleWhere($orders, $request) {
+
+        if ($request->all()) {
+            if ($from = $request->input('from')) {
+                $orders->where("orders.date", ">=", "$from");
+            }
+            if ($to = $request->input('to')) {
+                $orders->where("orders.date", "<=", "$to");
+            }
+            if ($user = $request->input('user')) {
+                $orders->where("orders.user_id", $user);
+            }
+            if ($store = $request->input('store')) {
+                $orders->where("stores.id", $store);
+            }
+            if ($order = $request->input('order')) {
+                $orders->where("orders.id", $order);
+            }
+            if ($delivery_type = $request->input('delivery_type')) {
+                $orders->where("orders.delivery_type", $delivery_type);
+            }
+            if ($status = $request->input('status')) {
+                $orders->where("orders.status", $status);
+            }
+        }
+        return $orders;
+    }
+
     public static function transformClient($item) {
         $transformer = new \stdClass();
         $transformer->id = $item->id;
         $transformer->status = $item->status;
-        
-        $status = $item->delivery_type==1?static::$status_one:static::$status_two;
-        $transformer->status_text = isset($status[$item->status])?_lang('app.' . $status[$item->status]['store']):'';
+
+        $status = $item->delivery_type == 1 ? static::$status_one : static::$status_two;
+        $transformer->status_text = isset($status[$item->status]) ? _lang('app.' . $status[$item->status]['store']) : '';
         $transformer->order_detailes = OrderDetails::transformCollection($item->order_details()
                                 ->join('products', 'order_details.product_id', '=', 'products.id')
                                 ->select('products.name', 'products.images', 'order_details.price', 'order_details.quantity')
@@ -89,8 +156,8 @@ class Order extends MyModel {
         $user = new \stdClass();
         $transformer->date = date('h:i A Y/m/d', strtotime($item->date));
         $transformer->status = $item->status;
-        $status = $item->delivery_type==1?static::$status_one:static::$status_two;
-        $transformer->status_text = isset($status[$item->status])?_lang('app.' . $status[$item->status]['store']):'';
+        $status = $item->delivery_type == 1 ? static::$status_one : static::$status_two;
+        $transformer->status_text = isset($status[$item->status]) ? _lang('app.' . $status[$item->status]['store']) : '';
 
         $user->name = $item->fname . ' ' . $item->lname;
         $user->image = url('public/uploads/users') . '/' . $item->image;

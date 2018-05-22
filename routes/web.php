@@ -104,6 +104,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('profile', 'ProfileController@index');
     Route::patch('profile', 'ProfileController@update');
 
+
+
     Route::resource('groups', 'GroupsController');
     Route::post('groups/data', 'GroupsController@data');
 
@@ -120,26 +122,34 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('clients/data', 'ClientsController@data');
     Route::get('clients/status/{id}', 'ClientsController@status');
 
-    Route::resource('stores', 'StoreController');
-    Route::post('stores/data', 'StoreController@data');
-    Route::get('stores/status/{id}', 'StoreController@status');
+    Route::resource('stores', 'StoresController');
+    Route::post('stores/data', 'StoresController@data');
+    Route::get('stores/status/{id}', 'StoresController@status');
 
     Route::resource('products', 'ProductController');
     Route::get('products/status/{id}', 'ProductController@status');
     Route::post('products/data', 'ProductController@data');
+    Route::resource('orders_reports', 'OrdersReportsController');
 
-    
     Route::post('settings', 'SettingsController@store');
     Route::get('notifications', 'NotificationsController@index');
     Route::post('notifications', 'NotificationsController@store');
 
+
+
     Route::get('settings', 'SettingsController@index');
+
+
+
+
+
+
 
     Route::resource('contact_messages', 'ContactMessagesController');
     Route::post('contact_messages/data', 'ContactMessagesController@data');
 
-    
-   
+
+
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'LoginController@login')->name('admin.login.submit');
     Route::get('logout', 'LoginController@logout')->name('admin.logout');

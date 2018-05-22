@@ -6,7 +6,7 @@ use Image;
 trait ModelTrait {
 
     protected $lang_code;
-    protected static $limit = 1;
+    protected static $limit = 10;
     protected static $distance = 1000000;
 
     
