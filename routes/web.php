@@ -104,8 +104,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('profile', 'ProfileController@index');
     Route::patch('profile', 'ProfileController@update');
 
-
-
     Route::resource('groups', 'GroupsController');
     Route::post('groups/data', 'GroupsController@data');
 
@@ -138,11 +136,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
     Route::get('settings', 'SettingsController@index');
-
-
-
-
-
 
 
     Route::resource('contact_messages', 'ContactMessagesController');
