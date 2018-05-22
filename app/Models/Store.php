@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends MyModel {
 
     protected $table = "stores";
-    protected $casts = ['id' => 'integer'];
+    protected $casts = ['id' => 'integer','lat' => 'double','lng' => 'double'];
     public static $sizes = array(
         's' => array('width' => 300, 'height' => 300),
         'm' => array('width' => 400, 'height' => 400),
