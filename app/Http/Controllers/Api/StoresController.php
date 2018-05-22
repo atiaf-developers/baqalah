@@ -36,7 +36,7 @@ class StoresController extends ApiController {
         $stores = Store::where('stores.active',true)
         ->select(['stores.id','stores.name','stores.description','stores.image','stores.mobile','stores.lat','stores.lng','stores.address','stores.available',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1) as number_of_products"),'stores.rate',DB::raw($this->iniDiffLocations('stores', $lat, $lng))])
         ->having('distance','<=',$distance)
-        ->orderBy('distance')
+        ->orderBy('distance','desc')
         ->get();
 
         return _api_json(Store::transformCollection($stores,null,['user'=>$user]));

@@ -97,6 +97,7 @@ if (in_array($currentLanguageCode, $languages)) {
 
 //Route::group(['middleware'=>'auth:admin'], function () {
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+    
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/error', 'AdminController@error')->name('admin.error');
     Route::get('/change_lang', 'AjaxController@change_lang')->name('ajax.change_lang');
