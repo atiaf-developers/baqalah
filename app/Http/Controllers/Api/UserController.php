@@ -65,7 +65,7 @@ class UserController extends ApiController {
                     $rules['gender'] = "required";
                 }
                 
-            }else if($user->tpye == 2){
+            }else if($user->type == 2){
                 if ($request->input('store_name')) {
                     $rules['store_name'] = "required";
                 }
@@ -80,6 +80,9 @@ class UserController extends ApiController {
                 }
                 if ($request->input('lng')) {
                     $rules['lng'] = "required";
+                }
+                if ($request->input('orders_notify')) {
+                    $rules['orders_notify'] = "required";
                 }
                 if ($request->input('store_categories')) {
                     $rules['store_categories'] = "required";
@@ -145,6 +148,9 @@ class UserController extends ApiController {
                         }
                         if ($request->input('lat')) {
                             $store->lat = $request->input('lat');
+                        }
+                        if ($request->input('orders_notify')) {
+                            $store->orders_notify = $request->input('orders_notify');
                         }
                         if ($request->input('lng')) {
                             $store->lng = $request->input('lng');

@@ -26,7 +26,7 @@ class Fcm {
     protected $url;
 
     public function __construct() {
-        $this->key = 'AAAA7NJWmTI:APA91bHtx_jGllbSgbkvnBVBSX2TaPb5A3Iufo0WEkKgfbvUPWasu_NSrahVhSB9BoiKSMNHWk9nV6CThRUU4bPDtuqnsTtw9Ec_Gk3GEWfhLzWl3MmswJIz8XQFJLH1Rbm5mNY_4U5o';
+        $this->key = 'AAAAyVnWhT0:APA91bG4l6fiuEHzW62a5YdDFDjItrLdxQU-Vi1Y1-AL7c676sBzB0O6bFC3k8Ut7ffesdX4cBJ9yFRorzwQOFIRbTYDWVjz68I_WFJBHMpPKzB9bJ9qNJTSfLaKL6JvCN9-qhAXVASlelR825LbXws_CnOuMuYbyw';
         $this->noti_url = 'https://fcm.googleapis.com/fcm/send';
     }
 

@@ -42,7 +42,6 @@ class OrdersController extends ApiController {
             $orders = $this->getOrders($request);
             return _api_json($orders);
         } catch (\Exception $e) {
-            dd($e);
             $message = _lang('app.error_is_occured');
             return _api_json([], ['message' => $message], 400);
         }
@@ -95,7 +94,7 @@ class OrdersController extends ApiController {
             if ($cart->count() > 0) {
                 foreach ($cart as $product) {
                     $stores[$product->store_id][] = $product;
-                    if (!in_array($product->user_id, $stores_user_id)) {
+                    if (!in_array($product->user_id, $stores_user_id) && $product->orders_notify == 1) {
                         $stores_user_id[] = $product->user_id;
                     }
                 }
@@ -141,7 +140,6 @@ class OrdersController extends ApiController {
             $this->send_noti_fcm($notification, $stores_user_id);
             return _api_json('', ['message' => _lang('app.order_has_been_sent_successfully')]);
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
             $message = _lang('app.error_is_occured');
             return _api_json('', ['message' => $message], 400);
@@ -291,8 +289,6 @@ class OrdersController extends ApiController {
                     $available_quantity = $item->product_quantity + $item->quantity;
                     $products_updated_quantity['quantity'][] = ['id' => $item->product_id, 'value' => $available_quantity];
                 }
-                //dd($products_updated_quantity);
-
                 $this->updateValues('App\Models\Product', $products_updated_quantity);
             }
 
@@ -305,7 +301,6 @@ class OrdersController extends ApiController {
             return _api_json('', ['message' => _lang('app.updated_successfully')]);
         } catch (\Exception $e) {
             DB::rollback();
-            //dd($e);
             $message = _lang('app.error_is_occured');
             return _api_json('', ['message' => $message], 400);
         }
@@ -322,14 +317,14 @@ class OrdersController extends ApiController {
             $status = Order::$user_status['client']['current'];
             $transformer = 'Store';
             if ($request->input('type') == 1) {
-                $status = Order::$user_status['store']['current'];
-            } else if ($request->input('type') == 2) {
                 $status = Order::$user_status['store']['waiting'];
+            } else if ($request->input('type') == 2) {
+                $status = Order::$user_status['store']['current'];
             } else {
                 $status = Order::$user_status['store']['previous'];
             }
         }
-        //dd($user->type);
+
         $columns = ['orders.id', 'orders.delivery_type', 'orders.date', 'orders.status', 'receipt_details.name', 'receipt_details.mobile', 'receipt_details.lat', 'receipt_details.lng', 'receipt_details.building', 'receipt_details.floor', 'receipt_details.address'];
         $orders = Order::join('receipt_details', 'orders.receipt_details_id', '=', 'receipt_details.id');
         if ($user->type == 1) {
@@ -346,11 +341,11 @@ class OrdersController extends ApiController {
             $columns[] = "users.lname";
             $columns[] = "users.image";
             $columns[] = "users.mobile";
+            $columns[] = "users.gender";
         }
 
         $orders->whereIn('status', $status);
         $orders->select($columns);
-        //dd($orders->toSql());
         $orders = $orders->paginate($this->limit);
         return Order::transformCollection($orders, $transformer);
     }

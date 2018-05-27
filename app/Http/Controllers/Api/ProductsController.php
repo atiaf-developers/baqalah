@@ -97,6 +97,7 @@ class ProductsController extends ApiController {
             if ($product->has_offer == 1) {
                 $notification['body'] = _lang('app.new_offer_from') . ' ' . $product->store->name . ' ' . _lang('app.on') . ' ' . $product->name;
                 $notification['type'] = 2;
+                $notification['id'] = $product->id;
                 $this->send_noti_fcm($notification, false, '/topics/baqalah_and', 1);
                 $this->send_noti_fcm($notification, false, '/topics/baqalah_ios', 2);
             }
@@ -161,6 +162,7 @@ class ProductsController extends ApiController {
             if ($product->has_offer == 1) {
                 $notification['body'] = _lang('app.new_offer_from') . ' ' . $product->store->name . ' ' . _lang('app.on') . ' ' . $product->name;
                 $notification['type'] = 2;
+                $notification['id'] = $product->id;
                 $this->send_noti_fcm($notification, false, '/topics/baqalah_and', 1);
                 $this->send_noti_fcm($notification, false, '/topics/baqalah_ios', 2);
             }

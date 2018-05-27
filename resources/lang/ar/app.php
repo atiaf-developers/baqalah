@@ -790,6 +790,9 @@ return [
     'complete_the_data' => 'استكمال البيانات',
     'create_a_new_account' => 'انشاء حساب جديد',
     'optional' => 'اختيارى',
+    'message_is_sent_successfully' => 'تم ارسال الرسالة بنجاح',
+    'rated_successfully' => 'تم التفييم بنجاح',
+    'order_has_been_sent_successfully' => 'تم ارسالة الطلب بنجاح'
 
 
 

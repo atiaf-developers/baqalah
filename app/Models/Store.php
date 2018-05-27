@@ -29,6 +29,7 @@ class Store extends MyModel {
         $transformer->lng = $item->lng;
         $transformer->address = $item->address;
         $transformer->available = $item->available;
+        $transformer->orders_notify = $item->orders_notify;
         
         if (isset($extra_params['user']) && $extra_params['user']->type == 1) {
             $transformer->categories = implode(" - ",$item->categories()->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id')

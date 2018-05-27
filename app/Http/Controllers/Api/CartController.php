@@ -31,7 +31,6 @@ class CartController extends ApiController {
             $user = $this->auth_user();
 
             $cart = Cart::getCartApi($user->id);
-            //dd($cart);
             $total_price = $cart->sum(function ($product) {
                 return $product->price * $product->quantity;
             });
@@ -121,7 +120,7 @@ class CartController extends ApiController {
 
             if (!$cart_item) {
                 return _api_json('', ['message' => _lang('app.not_found')], 400);
-            } else if ($request->input('quantity') > $cart_item->quantity) {
+            } else if ($request->input('quantity') > $cart_item->product_quantity) {
                 return _api_json('', ['message' => $cart_item->name . ' ' ._lang('app.available_quantity_is') . ' ' . $cart_item->product_quantity], 400);
             }
 

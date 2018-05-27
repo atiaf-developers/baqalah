@@ -13,7 +13,8 @@ class Order extends MyModel {
         'status' => 'integer',
         'delivery_type' => 'integer',
         'total_price' => 'double',
-        'store_id' => 'integer'
+        'store_id' => 'integer',
+        'gender' => 'integer'
     );
 
     private static $delivery_types = [
@@ -162,6 +163,7 @@ class Order extends MyModel {
         $user->name = $item->fname . ' ' . $item->lname;
         $user->image = url('public/uploads/users') . '/' . $item->image;
         $user->mobile = $item->mobile;
+        $user->gender = $item->gender;
         $transformer->user = $user;
 
         $transformer->id = $item->id;

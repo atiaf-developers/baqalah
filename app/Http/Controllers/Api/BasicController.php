@@ -22,8 +22,7 @@ class BasicController extends ApiController {
         'message' => 'required',
         'email' => 'required|email',
         'subject' => 'required',
-        'name' => 'required',
-        'store_id' => 'required'
+        'name' => 'required'
     );
 
     private $categories_rules = array(
@@ -75,12 +74,15 @@ class BasicController extends ApiController {
             $errors = $validator->errors()->toArray();
             return _api_json('', ['errors' => $errors], 400);
         } else {
+
             try {
+                $user = $this->auth_user();
                 $ContactMessage = new ContactMessage;
                 $ContactMessage->name = $request->input('name');
                 $ContactMessage->email = $request->input('email');
                 $ContactMessage->subject = $request->input('subject');
                 $ContactMessage->message = $request->input('message');
+                $ContactMessage->user_id = $user->id;
                 $ContactMessage->store_id = $request->input('store_id');
                 $ContactMessage->save();
                 return _api_json('', ['message' => _lang('app.message_is_sent_successfully')]);
@@ -97,8 +99,9 @@ class BasicController extends ApiController {
             return _api_json([], ['errors' => $errors], 400);
         } 
         try {
-            $complaints = ContactMessage::where('store_id',$request->input('store_id'))
-            ->select('name','email','subject','message')
+            $complaints = ContactMessage::Join('users','users.id','=','contact_messages.user_id')
+            ->where('store_id',$request->input('store_id'))
+            ->select('contact_messages.name','contact_messages.email','contact_messages.subject','contact_messages.message','users.gender')
             ->paginate($this->limit);
             return _api_json(ContactMessage::transformCollection($complaints));
         } catch (\Exception $ex) {

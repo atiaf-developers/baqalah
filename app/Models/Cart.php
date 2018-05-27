@@ -13,7 +13,7 @@ class Cart extends MyModel {
                 ->join('stores', 'cart.store_id', '=', 'stores.id')
                 ->join('users', 'stores.user_id', '=', 'users.id')
                 ->where('cart.user_id', $user_id)
-                ->select("cart.id", 'products.id as product_id', 'products.price', 'products.name', 'products.images', 'cart.quantity', 'products.quantity as product_quantity', 'products.store_id', DB::raw('(products.price * cart.quantity) as total_price'), 'users.id as user_id', 'users.device_type', 'users.device_token')
+                ->select("cart.id", 'products.id as product_id', 'products.price', 'products.name', 'products.images', 'cart.quantity', 'products.quantity as product_quantity', 'products.store_id', DB::raw('(products.price * cart.quantity) as total_price'), 'users.id as user_id', 'users.device_type', 'users.device_token','stores.orders_notify')
                 ->get();
         return $cart;
     }

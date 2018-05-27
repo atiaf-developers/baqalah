@@ -16,7 +16,8 @@ class ContactMessage extends MyModel {
     	$transformer->name = $item->name;
     	$transformer->email = $item->email;
     	$transformer->subject = $item->subject;
-    	$transformer->message = $item->message;
+        $transformer->message = $item->message;
+    	$transformer->gender = $item->gender;
 
     	return $transformer;
     }

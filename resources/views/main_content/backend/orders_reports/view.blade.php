@@ -26,7 +26,7 @@
                         | {{ $order->created_at }} </span>
                 </div>
                 <div class="actions">
-                    <a href="{{url('admin/resturant_orders')}}" class="btn default yellow-stripe">
+                    <a href="{{url('admin/orders_reports')}}" class="btn default yellow-stripe">
                         <i class="fa fa-angle-left"></i>
                         <span class="hidden-480">
                             {{  _lang('back') }} </span>
