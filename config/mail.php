@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'atyf.co'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'tafran@atiaf.net'),
-        'name' => env('MAIL_FROM_NAME', 'Ga3aaan'),
+        'address' => env('MAIL_FROM_ADDRESS', 'sales@baqalah.com'),
+        'name' => env('MAIL_FROM_NAME', 'Baqalah'),
     ],
 
     /*

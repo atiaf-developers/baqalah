@@ -25,6 +25,8 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::post('login', 'LoginController@login');
     Route::post('register', 'RegisterController@register');
+    Route::post('/password/reset', 'PasswordController@reset');
+    Route::post('/password/verify', 'PasswordController@verify');
 
     Route::get('setting', 'BasicController@getSettings');
     Route::get('get_categories', 'BasicController@getCategories');
@@ -33,6 +35,8 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::post('user/update', 'UserController@update');
         Route::get('logout', 'UserController@logout');
+        
+
         
         Route::get('store_categories', 'BasicController@getStoreCategories');
         Route::get('get_user', 'UserController@getUser');
@@ -50,6 +54,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::resource('stores', 'StoresController');
         Route::resource('cart','CartController');
         Route::resource('orders','OrdersController');
+
         
 
         

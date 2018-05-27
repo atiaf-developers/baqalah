@@ -8,5 +8,5 @@ We got a request to reset your password,Please use this code to complete this pr
 @endcomponent
 
 Thanks,<br>
-{{ 'Ga3aaan' }}
+{{ 'Baqalah' }}
 @endcomponent
