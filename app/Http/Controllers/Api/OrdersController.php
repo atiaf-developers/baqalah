@@ -137,7 +137,9 @@ class OrdersController extends ApiController {
 
             $notification['body'] = _lang('app.new_order');
             $notification['type'] = 1;
+
             $this->send_noti_fcm($notification, $stores_user_id);
+            
             return _api_json('', ['message' => _lang('app.order_has_been_sent_successfully')]);
         } catch (\Exception $e) {
             DB::rollback();

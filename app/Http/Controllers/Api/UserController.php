@@ -149,7 +149,7 @@ class UserController extends ApiController {
                         if ($request->input('lat')) {
                             $store->lat = $request->input('lat');
                         }
-                        if ($request->input('orders_notify')) {
+                        if ($request->input('orders_notify') != null) {
                             $store->orders_notify = $request->input('orders_notify');
                         }
                         if ($request->input('lng')) {

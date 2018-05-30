@@ -110,6 +110,7 @@ class Fcm {
         }else{
             $params['to']=$token;
         }
+        //dd($params);
         if ($device_type == 'ios') {
             /*$params = array(
                 'notification' => $data,
@@ -128,9 +129,9 @@ class Fcm {
             );
             
         }
-        //dd(json_encode($params,JSON_FORCE_OBJECT));
 
-        return $this->request('post', $this->noti_url, json_encode($params,JSON_FORCE_OBJECT), $options);
+
+        return $this->request('post', $this->noti_url, json_encode($params), $options);
     }
 
     public function send3($token, $notification, $device_type) {

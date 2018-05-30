@@ -74,15 +74,14 @@ trait Basic {
             $token_and = $token_and->toArray();
             $token_ios = $token_ios->toArray();
             if (count($token_and) > 0) {
-                //$token_and=$token_and[0];
-                //dd($token_and);
-                return $Fcm->send($token_and, $notification, 'and');
-            } else if (count($token_ios) > 0) {
-                return $Fcm->send($token_ios, $notification, 'ios');
+                $Fcm->send($token_and, $notification, 'and');
+            } 
+            if (count($token_ios) > 0) {
+                $Fcm->send($token_ios, $notification, 'ios');
             }
         } else {
             $device_type = $device_type == 1 ? 'and' : 'ios';
-            return $Fcm->send($device_token, $notification, $device_type);
+            $Fcm->send($device_token, $notification, $device_type);
         }
     }
 
