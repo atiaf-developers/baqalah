@@ -29,14 +29,17 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('/password/verify', 'PasswordController@verify');
 
     Route::get('setting', 'BasicController@getSettings');
+
+    Route::get('products', 'ProductsController@index');
+    Route::get('products/{id}', 'ProductsController@show');
+    Route::resource('stores', 'StoresController');
+
     Route::get('get_categories', 'BasicController@getCategories');
 
     Route::group(['middleware' => 'jwt.auth'], function () {
 
         Route::post('user/update', 'UserController@update');
         Route::get('logout', 'UserController@logout');
-        
-
         
         Route::get('store_categories', 'BasicController@getStoreCategories');
         Route::get('get_user', 'UserController@getUser');
@@ -47,11 +50,12 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('complaints', 'BasicController@getComplaints');
 
         Route::post('change_status','OrdersController@status');
-        
-       
 
-        Route::resource('products', 'ProductsController');
-        Route::resource('stores', 'StoresController');
+        Route::post('products', 'ProductsController@store');
+        Route::put('products/{id}', 'ProductsController@update');
+        Route::delete('products/{id}', 'ProductsController@destroy');
+       
+        
         Route::resource('cart','CartController');
         Route::resource('orders','OrdersController');
 

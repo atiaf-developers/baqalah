@@ -114,11 +114,11 @@ class BasicController extends ApiController {
     public function getCategories(Request $request) {
         try {
             $user = $this->auth_user();
-            if ($user) {
+            if (!$user || $user->type == 1) {
                 $validator = Validator::make($request->all(), $this->categories_rules);
                 if ($validator->fails()) {
                     $errors = $validator->errors()->toArray();
-                    return _api_json('', ['errors' => $errors], 400);
+                    return _api_json([], ['errors' => $errors], 400);
                 }
             }
             $categories = $this->categories($request,$user);
@@ -133,7 +133,7 @@ class BasicController extends ApiController {
             $validator = Validator::make($request->all(), $this->store_categories_rules);
             if ($validator->fails()) {
                 $errors = $validator->errors()->toArray();
-                return _api_json('', ['errors' => $errors], 400);
+                return _api_json([], ['errors' => $errors], 400);
             }
             $categories = $this->storeCategories($request->input('store_id'));
             return _api_json(Category::transformCollection($categories));
@@ -147,34 +147,31 @@ class BasicController extends ApiController {
     {
         $settings = $this->settings();
         $distance = $settings['search_range_for_stores']->value;
-        $columns = ["categories.id", "categories_translations.title"];
-        
-        if ($user) {
-            $columns[] = "categories.image";
-            $lat = $request->input('lat');
-            $lng = $request->input('lng');
+        $category_columns = ["categories.id", "categories_translations.title"];
 
-            $store = Store::leftJoin('ratings', function ($join) use($user) {
-                $join->on('ratings.store_id', '=', 'stores.id');
-                $join->where('ratings.user_id',  $user->id);
-            })
-            ->where('stores.active',true)
-            ->select(['stores.id','stores.name','stores.description','stores.image','stores.mobile','stores.lat','stores.lng','stores.address','stores.available','ratings.id as is_rated',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1) as number_of_products"),'stores.rate',DB::raw($this->iniDiffLocations('stores', $lat, $lng))])
-            ->having('distance','<=',$distance)
-            ->orderBy('distance')
-            ->first();
+        $store_columns = ['stores.id','stores.name','stores.description','stores.image','stores.mobile','stores.lat','stores.lng','stores.address','stores.available',DB::raw("(SELECT Count(*) FROM products WHERE store_id = stores.id and active = 1 and deleted_at IS NULL) as number_of_products"),'stores.rate'];
+        
+        if (($user && $user->type == 1) || !$user) {
+          $category_columns[] = "categories.image";
+          $store =  $this->getStores($request);
+          if (!empty($store)) {
+              $store = $store[0];
+          }else{
+            $store = new \stdClass();
+          }
         }
+       
 
         $categories =  Category::Join('categories_translations', 'categories.id', '=', 'categories_translations.category_id')
         ->where('categories_translations.locale', $this->lang_code)
         ->where('categories.active', true)
         ->where('categories.parent_id', 0)
         ->orderBy('categories.this_order')
-        ->select($columns)
+        ->select($category_columns)
         ->get();
 
-        if ($user) {
-            return _api_json(Category::transformCollection($categories),['store' => Store::transform($store)]);
+        if (($user && $user->type == 1) || !$user) {
+            return _api_json(Category::transformCollection($categories),['store' => $store]);
         }else{
             return _api_json(Category::transformCollection($categories));
         } 

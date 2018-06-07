@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Helpers\AUTHORIZATION;
 use App\Models\User;
-use App\Models\Friendship;
-use App\Models\UserBlockPost;
 use App\Models\AdminNotification;
 use App\Models\Order;
 use App\Models\Notification;
 use App\Models\Setting;
 use App\Traits\Basic;
 use App\Models\Category;
+use App\Models\Store;
+use DB;
+
 use Request;
 
 class ApiController extends Controller {
@@ -128,6 +129,57 @@ class ApiController extends Controller {
     {
         $settings = Setting::select('name', 'value')->get()->keyBy('name');
         return $settings;
+    }
+
+
+    protected function getStores($request,$id = null)
+    {
+           $user = $this->auth_user();
+           $settings = $this->settings();
+           $distance = $settings['search_range_for_stores']->value;
+
+            $columns = ['stores.id','stores.name','stores.description','stores.image','stores.mobile','stores.lat','stores.lng','stores.address','stores.available','stores.rate'];
+            
+            $stores = Store::where('stores.active',true);
+            if ($user) {
+                $stores->leftJoin('ratings', function ($join) use($user) {
+                    $join->on('ratings.store_id', '=', 'stores.id');
+                    $join->where('ratings.user_id',  $user->id);
+                });
+                $columns[] = 'ratings.id as is_rated';
+            }else{
+                $columns[] = DB::raw('0 as is_rated');
+            }
+
+            if ($id) {
+              $store_id = $id;
+              $stores->where('stores.id',$id);
+            }else{
+                $store_id = 'stores.id';
+            }
+
+            $columns[] =   DB::raw("(SELECT Count(*) FROM products WHERE store_id = {$store_id} and active = 1 and deleted_at IS NULL) as number_of_products");
+
+            if ($request->input('lat') && $request->input('lng')) {
+                $lat = $request->input('lat');
+                $lng = $request->input('lng');
+                $columns[] = DB::raw($this->iniDiffLocations('stores', $lat, $lng));
+                $stores->having('distance','<=',$distance);
+                $stores->orderBy('distance');
+            }
+
+            $stores->select($columns);
+        
+            if ($id) {
+                $stores = $stores->first();
+                if (!$stores) {
+                    return false;
+                }
+                return Store::transform($stores,['user' => $user]);
+            } else {
+                $stores = $stores->get();
+                return Store::transformCollection($stores,null,['user' => $user]);
+            }
     }
 
    

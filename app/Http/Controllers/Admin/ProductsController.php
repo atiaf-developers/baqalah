@@ -9,7 +9,7 @@ use App\Models\Store;
 use App\Models\Category;
 use Validator;
 
-class ProductController extends BackendController
+class ProductsController extends BackendController
 {
     public function __construct() {
 
@@ -83,6 +83,30 @@ class ProductController extends BackendController
         return $this->_view('products/view', 'backend');
     }
 
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id) {
+        $product = Product::find($id);
+        if (!$product) {
+            return _json('error', _lang('app.error_is_occured'), 404);
+        }
+        try {
+            $product->delete();
+            return _json('success', _lang('app.deleted_successfully'));
+        } catch (\Exception $ex) {
+            if ($ex->getCode() == 23000) {
+                return _json('error', _lang('app.this_record_can_not_be_deleted_for_linking_to_other_records'), 400);
+            } else {
+                return _json('error', _lang('app.error_is_occured'), 400);
+            }
+        }
+    }
+
     public function data(Request $request){
 
         $store_id = $request->input('store_id') ? $request->input('store_id') : null;
@@ -119,7 +143,7 @@ class ProductController extends BackendController
 
                 if (\Permissions::check('products', 'delete')) {
                     $back .= '<li>';
-                    $back .= '<a href="" data-toggle="confirmation" onclick = "Products.delete(this);return false;" data-id = "' . $item->id . '">';
+                    $back .= '<a href="#" data-toggle="confirmation" onclick = "Products.delete(this);return false;" data-id = "' . $item->id . '">';
                     $back .= '<i class = "icon-docs"></i>' . _lang('app.delete');
                     $back .= '</a>';
                     $back .= '</li>';
@@ -138,7 +162,7 @@ class ProductController extends BackendController
                 $message = _lang('app.not_active');
                 $class = 'btn-danger';
             }
-            $back = '<a class="btn ' . $class . '" onclick = "Proudcts.status(this);return false;" data-id = "' . $item->id . '" data-status = "' . $item->active . '">' . $message . ' <a>';
+            $back = '<a class="btn ' . $class . '" onclick = "Products.status(this);return false;" data-id = "' . $item->id . '" data-status = "' . $item->active . '">' . $message . ' <a>';
             return $back;
         }) 
         ->addColumn('image', function ($item) { 

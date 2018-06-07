@@ -22,7 +22,7 @@ class OrdersController extends ApiController {
         'name' => 'required',
         'mobile' => 'required',
         'building' => 'required',
-        'floor' => 'required',
+        //'floor' => 'required',
     );
     private $recieve_rules = array(
         'name' => 'required',
@@ -108,7 +108,7 @@ class OrdersController extends ApiController {
                     $order->store_id = $product->store_id;
                     $order->user_id = $user->id;
                     $order->total_price = 0;
-                    $order->date = date('Y-m-d');
+                    $order->date = date('Y-m-d h:i:s');
                     $order->status = 0;
                     $order->save();
                     $items = array();
@@ -261,7 +261,7 @@ class OrdersController extends ApiController {
         $validator = Validator::make($request->all(), $this->status_rules);
         if ($validator->fails()) {
             $errors = $validator->errors()->toArray();
-            return _api_json(new \stdClass(), ['errors' => $errors], 400);
+            return _api_json('', ['errors' => $errors], 400);
         }
 
         DB::beginTransaction();
@@ -342,7 +342,7 @@ class OrdersController extends ApiController {
             $columns[] = "users.fname";
             $columns[] = "users.lname";
             $columns[] = "users.image";
-            $columns[] = "users.mobile";
+            $columns[] = "users.mobile as user_mobile";
             $columns[] = "users.gender";
         }
 

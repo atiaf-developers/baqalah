@@ -792,7 +792,25 @@ return [
     'optional' => 'اختيارى',
     'message_is_sent_successfully' => 'تم ارسال الرسالة بنجاح',
     'rated_successfully' => 'تم التفييم بنجاح',
-    'order_has_been_sent_successfully' => 'تم ارسالة الطلب بنجاح'
+    'order_has_been_sent_successfully' => 'تم ارسالة الطلب بنجاح',
+    'invalid_credentials' => 'بيانات المستخدم غير صحيحة',
+    'waiting_for_reply' => 'قيد الانتظار',
+    'purchase_request' => 'طلب شراء',
+	'client_sent_new_order_and_waiting_for_store_reply' => 'العميل ارسل طلب شراءو فى انتظار رد المتجر',
+	'rejected' => 'تم الرفض',
+	'order_is_being_processed' => 'جارى تنفيذ الطلب',
+	'your_order_on_the_way' => 'جارى توصيل طلبك',
+	'order_on_the_way' => 'جارى توصيل الطلب',
+	'your_order_has_been_delivered' => 'تم توصيل طلبك',
+	'order_has_been_delivered' => 'تم توصيل الطلب',
+	'order_is_processed' => 'تم تجهيز الطلب',
+    'delivery_by_store' => 'توصيل عن طريق المتجر',
+    'receiving_the_order' => 'استلام الطلب',
+    'stores' => 'المتاجر',
+    'orders_reports' => 'تقارير الطلبات',
+    'orders_in_proccessing' => 'طلبات جارى تجهيزها',
+	
+	
 
 
 

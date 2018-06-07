@@ -18,9 +18,9 @@ class RegisterController extends ApiController {
         'step' => 'required',
         'first_name' => 'required',
         'last_name' => 'required',
-        'username' => 'required|unique:users',
-        'email' => 'email|unique:users',
-        'mobile' => 'required|unique:users',
+        'username' => 'required|unique:users,username,NULL,id,deleted_at,NULL',
+        'email' => 'email|unique:users,email,NULL,id,deleted_at,NULL',
+        'mobile' => 'required|unique:users,mobile,NULL,id,deleted_at,NULL',
         'password' => 'required',
         'gender' => 'required',
         'device_id' => 'required',
@@ -30,10 +30,10 @@ class RegisterController extends ApiController {
     private $store_rules_step_one = array(
         'step' => 'required',
         'type' => 'required',
-        'store_name' => 'required|unique:stores,name',
-        'username' => 'required|unique:users',
-        'email' => 'email|unique:users',
-        'mobile' => 'required|unique:users',
+        'store_name' => 'required|unique:stores,name,NULL,id,deleted_at,NULL',
+        'username' => 'required|unique:users,username,NULL,id,deleted_at,NULL',
+        'email' => 'email|unique:users,email,NULL,id,deleted_at,NULL',
+        'mobile' => 'required|unique:stores,mobile,NULL,id,deleted_at,NULL',
         'password' => 'required',
     );
     private $store_rules_step_two = array(
@@ -48,14 +48,14 @@ class RegisterController extends ApiController {
     private $store_rules = array(
         'step' => 'required',
         'type' => 'required',
-        'username' => 'required|unique:users',
-        'email' => 'email|unique:users',
-        'mobile' => 'required|unique:users',
+        'username' => 'required|unique:users,username,NULL,id,deleted_at,NULL',
+        'email' => 'email|unique:users,email,NULL,id,deleted_at,NULL',
+        'mobile' => 'required|unique:stores,mobile,NULL,id,deleted_at,NULL',
         'password' => 'required',
         'device_id' => 'required',
         'device_token' => 'required',
         'device_type' => 'required',
-        'store_name' => 'required|unique:stores,name',
+        'store_name' => 'required|unique:stores,name,NULL,id,deleted_at,NULL',
         'store_image' => 'required',
         'store_description' => 'required',
         'store_categories' => 'required',
@@ -99,7 +99,8 @@ class RegisterController extends ApiController {
         if ($request->step == 1 && $request->type == 2) {
             return _api_json(new \stdClass());
         } else if (($request->step == 1 && $request->type == 1) || ($request->step == 2 && $request->type == 2)) {
-            $verification_code = Random(4);
+            //$verification_code = Random(4);
+            $verification_code = "1234";
             return _api_json(new \stdClass(), ['code' => $verification_code]);
         } else if (($request->step == 2 && $request->type == 1) || ($request->step == 3 && $request->type == 2)) {
 

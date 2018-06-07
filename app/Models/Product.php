@@ -29,20 +29,17 @@ class Product extends MyModel
 
     public static function transform($item)
     {
-        $user = static::auth_user();
-        $transformer = new \stdClass();
+            $user = static::auth_user();
+            $transformer = new \stdClass();
 
-        $transformer->id = $item->id;
-        $transformer->name = $item->name;
-        $transformer->description = $item->description;
-        $transformer->price = $item->price;
-        $transformer->quantity = $item->quantity;
-        $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
-        $transformer->images = $prefixed_array;
+            $transformer->id = $item->id;
+            $transformer->name = $item->name;
+            $transformer->description = $item->description;
+            $transformer->price = $item->price;
+            $transformer->quantity = $item->quantity;
+            $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
+            $transformer->images = $prefixed_array;
 
-        if ($user->type == 1) {
-
-            $transformer->is_favourite = $item->is_favourite ? 1 : 0;
             $store = new \stdClass();
             $store->id = $item->store_id;
             $store->name = $item->store_name;
@@ -50,21 +47,25 @@ class Product extends MyModel
             $store->rate = $item->store_rate;
             $store->available = $item->store_available;
             $store->available_text = $item->store_available == 0 ? _lang('app.closed') : _lang('app.opened');
-            $transformer->store = $store;
 
-        }else if($user->type == 2){
+            if ($user) {
+                if ($user->type == 1) {
+                    $transformer->is_favourite = $item->is_favourite ? 1 : 0;
+                    $transformer->store = $store;
+                }else if($user->type == 2){
+                   $transformer->category = $item->category;
+                   $transformer->category_id = $item->category_id;
+                   $transformer->has_offer = $item->has_offer;
+               }
+           }else{
+               $transformer->is_favourite = 0;
+               $transformer->store = $store;
 
-         $transformer->category = $item->category;
-         $transformer->category_id = $item->category_id;
-         $transformer->has_offer = $item->has_offer;
+           }
+        return $transformer;
+   }
 
-     }
-
-     return $transformer;
-
- }
-
- protected static function boot() {
+protected static function boot() {
     parent::boot();
 
     static::deleting(function($product) {

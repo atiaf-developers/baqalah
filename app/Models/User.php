@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\ModelTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
 
 
@@ -13,6 +14,9 @@ class User extends Authenticatable {
 
     use Notifiable;
     use ModelTrait;
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     protected $casts = array(
         'id' => 'integer',
@@ -50,7 +54,7 @@ class User extends Authenticatable {
         $transformer->email = $item->email ? $item->email : "";
         $transformer->image = url('public/uploads/users').'/'.$item->image;
         if ($item->type == 2) {
-            $transformer->store = Store::transform($item->store);
+            $transformer->store = Store::transform($item->store,['user' => $item]);
         }
         return $transformer;
     }

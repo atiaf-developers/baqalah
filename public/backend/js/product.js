@@ -3,7 +3,7 @@ var store_id;
 var category_id;
 
 
-var Proudcts = function() {
+var Products = function() {
 
     var init = function() {
 
@@ -327,7 +327,7 @@ var Proudcts = function() {
             var id = $(t).attr("data-id");
             My.deleteForm({
                 element: t,
-                url: config.admin_url + '/users/' + id + '',
+                url: config.admin_url + '/products/' + id + '',
                 data: { _method: 'DELETE', _token: $('input[name="_token"]').val() },
                 success: function(data) {
 
@@ -360,6 +360,7 @@ var Proudcts = function() {
         },
     };
 }();
+
 $(document).ready(function() {
-    Proudcts.init();
+    Products.init();
 });

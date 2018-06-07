@@ -129,7 +129,7 @@ class Order extends MyModel {
         $transformer->status = $item->status;
 
         $status = $item->delivery_type == 1 ? static::$status_one : static::$status_two;
-        $transformer->status_text = isset($status[$item->status]) ? _lang('app.' . $status[$item->status]['store']) : '';
+        $transformer->status_text = isset($status[$item->status]) ? _lang('app.' . $status[$item->status]['client']) : '';
         $transformer->order_detailes = OrderDetails::transformCollection($item->order_details()
                                 ->join('products', 'order_details.product_id', '=', 'products.id')
                                 ->select('products.name', 'products.images', 'order_details.price', 'order_details.quantity')
@@ -162,7 +162,7 @@ class Order extends MyModel {
 
         $user->name = $item->fname . ' ' . $item->lname;
         $user->image = url('public/uploads/users') . '/' . $item->image;
-        $user->mobile = $item->mobile;
+        $user->mobile = $item->user_mobile;
         $user->gender = $item->gender;
         $transformer->user = $user;
 

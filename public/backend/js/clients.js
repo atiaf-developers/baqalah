@@ -321,7 +321,7 @@ var Clients = function() {
             var id = $(t).attr("data-id");
             My.deleteForm({
                 element: t,
-                url: config.admin_url + '/users/' + id + '',
+                url: config.admin_url + '/clients/' + id + '',
                 data: { _method: 'DELETE', _token: $('input[name="_token"]').val() },
                 success: function(data) {
 

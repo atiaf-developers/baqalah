@@ -121,9 +121,9 @@ class ProductsController extends ApiController {
         try {
 
             $product = Product::where('id', $id)
-                    ->where('store_id', $request->input('store_id'))
-                    ->where('active', true)
-                    ->first();
+            ->where('store_id', $request->input('store_id'))
+            ->where('active', true)
+            ->first();
             if (!$product) {
                 $message = _lang('app.not_found');
                 return _api_json('', ['message' => $message], 404);
@@ -184,8 +184,8 @@ class ProductsController extends ApiController {
     public function destroy(Request $request, $id) {
         try {
             $product = Product::where('id', $id)
-                    ->where('store_id', $request->input('store_id'))
-                    ->first();
+            ->where('store_id', $request->input('store_id'))
+            ->first();
             if (!$product) {
                 $message = _lang('app.not_found');
                 return _api_json('', ['message' => $message], 404);
@@ -199,46 +199,43 @@ class ProductsController extends ApiController {
     }
 
     private function getProducts($request, $product_id = null) {
+
         $columns = ["products.id", 'products.name', 'products.description', 'products.images', 'products.quantity',
-            'products.price'];
+        'products.price',"stores.id as store_id","stores.name as store_name","stores.image as store_image","stores.rate as store_rate","stores.available as store_available"];
 
         $user = $this->auth_user();
 
         $products = Product::join('stores', 'stores.id', '=', 'products.store_id');
         $products->join('categories', 'categories.id', '=', 'products.category_id');
         $products->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id');
-
-        if ($user->type == 1) {
-            $products->leftJoin('favourites', function ($join) use($user) {
-                $join->on('favourites.product_id', '=', 'products.id');
-                $join->where('favourites.user_id', $user->id);
-            });
-            $columns[] = "favourites.id as is_favourite";
-            $columns[] = "stores.id as store_id";
-            $columns[] = "stores.name as store_name";
-            $columns[] = "stores.image as store_image";
-            $columns[] = "stores.rate as store_rate";
-            $columns[] = "stores.available as store_available";
-
-            if ($request->input('type') && $request->input('type') == 'offers') {
-                $products->where('products.has_offer', 1);
+        if ($user) {
+            if ($user->type == 1) {
+                $products->leftJoin('favourites', function ($join) use($user) {
+                    $join->on('favourites.product_id', '=', 'products.id');
+                    $join->where('favourites.user_id', $user->id);
+                });
+                $columns[] = "favourites.id as is_favourite";
+                if ($request->input('type') && $request->input('type') == 'offers') {
+                    $products->where('products.has_offer', 1);
+                }
+                if ($request->input('categories')) {
+                    $categories = json_decode($request->input('categories'));
+                    $products->whereIn('products.category_id', $categories);
+                }
+                if ($request->input('sort')) {
+                    $sort_type = $request->input('sort') == 1 ? 'ASC' : 'DESC';
+                    $products->orderBy('products.price', $sort_type);
+                }
+                if ($request->input('search')) {
+                    $products->whereRaw(handleKeywordWhere(['products.name'], $request->input('search')));
+                }
+            } else if ($user->type == 2) {
+                $columns[] = "products.has_offer";
+                $columns[] = "categories_translations.title as category";
+                $columns[] = "categories.id as category_id";
             }
-            if ($request->input('categories')) {
-                $categories = json_decode($request->input('categories'));
-                $products->whereIn('products.category_id', $categories);
-            }
-            if ($request->input('sort')) {
-                $sort_type = $request->input('sort') == 1 ? 'ASC' : 'DESC';
-                $products->orderBy('products.price', $sort_type);
-            }
-            if ($request->input('search')) {
-                $products->whereRaw(handleKeywordWhere(['products.name'], $request->input('search')));
-            }
-        } else if ($user->type == 2) {
-            $columns[] = "products.has_offer";
-            $columns[] = "categories_translations.title as category";
-            $columns[] = "categories.id as category_id";
         }
+        
 
         if ($product_id) {
             $products->where('products.id', $product_id);

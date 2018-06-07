@@ -41,6 +41,30 @@ class ClientsController extends BackendController
         return $this->_view('clients/view', 'backend');
     }
 
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id) {
+        $user = User::find($id);
+        if (!$user) {
+            return _json('error', _lang('app.error_is_occured'), 404);
+        }
+        try {
+            $user->delete();
+            return _json('success', _lang('app.deleted_successfully'));
+        } catch (\Exception $ex) {
+            if ($ex->getCode() == 23000) {
+                return _json('error', _lang('app.this_record_can_not_be_deleted_for_linking_to_other_records'), 400);
+            } else {
+                return _json('error', _lang('app.error_is_occured'), 400);
+            }
+        }
+    }
+
     public function data(Request $request) {
         $Clients = User::where('type',1);
 
