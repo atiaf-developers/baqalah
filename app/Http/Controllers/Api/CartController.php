@@ -85,6 +85,9 @@ class CartController extends ApiController {
                     ->first();
             if ($cart_item) {
                 $cart_item->quantity += 1;
+                if ( $cart_item->quantity > $product->quantity ) {
+                   return _api_json('', ['message' => $product->name . ' ' ._lang('app.available_quantity_is') . ' ' . $product->quantity], 400);
+                }
                 $cart_item->save();
             } else {
                 $cart_item = new Cart;
@@ -122,6 +125,10 @@ class CartController extends ApiController {
                 return _api_json('', ['message' => _lang('app.not_found')], 400);
             } else if ($request->input('quantity') > $cart_item->product_quantity) {
                 return _api_json('', ['message' => $cart_item->name . ' ' ._lang('app.available_quantity_is') . ' ' . $cart_item->product_quantity], 400);
+            }
+            
+            if ( $request->input('quantity') > $cart_item->product_quantity ) {
+              
             }
 
             $cart_item->quantity = $request->input('quantity');

@@ -215,25 +215,27 @@ class ProductsController extends ApiController {
                     $join->where('favourites.user_id', $user->id);
                 });
                 $columns[] = "favourites.id as is_favourite";
-                if ($request->input('type') && $request->input('type') == 'offers') {
-                    $products->where('products.has_offer', 1);
-                }
-                if ($request->input('categories')) {
-                    $categories = json_decode($request->input('categories'));
-                    $products->whereIn('products.category_id', $categories);
-                }
-                if ($request->input('sort')) {
-                    $sort_type = $request->input('sort') == 1 ? 'ASC' : 'DESC';
-                    $products->orderBy('products.price', $sort_type);
-                }
-                if ($request->input('search')) {
-                    $products->whereRaw(handleKeywordWhere(['products.name'], $request->input('search')));
-                }
+                
             } else if ($user->type == 2) {
                 $columns[] = "products.has_offer";
                 $columns[] = "categories_translations.title as category";
                 $columns[] = "categories.id as category_id";
             }
+        }
+
+        if ($request->input('type') && $request->input('type') == 'offers') {
+            $products->where('products.has_offer', 1);
+        }
+        if ($request->input('categories')) {
+            $categories = json_decode($request->input('categories'));
+            $products->whereIn('products.category_id', $categories);
+        }
+        if ($request->input('sort')) {
+            $sort_type = $request->input('sort') == 1 ? 'ASC' : 'DESC';
+            $products->orderBy('products.price', $sort_type);
+        }
+        if ($request->input('search')) {
+            $products->whereRaw(handleKeywordWhere(['products.name'], $request->input('search')));
         }
         
 

@@ -17,17 +17,17 @@
 <input type="hidden" name="lng" id="lng" value="{{ $store->lng }}">
 
 
-<div class="row">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="col-md-12">
 
-                <!-- BEGIN SAMPLE TABLE PORTLET-->
-                <div class="portlet box red">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <i class="fa fa-cogs"></i>{{ $store->name }}
-                        </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="col-md-12">
+
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+            <div class="portlet box red">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i>{{ $store->name }}
+                    </div>
                         <!--                        <div class="tools">
                                                     <a href="javascript:;" class="collapse" store-original-title="" title="">
                                                     </a>
@@ -66,8 +66,8 @@
 
                                                             </tr>
                                                             <tr>
-                                                                <td>{{ _lang('app.avaliable')}}</td>
-                                                                @if($store->avaliable==1)
+                                                                <td>{{ _lang('app.available')}}</td>
+                                                                @if($store->available == 1)
                                                                 <td>{{ _lang('app.opened')}}</td>
                                                                 @else
                                                                 <td>{{ _lang('app.closed')}}</td>
@@ -77,7 +77,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>{{ _lang('app.active')}}</td>
-                                                                @if($store->avaliable==1)
+                                                                @if($store->active == 1)
                                                                 <td>{{ _lang('app.active')}}</td>
                                                                 @else
                                                                 <td>{{ _lang('app.not_active')}}</td>
@@ -88,7 +88,7 @@
                                                             <tr>
                                                                 <td>{{ _lang('app.image')}}</td>
                                                                 <td>
-                                                                 <a class="fancybox-button" product-rel="fancybox-button" title="390 x 220 - keenthemes.com" href="{{url('public/uploads/stores')}}/{{$store->image}}">
+                                                                   <a class="fancybox-button" product-rel="fancybox-button" title="390 x 220 - keenthemes.com" href="{{url('public/uploads/stores')}}/{{$store->image}}">
                                                                     <img style="width: 100px;height: 100px;" alt="" src="{{url('public/uploads/stores')}}/{{$store->image}}">
                                                                 </a>
                                                             </td>
@@ -132,7 +132,7 @@
 
                                 </div>
                             </div>
-                           
+
                             <div class="col-md-6">
                                 <!-- BEGIN SAMPLE TABLE PORTLET-->
                                 <div class="portlet box red">
@@ -140,27 +140,27 @@
                                         <div class="caption">
                                             <i class="fa fa-cogs"></i>{{ $store->name }} {{ _lang('app.map')}}
                                         </div>
-                 
+
                                     </div>
                                     <div class="portlet-body">
 
                                         <div class="maplarger">
-                          
+
                                             <div id="map" style="height: 300px; width:100%;"></div>
-                                               <div id="infowindow-content">
-                                                        <span id="place-name"  class="title"></span><br>
-                                                        Place ID <span id="place-id"></span><br>
-                                                        <span id="place-address"></span>
-                                                    </div>
-                                                </div>
+                                            <div id="infowindow-content">
+                                                <span id="place-name"  class="title"></span><br>
+                                                Place ID <span id="place-id"></span><br>
+                                                <span id="place-address"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
 
-<script>
-    var new_lang = {};
-</script>
-@endsection
+                        </div>
+                 
+
+                    <script>
+                        var new_lang = {};
+                    </script>
+                    @endsection

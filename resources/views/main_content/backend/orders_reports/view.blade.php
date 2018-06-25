@@ -97,10 +97,10 @@
 
                                             <div class="row static-info">
                                                 <div class="col-md-5 name">
-                                                    {{_lang('app.payment_method')}}
+                                                    {{_lang('app.delivery_type')}}
                                                 </div>
                                                 <div class="col-md-7 value">
-                                                    {{$order->delivery_type==1?_lang('app.delivery_by_store'):_lang('app.receive_order')}}
+                                                    {{$order->delivery_type==1?_lang('app.delivery_by_store'):_lang('app.receiving_the_order')}}
                                                 </div>
                                             </div>
                                             <div class="row static-info">
@@ -208,7 +208,7 @@
                                                 <table class="table table-hover table-bordered table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th> {{_lang('app.no')}}</th>
+                                                            <th> {{_lang('app.order_no')}}</th>
                                                             <th> {{_lang('app.product')}}</th>
                                                             <th> {{_lang('app.price')}}</th>
                                                             <th> {{_lang('app.quantity')}}</th>

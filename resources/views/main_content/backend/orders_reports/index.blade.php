@@ -75,7 +75,7 @@
                             <select class="form-control" name="delivery_type" id="delivery_type">
                                 <option value="">{{_lang('app.choose')}}</option>
                                 <option {{ (isset($delivery_type) && $delivery_type==1) ?'selected':''}}  value="1">{{ _lang('app.delivery_by_store') }}</option>
-                                <option {{ (isset($delivery_type) && $delivery_type==2) ?'selected':''}}  value="2">{{ _lang('app.recieve_order') }}</option>
+                                <option {{ (isset($delivery_type) && $delivery_type==2) ?'selected':''}}  value="2">{{ _lang('app.receiving_the_order') }}</option>
 
 
                             </select>
@@ -172,7 +172,7 @@
                             <td>{{$one->client_name}}</td>
                             <td>{{$one->store_name}}</td>
                             <td>{{$one->total_price}}</td>
-                            <td>{{$one->delivery_type==1?_lang('app.delivery_by_store'):_lang('app.receive_order')}}</td>
+                            <td>{{$one->delivery_type==1?_lang('app.delivery_by_store'):_lang('app.receiving_the_order')}}</td>
                             <td>
                                 @if($one->delivery_type==1)
                                 {{isset($status_one_arr[$one->status])?_lang('app.'.$status_one_arr[$one->status]['admin']):''}}

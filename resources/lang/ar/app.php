@@ -791,14 +791,14 @@ return [
     'create_a_new_account' => 'انشاء حساب جديد',
     'optional' => 'اختيارى',
     'message_is_sent_successfully' => 'تم ارسال الرسالة بنجاح',
-    'rated_successfully' => 'تم التفييم بنجاح',
+    'rated_successfully' => 'تم التقييم بنجاح',
     'order_has_been_sent_successfully' => 'تم ارسالة الطلب بنجاح',
     'invalid_credentials' => 'بيانات المستخدم غير صحيحة',
     'waiting_for_reply' => 'قيد الانتظار',
     'purchase_request' => 'طلب شراء',
 	'client_sent_new_order_and_waiting_for_store_reply' => 'العميل ارسل طلب شراءو فى انتظار رد المتجر',
 	'rejected' => 'تم الرفض',
-	'order_is_being_processed' => 'جارى تنفيذ الطلب',
+	'order_is_being_processed' => 'جارى تجهيز الطلب',
 	'your_order_on_the_way' => 'جارى توصيل طلبك',
 	'order_on_the_way' => 'جارى توصيل الطلب',
 	'your_order_has_been_delivered' => 'تم توصيل طلبك',
@@ -809,6 +809,19 @@ return [
     'stores' => 'المتاجر',
     'orders_reports' => 'تقارير الطلبات',
     'orders_in_proccessing' => 'طلبات جارى تجهيزها',
+	'this_product_is_out_of_Stock' => 'لقد نفذ هذا المنتج',
+    'commission_cost' => 'مبلغ العمولة',
+	'total_commission_cost' => 'مبلغ العمولة الكلى',
+	'show' => 'عرض',
+	'available' => 'متاح',
+	'owner_name' => 'اسم المالك',
+	'available_quantity_is' => 'الكمية المتاحة منه هى',
+	'store' => 'المتجر',
+	'delivery_type' => 'نوع التوصيل',
+	'client' => 'العميل',
+	'product' => 'المنتج',
+	
+    
 	
 	
 

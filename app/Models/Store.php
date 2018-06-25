@@ -30,6 +30,7 @@ class Store extends MyModel {
     }
 
     public static function transform($item, $extra_params = array()) {
+      
         $lang_code = static::getLangCode();
         $transformer = new \stdClass();
         $transformer->id = $item->id;
@@ -41,10 +42,9 @@ class Store extends MyModel {
         $transformer->lng = $item->lng;
         $transformer->address = $item->address;
         $transformer->available = $item->available;
-        if ($item->orders_notify) {
+        if (isset($item->orders_notify)) {
             $transformer->orders_notify = $item->orders_notify;
         }
-        
         if ((isset($extra_params['user']) && $extra_params['user']->type == 1) || !isset($extra_params['user'])) {
             $transformer->categories = implode(" - ",$item->categories()->join('categories_translations', 'categories.id', '=', 'categories_translations.category_id')
             ->where('categories_translations.locale', $lang_code)

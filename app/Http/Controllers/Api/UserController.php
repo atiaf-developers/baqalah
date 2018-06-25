@@ -223,12 +223,17 @@ class UserController extends ApiController {
         }
         DB::beginTransaction();
         try {
+
+            Rating::updateOrCreate(
+                ['user_id' => $user->id, 'store_id' => $request->input('store_id')],
+                ['rate' => $request->input('rate')]
+            );
             
-            $rate = new Rating;
+            /*$rate = new Rating;
             $rate->user_id = $user->id;
             $rate->store_id = $request->input('store_id');
             $rate->rate = $request->input('rate');
-            $rate->save();
+            $rate->save();*/
 
             $store_new_rate = Rating::where('store_id', $request->input('store_id'))
             ->select(DB::raw(' SUM(rate)/COUNT(*) as rate'))

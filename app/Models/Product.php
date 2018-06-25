@@ -18,7 +18,7 @@ class Product extends MyModel
 
     public static $sizes = array(
         's' => array('width' => 300, 'height' => 300),
-        'm' => array('width' => 400, 'height' => 400),
+        'm' => array('width' => 600, 'height' => 400),
     );
     
     
@@ -37,8 +37,16 @@ class Product extends MyModel
             $transformer->description = $item->description;
             $transformer->price = $item->price;
             $transformer->quantity = $item->quantity;
-            $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
+            
+            $product_images =  json_decode($item->images);
+            foreach ($product_images as $key => $value) {
+                $product_images[$key] =  static::rmv_prefix($value);
+            }
+            $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/m_', $product_images);
             $transformer->images = $prefixed_array;
+
+            //$prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
+            //$transformer->images = $prefixed_array;
 
             $store = new \stdClass();
             $store->id = $item->store_id;
