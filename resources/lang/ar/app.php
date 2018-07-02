@@ -792,7 +792,7 @@ return [
     'optional' => 'اختيارى',
     'message_is_sent_successfully' => 'تم ارسال الرسالة بنجاح',
     'rated_successfully' => 'تم التقييم بنجاح',
-    'order_has_been_sent_successfully' => 'تم ارسالة الطلب بنجاح',
+    'order_has_been_sent_successfully' => 'تم ارسال الطلب بنجاح',
     'invalid_credentials' => 'بيانات المستخدم غير صحيحة',
     'waiting_for_reply' => 'قيد الانتظار',
     'purchase_request' => 'طلب شراء',
@@ -809,7 +809,7 @@ return [
     'stores' => 'المتاجر',
     'orders_reports' => 'تقارير الطلبات',
     'orders_in_proccessing' => 'طلبات جارى تجهيزها',
-	'this_product_is_out_of_Stock' => 'لقد نفذ هذا المنتج',
+	'this_product_is_out_of_stock' => 'لقد نفذ هذا المنتج',
     'commission_cost' => 'مبلغ العمولة',
 	'total_commission_cost' => 'مبلغ العمولة الكلى',
 	'show' => 'عرض',
@@ -820,6 +820,8 @@ return [
 	'delivery_type' => 'نوع التوصيل',
 	'client' => 'العميل',
 	'product' => 'المنتج',
+	'the_product_has_been_deleted_from_favorites' => 'تم حذف المنتج من المفضلة',
+    'the_product_has_been_added_to_favorites' => 'تم اضافة المنتج الى المفضلة',
 	
     
 	

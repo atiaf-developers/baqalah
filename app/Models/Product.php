@@ -38,12 +38,18 @@ class Product extends MyModel
             $transformer->price = $item->price;
             $transformer->quantity = $item->quantity;
             
+            $prefixed_array = array();
             $product_images =  json_decode($item->images);
-            foreach ($product_images as $key => $value) {
-                $product_images[$key] =  static::rmv_prefix($value);
+            if (count($product_images) > 0) {
+                foreach ($product_images as $key => $value) {
+                  $product_images[$key] =  static::rmv_prefix($value);
+                }
+                $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/m_', $product_images);
+                $transformer->images = $prefixed_array;
+            }else{
+                $transformer->images = $prefixed_array;
             }
-            $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/m_', $product_images);
-            $transformer->images = $prefixed_array;
+           
 
             //$prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
             //$transformer->images = $prefixed_array;

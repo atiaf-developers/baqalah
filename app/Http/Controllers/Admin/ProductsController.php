@@ -167,7 +167,11 @@ class ProductsController extends BackendController
         }) 
         ->addColumn('image', function ($item) { 
             $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
-            $back = '<img src="' .  $prefixed_array[0] . '" style="height:64px;width:64px;"/>';
+            if (count($prefixed_array) > 0) {
+                $back = '<img src="' .  $prefixed_array[0] . '" style="height:64px;width:64px;"/>';
+            }else{
+                $back = '<img src="" style="height:64px;width:64px;"/>';
+            }
             return $back;
         })
         ->addColumn('category', function ($item) { 

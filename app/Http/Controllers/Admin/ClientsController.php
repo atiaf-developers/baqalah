@@ -66,7 +66,7 @@ class ClientsController extends BackendController
     }
 
     public function data(Request $request) {
-        $Clients = User::where('type',1);
+        $Clients = User::where('type',1)->orderBy('id','desc');
 
         return \Datatables::eloquent($Clients)
         ->addColumn('options', function ($item) {

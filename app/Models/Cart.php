@@ -46,7 +46,12 @@ class Cart extends MyModel {
         $transformer->price = $item->price;
         $transformer->quantity = $item->quantity;
         $prefixed_array = preg_filter('/^/', url('public/uploads/products') . '/', json_decode($item->images));
-        $transformer->image = $prefixed_array[0];
+        if (count( $prefixed_array) > 0) {
+            $transformer->image = $prefixed_array[0];
+        }else{
+            $transformer->image = "";
+        }
+        
 
         return $transformer;
     }

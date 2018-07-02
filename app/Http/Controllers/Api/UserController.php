@@ -146,20 +146,24 @@ class UserController extends ApiController {
                                 $store->image = Store::upload($image,'stores',true,false,true);
                             } 
                         }
-                        if ($request->input('lat')) {
-                            $store->lat = $request->input('lat');
-                        }
                         if ($request->input('orders_notify') != null) {
                             $store->orders_notify = $request->input('orders_notify');
+                        }
+                        if ($request->input('lat')) {
+                            $store->lat = $request->input('lat');
                         }
                         if ($request->input('lng')) {
                             $store->lng = $request->input('lng');
                         }
 
+                        if ($request->input('lat') && $request->input('lng')) {
+                            $store->address = getAddress($request->input('lat'), $request->input('lng'), $lang = "AR"); 
+                        }
+
                         if ($request->input('available') != null) {
                             $store->available = $request->input('available');
                         }
-                        $store->address = getAddress($request->input('lat'), $request->input('lng'), $lang = "AR"); 
+                        
                        
                         if ($request->input('store_categories')) {
 
@@ -272,14 +276,16 @@ class UserController extends ApiController {
 
             if ($check) {
                 $check->delete();
+                $message = _lang('app.the_product_has_been_deleted_from_favorites');
             }
             else{
                 $favourite = new Favourite;
                 $favourite->product_id = $request->input('product_id');
                 $favourite->user_id = $user->id;
                 $favourite->save();
+                $message = _lang('app.the_product_has_been_added_to_favorites');
             }
-            return _api_json('',['message' => _lang('app.updated_successfully')]);
+            return _api_json('',['message' => $message ]);
         } catch (\Exception $e) {
             $message = _lang('app.error_is_occured');
             return _api_json('', ['message' => $message],400);

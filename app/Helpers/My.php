@@ -818,7 +818,7 @@ if (!function_exists('getAddress3')) {
      * @param string $lang
      * @return string
      */
-    function getAddress($lat, $lng, $lang = "AR") {
+    function getAddress3($lat, $lng, $lang = "AR") {
         $url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' . trim($lat) . ',' . trim($lng) . '&language=' . $lang . '&sensor=false';
         $json = @file_get_contents($url);
         $data = json_decode($json);
@@ -1097,7 +1097,7 @@ if (!function_exists('unique_random')) {
 if (!function_exists('getAddress')) {
 
     function getAddress($lat, $lng, $lang = "AR") {
-        $url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' . trim($lat) . ',' . trim($lng) . '&language=' . $lang;
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . trim($lat) . ',' . trim($lng) . '&language=' . $lang . "&key=AIzaSyDGbxcCdO2kOPtbiHIHz4CpdzG30c2A6is";
         $data = json_decode(curlRequest($url));
         isset($data->status) ? $status = $data->status : $status = "FAIL";
 

@@ -97,7 +97,7 @@ class StoresController extends BackendController
     }
 
     public function data(Request $request) {
-        $stores = Store::select('*');
+        $stores = Store::select('*')->orderBy('id','desc');
 
         return \Datatables::eloquent($stores)
 

@@ -52,7 +52,12 @@ class User extends Authenticatable {
         }
         $transformer->username = $item->username;
         $transformer->email = $item->email ? $item->email : "";
-        $transformer->image = url('public/uploads/users').'/'.$item->image;
+        if ($item->image == 'default.png') {
+            $transformer->image = "";
+        }else{
+            $transformer->image = url('public/uploads/users').'/'.$item->image;
+        }
+        
         if ($item->type == 2) {
             $transformer->store = Store::transform($item->store,['user' => $item]);
         }
@@ -63,8 +68,8 @@ class User extends Authenticatable {
         parent::boot();
 
         static::deleted(function($user) {
-            if ($user->user_image != 'default.png') {
-                User::deleteUploaded('users',$user->user_image);
+            if ($user->image != 'default.png') {
+                User::deleteUploaded('users',$user->image);
             }
             
         });
