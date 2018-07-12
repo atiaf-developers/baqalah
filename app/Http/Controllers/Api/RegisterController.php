@@ -101,6 +101,8 @@ class RegisterController extends ApiController {
         } else if (($request->step == 1 && $request->type == 1) || ($request->step == 2 && $request->type == 2)) {
             //$verification_code = Random(4);
             $verification_code = "1234";
+            $send=$this->sendSMS([$request->input('mobile')], $verification_code);
+            dd(json_decode($send->getBody()));
             return _api_json(new \stdClass(), ['code' => $verification_code]);
         } else if (($request->step == 2 && $request->type == 1) || ($request->step == 3 && $request->type == 2)) {
 
@@ -142,7 +144,7 @@ class RegisterController extends ApiController {
             $User->mobile = $request->input('mobile');
         }
         $User->type = $request->type;
-        $User->image = "default.png";
+        $User->image = "";
 
         if ($request->type == 1) {
             $User->active = 1;

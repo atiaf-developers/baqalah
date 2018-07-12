@@ -12,6 +12,7 @@ use App\Models\SettingTranslation;
 use App\Models\Category;
 use App\Models\Store;
 use App\Models\ContactMessage;
+use App\Models\Device;
 use App\Helpers\Fcm;
 use Carbon\Carbon;
 use DB;
@@ -32,6 +33,12 @@ class BasicController extends ApiController {
 
     private $store_categories_rules = array(
         'store_id' => 'required',
+    );
+
+    private $update_token_rules = array(
+        'device_id' => 'required' ,
+        'device_token' => 'required',
+        'device_type' => 'required'
     );
 
 
@@ -101,7 +108,7 @@ class BasicController extends ApiController {
         try {
             $complaints = ContactMessage::Join('users','users.id','=','contact_messages.user_id')
             ->where('store_id',$request->input('store_id'))
-            ->select('contact_messages.name','contact_messages.email','contact_messages.subject','contact_messages.message','users.gender')
+            ->select('contact_messages.name','contact_messages.email','contact_messages.subject','contact_messages.message','users.gender','users.image')
             ->paginate($this->limit);
             return _api_json(ContactMessage::transformCollection($complaints));
         } catch (\Exception $ex) {
@@ -139,6 +146,24 @@ class BasicController extends ApiController {
             return _api_json(Category::transformCollection($categories));
         } catch (\Exception $e) {
             return _api_json([], ['message' => _lang('app.error_is_occured')], 400);
+        }
+    }
+
+    public function updateToken(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), $this->$update_token_rules);
+            if ($validator->fails()) {
+                $errors = $validator->errors()->toArray();
+                return _api_json([], ['errors' => $errors], 400);
+            }
+            $user = $this->auth_user();
+            Device::updateOrCreate(
+                ['device_id' => $request->input('device_id'), 'user_id' => $user->id], ['device_token' => $request->input('device_token'), 'device_type' => $request->input('device_type')]
+            );
+            return _api_json("");
+        } catch (\Exception $e) {
+            return _api_json("", ['message' => _lang('app.error_is_occured')], 400);
         }
     }
 
