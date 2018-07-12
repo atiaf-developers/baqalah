@@ -143,7 +143,7 @@ class UserController extends ApiController {
                             $image = preg_replace("/\r|\n/", "", $request->input('store_image'));
                             Store::deleteUploaded('stores', $store->image);
                             if (isBase64image($image)) {
-                                $store->image = Store::upload($image,'stores',true,false,true);
+                                $store->image = Store::upload($image,'stores',false,false,true);
                             } 
                         }
                         if ($request->input('orders_notify') != null) {

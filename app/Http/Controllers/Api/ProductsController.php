@@ -67,19 +67,19 @@ class ProductsController extends ApiController {
      */
     public function store(Request $request) {
         try {
-
-            $this->rules['product_name'] = "required|unique:products,name,NULL,id,store_id,{$request->input('store_id')}";
+              $user = $this->auth_user();
+            $this->rules['product_name'] = "required|unique:products,name,NULL,id,store_id,{$user->store->id},deleted_at,NULL";
 
             $validator = Validator::make($request->all(), $this->rules);
             if ($validator->fails()) {
                 $errors = $validator->errors()->toArray();
                 return _api_json('', ['errors' => $errors], 400);
             }
-
+            
             $product = new Product;
             $product->name = $request->input('product_name');
             $product->category_id = $request->input('category');
-            $product->store_id = $request->input('store_id');
+            $product->store_id = $user->store->id;
             $product->description = $request->input('description');
             $product->price = $request->input('price');
             $product->quantity = $request->input('quantity');
@@ -119,16 +119,17 @@ class ProductsController extends ApiController {
      */
     public function update(Request $request, $id) {
         try {
-
+            $user = $this->auth_user();
+            //dd($user->store);
             $product = Product::where('id', $id)
-            ->where('store_id', $request->input('store_id'))
-            ->where('active', true)
-            ->first();
+                    ->where('store_id',$user->store->id)
+                    ->where('active', true)
+                    ->first();
             if (!$product) {
                 $message = _lang('app.not_found');
                 return _api_json('', ['message' => $message], 404);
             }
-            $this->rules['product_name'] = "required|unique:products,name,{$id},id,store_id,{$request->input('store_idg')}";
+            $this->rules['product_name'] = "required|unique:products,name,{$id},id,store_id,{$user->store->id},deleted_at,NULL";
 
             $validator = Validator::make($request->all(), $this->rules);
             if ($validator->fails()) {
@@ -138,7 +139,7 @@ class ProductsController extends ApiController {
 
             $product->name = $request->input('product_name');
             $product->category_id = $request->input('category');
-            $product->store_id = $request->input('store_id');
+
             $product->description = $request->input('description');
             $product->price = $request->input('price');
             $product->quantity = $request->input('quantity');
@@ -184,8 +185,8 @@ class ProductsController extends ApiController {
     public function destroy(Request $request, $id) {
         try {
             $product = Product::where('id', $id)
-            ->where('store_id', $request->input('store_id'))
-            ->first();
+                    ->where('store_id', $request->input('store_id'))
+                    ->first();
             if (!$product) {
                 $message = _lang('app.not_found');
                 return _api_json('', ['message' => $message], 404);
@@ -201,7 +202,7 @@ class ProductsController extends ApiController {
     private function getProducts($request, $product_id = null) {
 
         $columns = ["products.id", 'products.name', 'products.description', 'products.images', 'products.quantity',
-        'products.price',"stores.id as store_id","stores.name as store_name","stores.image as store_image","stores.rate as store_rate","stores.available as store_available"];
+            'products.price', "stores.id as store_id", "stores.name as store_name", "stores.image as store_image", "stores.rate as store_rate", "stores.available as store_available"];
 
         $user = $this->auth_user();
 
@@ -215,7 +216,6 @@ class ProductsController extends ApiController {
                     $join->where('favourites.user_id', $user->id);
                 });
                 $columns[] = "favourites.id as is_favourite";
-                
             } else if ($user->type == 2) {
                 $columns[] = "products.has_offer";
                 $columns[] = "categories_translations.title as category";
@@ -237,7 +237,7 @@ class ProductsController extends ApiController {
         if ($request->input('search')) {
             $products->whereRaw(handleKeywordWhere(['products.name'], $request->input('search')));
         }
-        
+
 
         if ($product_id) {
             $products->where('products.id', $product_id);

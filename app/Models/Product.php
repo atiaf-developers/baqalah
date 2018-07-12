@@ -18,7 +18,7 @@ class Product extends MyModel
 
     public static $sizes = array(
         's' => array('width' => 300, 'height' => 300),
-        'm' => array('width' => 600, 'height' => 400),
+        'm' => array('width' => 900, 'height' => 500),
     );
     
     
