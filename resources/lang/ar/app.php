@@ -822,6 +822,7 @@ return [
 	'product' => 'المنتج',
 	'the_product_has_been_deleted_from_favorites' => 'تم حذف المنتج من المفضلة',
     'the_product_has_been_added_to_favorites' => 'تم اضافة المنتج الى المفضلة',
+	'this_store_is_currently_closed' => 'هذا المتجر مغلق حالياً',
 	
     
 	

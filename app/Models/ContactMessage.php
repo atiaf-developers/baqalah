@@ -18,6 +18,16 @@ class ContactMessage extends MyModel {
     	$transformer->subject = $item->subject;
         $transformer->message = $item->message;
     	$transformer->gender = $item->gender;
+        if (!$item->image) {
+             if ($item->gender == 1) {
+                $image = 'default_male.png';
+            }else if($item->gender == 2){
+                $image = 'default_female.png';
+            } 
+        }else{
+            $image = $item->image;
+        }
+        $transformer->image = url('public/uploads/users').'/'.$image;
 
     	return $transformer;
     }

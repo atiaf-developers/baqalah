@@ -39,6 +39,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::group(['middleware' => 'jwt.auth'], function () {
 
         Route::post('user/update', 'UserController@update');
+        Route::post('update_token','BasicController@updateToken');
         Route::get('logout', 'UserController@logout');
         
         Route::get('store_categories', 'BasicController@getStoreCategories');
@@ -50,6 +51,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('complaints', 'BasicController@getComplaints');
 
         Route::post('change_status','OrdersController@status');
+
 
         Route::post('products', 'ProductsController@store');
         Route::put('products/{id}', 'ProductsController@update');

@@ -112,7 +112,11 @@ class ClientsController extends BackendController
         }) 
         ->addColumn('image', function ($item) {
             if (!$item->image) {
-                $item->image = 'default.png';
+                if ($item->gender == 1) {
+                    $item->image = 'default_male.png';
+                }else if($item->gender == 2){
+                    $item->image = 'default_female.png';
+                } 
             }
              $back = '<img src="' . url('public/uploads/users/' . $item->image) . '" style="height:64px;width:64px;"/>';
              return $back;

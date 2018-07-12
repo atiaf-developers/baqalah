@@ -124,6 +124,8 @@ class ProductsController extends ApiController {
             ->where('store_id', $request->input('store_id'))
             ->where('active', true)
             ->first();
+
+            $has_offer = $product->has_offer;
             if (!$product) {
                 $message = _lang('app.not_found');
                 return _api_json('', ['message' => $message], 404);
@@ -160,7 +162,7 @@ class ProductsController extends ApiController {
             foreach ($old_images as $image) {
                 Product::deleteUploaded('products', $image);
             }
-            if ($product->has_offer == 1) {
+            if ($product->has_offer == 1 && $has_offer == 0) {
                 $notification['body'] = _lang('app.new_offer_from') . ' ' . $product->store->name . ' ' . _lang('app.on') . ' ' . $product->name;
                 $notification['type'] = 2;
                 $notification['id'] = $product->id;

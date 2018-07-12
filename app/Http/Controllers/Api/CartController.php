@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Helpers\AUTHORIZATION;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Store;
 use App\Models\Product;
 use DB;
 
@@ -67,6 +68,14 @@ class CartController extends ApiController {
             if ($validator->fails()) {
                 $errors = $validator->errors()->toArray();
                 return _api_json('', ['errors' => $errors], 400);
+            }
+
+            $store = Store::find($request->input('store_id'));
+            if (!$store) {
+                return _api_json('', ['message' => _lang('app.not_found')], 404);
+            }
+            if ($store->available == 0) {
+                return _api_json('', ['message' => _lang('app.this_store_is_currently_closed')], 400);
             }
 
             $product = Product::where('id', $request->input('product_id'))
@@ -137,7 +146,6 @@ class CartController extends ApiController {
             $message = _lang('app.updated_successfully');
             return _api_json('', ['message' => $message]);
         } catch (\Exception $e) {
-            dd($e);
             $message = _lang('app.error_is_occured');
             return _api_json('', ['message' => $message], 400);
         }

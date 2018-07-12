@@ -105,7 +105,7 @@ class OrdersController extends ApiController {
                     $order = new Order;
                     $order->receipt_details_id = $receipt_detailes->id;
                     $order->delivery_type = $request->input('delivery_type');
-                    $order->store_id = $product->store_id;
+                    $order->store_id = $store;
                     $order->user_id = $user->id;
                     $order->total_price = 0;
                     $order->date = date('Y-m-d h:i:s');
@@ -135,7 +135,7 @@ class OrdersController extends ApiController {
             Cart::where('user_id', $user->id)->delete();
             DB::commit();
 
-            $notification['body'] = _lang('app.new_order');
+            $notification['body'] = 'طلب شراء جديد';
             $notification['type'] = 1;
 
             $this->send_noti_fcm($notification, $stores_user_id);

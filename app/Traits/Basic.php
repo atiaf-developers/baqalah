@@ -82,7 +82,27 @@ trait Basic {
         } else {
             $device_type = $device_type == 1 ? 'and' : 'ios';
             $Fcm->send($device_token, $notification, $device_type);
+           
         }
+    }
+
+    protected function sendSMS($numbers,$msg) {
+        //dd($msg);
+        $params = array(
+            'mobile' => env('MOBILY_MOBILE'),
+            'password' => env('MOBILY_PASSWORD'),
+            'numbers' => implode(',', $numbers),
+            'sender' => env('MOBILY_SENDER'),
+            'msg' => $msg,
+            'applicationType'=>68,
+            'lang'=>3
+        );
+        $url='http://www.mobily.ws/api/msgSend.php';
+        $url.='?'. http_build_query($params);
+        //dd($url);
+        $client = new \GuzzleHttp\Client();
+        $res = $client->request('GET', $url);
+        return $res;
     }
 
     /* public function updateValues($model, $data) {
